@@ -89,6 +89,10 @@ export default class MenuItem extends HTMLElement {
     this.#root.append(template.content.cloneNode(true));
   }
 
+  get label() {
+    return this.getAttribute("label");
+  }
+
   get active() {
     return this.hasAttribute("active");
   }

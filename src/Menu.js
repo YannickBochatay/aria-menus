@@ -47,27 +47,47 @@ export default class DesktopMenu extends HTMLElement {
     const isLastExpanded = !subItems || [...subItems].every(item => !item.expanded);
 
     switch (e.key) {
+
       case "ArrowUp":
         if (!hasSubmenuExpanded) {
           const index = (activeIndex === -1) ? this.items.length - 1 :activeIndex - 1;
           this.activeItem(index);
         }
         break;
+
       case "ArrowDown":
         if (!hasSubmenuExpanded) {
           const index = (activeIndex === -1) ? 0 : activeIndex + 1;
           this.activeItem(index);
         }
         break;
-      case "ArrowLeft":
+
+      case "Home":
+        if (!hasSubmenuExpanded) this.activeItem(0);
+        break;
+      
+      case "End":
+        if (!hasSubmenuExpanded) this.activeItem(this.items.length - 1);
+        break;
+
+      case "ArrowLeft": case "Escape":
         if (activeItem?.hasSubmenu && isLastExpanded) activeItem.expanded = false;
         break;
-      case "ArrowRight":
+
+      case "ArrowRight": case "Enter": case " ":
         if (activeItem?.hasSubmenu  && !hasSubmenuExpanded) {
           activeItem.expanded = true;
           activeItem.firstElementChild.activeItem(0);
         }
         break;
+
+      default:
+        if (e.key.length === 1 && !hasSubmenuExpanded) {
+          const index = this.items.findIndex(item => (
+            item.label.slice(0,1).toLowerCase() === e.key
+          ));
+          if (index !== -1) this.activeItem(index);
+        }
     }
   }
 
