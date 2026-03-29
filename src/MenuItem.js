@@ -27,8 +27,8 @@ style.replaceSync(/*css*/`
   }
 
   .icon {
-    width:16px,
-    margin-right:5;
+    width:16px;
+    margin-right:5px;
     color:black;
   }
 
@@ -66,11 +66,11 @@ const template = document.createElement("template");
 template.innerHTML = `
   <li role="none">
     <a role="menuitem" href="#">
-      <span class="icon"></span>
+      <slot class="icon" name="icon"></slot>
       <span class="label"></span>
       <span class="info"></span>
     </a>
-    <slot hidden></slot>
+    <slot name="submenu" hidden></slot>
     <span class="arrow" hidden>▶</span>
   </li>
 `
@@ -110,7 +110,7 @@ export default class MenuItem extends HTMLElement {
   set expanded(bool) {
     if (typeof bool !== "boolean") throw new TypeError("expanded value must be a boolean");
 
-    this.#root.querySelector("slot").hidden = !bool;
+    this.#root.querySelector("slot[name=submenu]").hidden = !bool;
     this.#root.querySelector("li").setAttribute("aria-expanded", String(bool));
 
     if (!bool) {
@@ -122,7 +122,7 @@ export default class MenuItem extends HTMLElement {
   }
 
   get hasSubmenu() {
-    return this.children.length > 0;
+    return Boolean(this.querySelector("[slot=submenu]"));
   }
 
   connectedCallback() {

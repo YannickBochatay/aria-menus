@@ -45,6 +45,9 @@ export default class DesktopMenu extends HTMLElement {
     const activeItem = this.items[activeIndex];
     const subItems = activeItem?.querySelectorAll("desktop-menu-item");
     const isLastExpanded = !subItems || [...subItems].every(item => !item.expanded);
+    const isHidden = this.assignedSlot?.hidden;
+
+    if (isHidden) return;
 
     switch (e.key) {
 
