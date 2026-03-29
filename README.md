@@ -2,7 +2,7 @@
 Web components for dk app menus
 
 ### Demo
-[http://yannickbochatay.github.io/desktop-menu](http://yannickbochatay.github.io/desktop-menu/)
+[http://yannickbochatay.github.io/desktop-menu/docs](http://yannickbochatay.github.io/desktop-menu/docs)
 
 ### Example
 ```html

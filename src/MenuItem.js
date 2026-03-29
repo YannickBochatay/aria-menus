@@ -5,6 +5,8 @@ style.replaceSync(/*css*/`
     background-color:rgb(229, 236, 255);
   }
   li {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size:1rem;
     margin:0;
     white-space:nowrap;
     line-height:1.5;
@@ -76,7 +78,6 @@ template.innerHTML = `
 
 export default class MenuItem extends HTMLElement {
 
-  #timeoutId
   #root
 
   static observedAttributes = ["expanded"];
@@ -127,6 +128,7 @@ export default class MenuItem extends HTMLElement {
       const li = this.#root.querySelector("li");
       li.querySelector(".arrow").hidden = false;
       li.setAttribute("aria-haspopup", "true");
+      li.setAttribute("aria-expanded", "false");
     }
   }
 

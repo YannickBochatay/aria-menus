@@ -31,7 +31,6 @@ export default class DesktopMenu extends HTMLElement {
 
   #root
   #timeoutId
-  #activeIndex
 
   constructor() {
     super()
@@ -41,20 +40,33 @@ export default class DesktopMenu extends HTMLElement {
   }
 
   #handleKeyDown = e => {
-    if (this.#activeIndex == null) return;
+    const activeIndex = this.items.findIndex(item => item.active);
+    const hasSubmenuExpanded = this.items.some(item => item.expanded);
+    const activeItem = this.items[activeIndex];
+    const subItems = activeItem?.querySelectorAll("desktop-menu-item");
+    const isLastExpanded = !subItems || [...subItems].every(item => !item.expanded);
 
     switch (e.key) {
       case "ArrowUp":
-        this.#activeItem(this.#activeIndex - 1)
+        if (!hasSubmenuExpanded) {
+          const index = (activeIndex === -1) ? this.items.length - 1 :activeIndex - 1;
+          this.activeItem(index);
+        }
         break;
       case "ArrowDown":
-        this.#activeItem(this.#activeIndex + 1);
+        if (!hasSubmenuExpanded) {
+          const index = (activeIndex === -1) ? 0 : activeIndex + 1;
+          this.activeItem(index);
+        }
         break;
       case "ArrowLeft":
-        this.items[this.#activeIndex].expanded = false;
+        if (activeItem?.hasSubmenu && isLastExpanded) activeItem.expanded = false;
         break;
       case "ArrowRight":
-        this.items[this.#activeIndex].expanded = true;
+        if (activeItem?.hasSubmenu  && !hasSubmenuExpanded) {
+          activeItem.expanded = true;
+          activeItem.firstElementChild.activeItem(0);
+        }
         break;
     }
   }
@@ -63,12 +75,11 @@ export default class DesktopMenu extends HTMLElement {
     return Array.from(this.children).filter(item => item instanceof MenuItem);
   }
 
-  #activeItem(index) {
+  activeItem(index) {
     const items = this.items;
     if (index > items.length - 1) index = 0;
     else if (index < 0) index = items.length - 1;
 
-    this.#activeIndex = index;
     for (const [ind, item] of items.entries()) {
       if (index === ind) item.active = true;
       else {
@@ -85,7 +96,7 @@ export default class DesktopMenu extends HTMLElement {
 
       for (const [ind, item] of this.items.entries()) {
         if (e.target === item) {
-          this.#activeItem(ind);
+          this.activeItem(ind);
           clearTimeout(this.#timeoutId);
           this.#timeoutId = setTimeout(() => item.expanded = true, 300);
           break;
