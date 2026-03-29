@@ -1,0 +1,22 @@
+{
+  "name": "desktop-menu",
+  "version": "0.0.1",
+  "description": "web component for desktop app menus",
+  "main": "dist/index.js",
+  "files": ["dist/index.js"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YannickBochatay/react-desktop-menus.git"
+  },
+  "keywords": [
+    "react",
+    "menu",
+    "javascript"
+  ],
+  "author": "Yannick Bochatay",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/YannickBochatay/react-desktop-menus/issues"
+  },
+  "homepage": "https://github.com/YannickBochatay/react-desktop-menus#readme"
+}

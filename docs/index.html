@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Desktop menu">
+    <title>Desktop menu</title>
+    <script src="../src/index.js" type="module"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Desktop menu</h1>
+    </header>
+    <main>
+      <desktop-menu>
+        <desktop-menu-item label="Toto"></desktop-menu-item>
+        <desktop-menu-item label="Tata"></desktop-menu-item>
+        <desktop-menu-separator></desktop-menu-separator>
+        <desktop-menu-item label="Titi">
+          <desktop-menu>
+            <desktop-menu-item label="Tutu"></desktop-menu-item>
+            <desktop-menu-item label="Tete">
+              <desktop-menu>
+                <desktop-menu-item label="Tutu"></desktop-menu-item>
+                <desktop-menu-item label="Tete"></desktop-menu-item>
+              </desktop-menu>
+            </desktop-menu-item>
+          </desktop-menu>
+        </desktop-menu-item>
+      </desktop-menu>
+    </main>    
+  </body>
+</html>
