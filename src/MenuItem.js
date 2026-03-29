@@ -4,32 +4,47 @@ style.replaceSync(/*css*/`
   :host([active]) li {
     background-color:rgb(229, 236, 255);
   }
+  ::slotted([slot=icon]) {
+    width:18px;
+    vertical-align:middle;
+  }
   li {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size:1rem;
     margin:0;
-    white-space:nowrap;
-    line-height:1.5;
     padding:2px 5px;
-    cursor:default;
-    display:flex;
-    align-items:center;
     color:#333;
     position:relative;
     width:100%;
     box-sizing:border-box;
+    display:flex;
+    align-items:center;
 
     a {
       text-decoration:none;
       color:inherit;
+      display:flex;
+      align-items:center;
+      cursor:default;
+      flex:1;
+
+      .icon {
+        width:18px;
+        margin-right:5px;
+        display:inline-block;
+      }
+      
+      .label {
+        margin-right:15px;
+        white-space:nowrap;
+        flex:1;
+      }
+
+      .info {
+        color:gray;
+      }
     }
     
-  }
-
-  .icon {
-    width:16px;
-    margin-right:5px;
-    color:black;
   }
 
   [disabled] {
@@ -40,15 +55,6 @@ style.replaceSync(/*css*/`
 
   .disabledActive {
     background-color:#eee;
-  }
-
-  .info {
-    color:gray;
-  }
-
-  .label {
-    margin-right:15px;
-    flex:1;
   }
 
   .arrow {
@@ -66,9 +72,13 @@ const template = document.createElement("template");
 template.innerHTML = `
   <li role="none">
     <a role="menuitem" href="#">
-      <slot class="icon" name="icon"></slot>
+      <span class="icon">
+        <slot name="icon"></slot>
+      </span>
       <span class="label"></span>
-      <span class="info"></span>
+      <span class="info">
+        <slot name="info"></slot>
+      </span>
     </a>
     <slot name="submenu" hidden></slot>
     <span class="arrow" hidden>▶</span>
