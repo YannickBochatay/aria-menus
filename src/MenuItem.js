@@ -1,10 +1,10 @@
 const style =  new CSSStyleSheet();
 
 style.replaceSync(/*css*/`
-  :host([active]) li {
+  :host([active]:not([disabled])) li {
     background-color:rgba(213, 220, 238, 1);
   }
-  :host([disabled]) li {
+  :host([disabled]) li a {
     color:gray;
     font-style:italic;
     cursor:not-allowed;
@@ -89,7 +89,7 @@ export default class MenuItem extends HTMLElement {
 
   #root
 
-  static observedAttributes = ["expanded", "active"];
+  static observedAttributes = ["expanded", "active", "disabled"];
 
   constructor() {
     super();
@@ -100,6 +100,10 @@ export default class MenuItem extends HTMLElement {
 
   get label() {
     return this.getAttribute("label");
+  }
+
+  get disabled() {
+    return this.hasAttribute("disabled");
   }
 
   get active() {
@@ -155,14 +159,14 @@ export default class MenuItem extends HTMLElement {
   }
 
   #handleKeyShortcut = e => {
-    if (this.#isShortcut(e)) {
+    if (!this.disabled && this.#isShortcut(e)) {
       e.preventDefault();
       this.#root.querySelector("a").click();
     }
   }
 
   #handleKeyNavigation = e => {
-    if (!this.active || this.assignedSlot?.hidden || !this.#hasSubmenu() || !this.#isLastExpanded()) return;
+    if (!this.disabled && !this.active || this.assignedSlot?.hidden || !this.#hasSubmenu() || !this.#isLastExpanded()) return;
 
     switch (e.key) {
 
@@ -185,7 +189,10 @@ export default class MenuItem extends HTMLElement {
     const a = this.#root.querySelector("a");
 
     a.addEventListener("click", e => {
-      this.dispatchEvent(new CustomEvent("select", { detail : { originalEvent : e } }));
+      e.preventDefault();
+      if (!this.disabled) {
+        this.dispatchEvent(new CustomEvent("select", { detail : { originalEvent : e } }));
+      }
     });
 
     if (this.#hasSubmenu()) {

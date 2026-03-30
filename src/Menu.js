@@ -75,7 +75,7 @@ export default class DesktopMenu extends HTMLElement {
   }
 
   get items() {
-    return Array.from(this.children).filter(item => item instanceof MenuItem);
+    return Array.from(this.children).filter(item => item instanceof MenuItem && !item.disabled);
   }
 
   activeItem(index) {
