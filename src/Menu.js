@@ -43,12 +43,12 @@ export default class DesktopMenu extends HTMLElement {
     if (this.assignedSlot?.hidden || this.items.some(item => item.expanded)) return;
     
     const activeIndex = this.items.findIndex(item => item.active);
-    let newIndex = -1;
+    let newIndex = null;
 
     switch (e.key) {
 
       case "ArrowUp":
-        newIndex = (activeIndex === -1) ? this.items.length - 1 :activeIndex - 1;
+        newIndex = (activeIndex === -1) ? this.items.length - 1 : activeIndex - 1;
         break;
 
       case "ArrowDown":
@@ -68,10 +68,11 @@ export default class DesktopMenu extends HTMLElement {
           newIndex = this.items.findIndex(item => (
             item.label.slice(0,1).toLowerCase() === e.key
           ));
+          if (newIndex === -1) newIndex = null;
         }
     }
 
-    if (newIndex !== -1) this.activeItem(newIndex);
+    if (newIndex != null) this.activeItem(newIndex);
   }
 
   get items() {
