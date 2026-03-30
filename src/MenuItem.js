@@ -5,7 +5,7 @@ style.replaceSync(/*css*/`
     background-color:rgba(213, 220, 238, 1);
   }
   :host([disabled]) li a {
-    color:gray;
+    opacity:0.7;
     font-style:italic;
     cursor:not-allowed;
   }
@@ -14,11 +14,8 @@ style.replaceSync(/*css*/`
     vertical-align:middle;
   }
   li {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size:1rem;
     margin:0;
     padding:2px 5px;
-    color:#333;
     position:relative;
     width:100%;
     box-sizing:border-box;
@@ -29,7 +26,7 @@ style.replaceSync(/*css*/`
       text-decoration:none;
       color:inherit;
       display:flex;
-      align-items:center;
+      align-items:baseline;
       cursor:default;
       flex:1;
 
@@ -47,10 +44,14 @@ style.replaceSync(/*css*/`
         margin-right:15px;
         white-space:nowrap;
         flex:1;
+
+        label {
+          display:block;
+        }
       }
 
       .shortcut {
-        color:#666;
+        opacity:0.7;
         font-size:0.9rem;
       }
     }
@@ -58,7 +59,7 @@ style.replaceSync(/*css*/`
   }
 
   .arrow {
-    font-size:9px;
+    font-size:0.6rem;
   }
 
   ::slotted(desktop-menu) {
@@ -84,12 +85,13 @@ template.innerHTML = `
   </li>
 `
 
+let idCpt = 0;
 
 export default class MenuItem extends HTMLElement {
 
   #root
 
-  static observedAttributes = ["expanded", "active", "disabled"];
+  static observedAttributes = ["expanded", "active"];
 
   constructor() {
     super();
@@ -138,7 +140,7 @@ export default class MenuItem extends HTMLElement {
     return this.getAttribute("shortcut");
   }
 
-  #hasSubmenu() {
+  get hasSubmenu() {
     return Boolean(this.querySelector("[slot=submenu]"));
   }
 
@@ -166,7 +168,7 @@ export default class MenuItem extends HTMLElement {
   }
 
   #handleKeyNavigation = e => {
-    if (!this.disabled && !this.active || this.assignedSlot?.hidden || !this.#hasSubmenu() || !this.#isLastExpanded()) return;
+    if (!this.disabled && !this.active || this.assignedSlot?.hidden || !this.hasSubmenu || !this.#isLastExpanded()) return;
 
     switch (e.key) {
 
@@ -185,7 +187,7 @@ export default class MenuItem extends HTMLElement {
   }
 
   connectedCallback() {
-    this.#root.querySelector(".label").textContent = this.getAttribute("label");
+    this.#root.querySelector(".label").textContent = this.label;
     const a = this.#root.querySelector("a");
 
     a.addEventListener("click", e => {
@@ -195,7 +197,7 @@ export default class MenuItem extends HTMLElement {
       }
     });
 
-    if (this.#hasSubmenu()) {
+    if (this.hasSubmenu) {
       const li = this.#root.querySelector("li");
       li.querySelector(".arrow").hidden = false;
 
@@ -209,6 +211,18 @@ export default class MenuItem extends HTMLElement {
       this.#root.querySelector(".shortcut").textContent = this.shortcut;
       document.addEventListener("keydown", this.#handleKeyShortcut);
     }
+
+    if (this.hasAttribute("checkbox")) {
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.id = "desktop-menu-item-checkbox-" + (++idCpt);
+      this.#root.querySelector("slot[name=icon]").append(input);
+
+      const label = document.createElement("label");
+      label.htmlFor = input.id;
+      label.textContent = this.label;
+      this.#root.querySelector(".label").replaceChildren(label);
+    }
   }
 
   disconnectedCallback() {
@@ -217,7 +231,7 @@ export default class MenuItem extends HTMLElement {
   }
 
   attributeChangedCallback(prop, prevValue, value) {
-    if (prop === "expanded") {
+    if (prop === "expanded" && this.hasSubmenu) {
       this.expanded = (value != null);
     } else if (prop === "active") {
       if (value != null) this.#root.querySelector("a").focus();

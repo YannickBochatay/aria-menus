@@ -10,6 +10,10 @@
       :not(:defined) {
         visibility: hidden;
       }
+      :root {
+        font-family:Arial, Helvetica, sans-serif;
+        color:#222;
+      }
     </style>
   </head>
   <body>
@@ -26,6 +30,7 @@
             <img src="img/icon.svg" alt="linux icon" slot="icon"/>
           </desktop-menu-item>
           <desktop-menu-item label="bbbbb" disabled></desktop-menu-item>
+          <desktop-menu-checkbox label="hhhhh" id="checkbox" disabled></desktop-menu-checkbox>
           <desktop-menu-separator></desktop-menu-separator>
           <desktop-menu-item label="ccccc">
             <desktop-menu slot="submenu">
@@ -44,6 +49,9 @@
     <script type="module">
       document.querySelector("#selectAll").addEventListener("select", () => {
         alert("select All !");
+      });
+      document.querySelector("#checkbox").addEventListener("change", e => {
+        alert("checkbox is " + (e.target.checked ? "checked" : "unchecked"));
       })
     </script>
   </body>

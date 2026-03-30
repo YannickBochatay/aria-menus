@@ -1,3 +1,4 @@
+import MenuCheckbox from "./MenuCheckbox.js";
 import MenuItem from "./MenuItem.js";
 
 const style =  new CSSStyleSheet();
@@ -76,7 +77,9 @@ export default class DesktopMenu extends HTMLElement {
   }
 
   get items() {
-    return Array.from(this.children).filter(item => item instanceof MenuItem && !item.disabled);
+    return Array.from(this.children).filter(item => (
+      (item instanceof MenuItem || item instanceof MenuCheckbox) && !item.disabled
+    ));
   }
 
   activeItem(index) {
@@ -96,13 +99,17 @@ export default class DesktopMenu extends HTMLElement {
   connectedCallback() {
     this.#root.addEventListener("pointerover", e => {
 
-      if (e.target.tagName.toLowerCase() !== "desktop-menu-item") return;
+      const tagName = e.target.tagName.toLowerCase()
+
+      if (!["desktop-menu-item", "desktop-menu-checkbox"].includes(tagName)) return;
 
       for (const [ind, item] of this.items.entries()) {
         if (e.target === item) {
           this.activeItem(ind);
           clearTimeout(this.#timeoutId);
-          this.#timeoutId = setTimeout(() => item.expanded = true, 300);
+          if (item.hasSubmenu) {
+            this.#timeoutId = setTimeout(() => item.expanded = true, 300);
+          }
           break;
         }
       }
