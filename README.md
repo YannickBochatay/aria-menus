@@ -1,5 +1,5 @@
-# dk-menus
-Web components for dk app menus
+# desktop-menu
+Web components for desktop app menus. This is a **WORK IN PROGRESS**.
 
 ### Demo
 [http://yannickbochatay.github.io/desktop-menu/docs](http://yannickbochatay.github.io/desktop-menu/docs)
