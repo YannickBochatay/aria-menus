@@ -22,9 +22,8 @@
       </p>
       <nav aria-label="menu example">
         <desktop-menu>
-          <desktop-menu-item label="aaaaa">
+          <desktop-menu-item label="aaaaa" shortcut="Ctrl+A" id="selectAll">
             <img src="img/icon.svg" alt="linux icon" slot="icon"/>
-            <span slot="info">Ctrl+a</span>
           </desktop-menu-item>
           <desktop-menu-item label="bbbbb"></desktop-menu-item>
           <desktop-menu-separator></desktop-menu-separator>
@@ -41,6 +40,11 @@
           </desktop-menu-item>
         </desktop-menu>
       </nav>
-    </main>    
+    </main>
+    <script type="module">
+      document.querySelector("#selectAll").addEventListener("select", () => {
+        alert("select All !");
+      })
+    </script>
   </body>
 </html>

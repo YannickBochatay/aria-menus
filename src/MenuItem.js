@@ -2,7 +2,7 @@ const style =  new CSSStyleSheet();
 
 style.replaceSync(/*css*/`
   :host([active]) li {
-    background-color:rgb(229, 236, 255);
+    background-color:rgba(213, 220, 238, 1);
   }
   :host([disabled]) li {
     color:gray;
@@ -33,6 +33,10 @@ style.replaceSync(/*css*/`
       cursor:default;
       flex:1;
 
+      &:focus {
+        outline:none;
+      }
+
       .icon {
         width:18px;
         margin-right:5px;
@@ -45,8 +49,8 @@ style.replaceSync(/*css*/`
         flex:1;
       }
 
-      .info {
-        color:gray;
+      .shortcut {
+        color:#666;
         font-size:0.9rem;
       }
     }
@@ -72,8 +76,7 @@ template.innerHTML = `
         <slot name="icon"></slot>
       </span>
       <span class="label"></span>
-      <span class="info">
-        <slot name="info"></slot>
+      <span class="shortcut">
       </span>
     </a>
     <slot name="submenu" hidden></slot>
@@ -127,16 +130,38 @@ export default class MenuItem extends HTMLElement {
     }
   }
 
+  get shortcut() {
+    return this.getAttribute("shortcut");
+  }
+
   #hasSubmenu() {
     return Boolean(this.querySelector("[slot=submenu]"));
   }
 
   #isLastExpanded() {
     const subItems = this.querySelectorAll("desktop-menu-item");
-    return !subItems || [...subItems].every(item => !item.expanded);
+    return subItems.length === 0 || [...subItems].every(item => !item.expanded);
   }
 
-  #handleKeyDown = e => {
+  #isShortcut(e) {
+    let [meta, key] = this.shortcut.toLowerCase().split(/\s*\+\s*/);
+
+    if (meta === "ctrl" && !e.metaKey && !e.ctrlKey) return false;
+    if (meta === "shift" && !e.shiftKey) return false;
+
+    if (key == null) key = meta;
+    
+    return key === e.key.toLowerCase();
+  }
+
+  #handleKeyShortcut = e => {
+    if (this.#isShortcut(e)) {
+      e.preventDefault();
+      this.#root.querySelector("a").click();
+    }
+  }
+
+  #handleKeyNavigation = e => {
     if (!this.active || this.assignedSlot?.hidden || !this.#hasSubmenu() || !this.#isLastExpanded()) return;
 
     switch (e.key) {
@@ -145,6 +170,7 @@ export default class MenuItem extends HTMLElement {
         this.expanded = false;
         this.active = true;
         break;
+
       case "ArrowRight": case "Enter": case " ":
         if (!this.expanded) {
           this.expanded = true;
@@ -156,21 +182,31 @@ export default class MenuItem extends HTMLElement {
 
   connectedCallback() {
     this.#root.querySelector(".label").textContent = this.getAttribute("label");
+    const a = this.#root.querySelector("a");
+
+    a.addEventListener("click", e => {
+      this.dispatchEvent(new CustomEvent("select", { detail : { originalEvent : e } }));
+    });
 
     if (this.#hasSubmenu()) {
       const li = this.#root.querySelector("li");
       li.querySelector(".arrow").hidden = false;
 
-      const a = this.#root.querySelector("a");
       a.setAttribute("aria-haspopup", "true");
       a.setAttribute("aria-expanded", "false");
 
-      document.addEventListener("keydown", this.#handleKeyDown);
+      document.addEventListener("keydown", this.#handleKeyNavigation);
+    }
+
+    if (this.shortcut) {
+      this.#root.querySelector(".shortcut").textContent = this.shortcut;
+      document.addEventListener("keydown", this.#handleKeyShortcut);
     }
   }
 
   disconnectedCallback() {
-    document.removeEventListener("keydown", this.#handleKeyDown);
+    document.removeEventListener("keydown", this.#handleKeyNavigation);
+    document.removeEventListener("keydown", this.#handleKeyShortcut);
   }
 
   attributeChangedCallback(prop, prevValue, value) {
