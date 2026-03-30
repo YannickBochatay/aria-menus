@@ -40,43 +40,38 @@ export default class DesktopMenu extends HTMLElement {
   }
 
   #handleKeyDown = e => {
-    if (this.assignedSlot?.hidden) return;
+    if (this.assignedSlot?.hidden || this.items.some(item => item.expanded)) return;
     
     const activeIndex = this.items.findIndex(item => item.active);
-    const hasSubmenuExpanded = this.items.some(item => item.expanded);
+    let newIndex = -1;
 
     switch (e.key) {
 
       case "ArrowUp":
-        if (!hasSubmenuExpanded) {
-          const index = (activeIndex === -1) ? this.items.length - 1 :activeIndex - 1;
-          this.activeItem(index);
-        }
+        newIndex = (activeIndex === -1) ? this.items.length - 1 :activeIndex - 1;
         break;
 
       case "ArrowDown":
-        if (!hasSubmenuExpanded) {
-          const index = (activeIndex === -1) ? 0 : activeIndex + 1;
-          this.activeItem(index);
-        }
+        newIndex = (activeIndex === -1) ? 0 : activeIndex + 1;
         break;
 
       case "Home":
-        if (!hasSubmenuExpanded) this.activeItem(0);
+        newIndex = 0;
         break;
       
       case "End":
-        if (!hasSubmenuExpanded) this.activeItem(this.items.length - 1);
+        newIndex = this.items.length - 1;
         break;
 
       default:
-        if (e.key.length === 1 && !hasSubmenuExpanded) {
-          const index = this.items.findIndex(item => (
+        if (e.key.length === 1) {
+          newIndex = this.items.findIndex(item => (
             item.label.slice(0,1).toLowerCase() === e.key
           ));
-          if (index !== -1) this.activeItem(index);
         }
     }
+
+    if (newIndex !== -1) this.activeItem(newIndex);
   }
 
   get items() {
