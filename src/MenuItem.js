@@ -109,7 +109,7 @@ export default class MenuItem extends HTMLElement {
   }
 
   get expanded() {
-    const attr = this.#root.querySelector("li").getAttribute("aria-expanded");
+    const attr = this.#root.querySelector("a").getAttribute("aria-expanded");
     return attr === "true";
   }
 
@@ -117,7 +117,7 @@ export default class MenuItem extends HTMLElement {
     if (typeof bool !== "boolean") throw new TypeError("expanded value must be a boolean");
 
     this.#root.querySelector("slot[name=submenu]").hidden = !bool;
-    this.#root.querySelector("li").setAttribute("aria-expanded", String(bool));
+    this.#root.querySelector("a").setAttribute("aria-expanded", String(bool));
 
     if (!bool) {
       this.querySelectorAll("desktop-menu-item").forEach(item => {
@@ -160,8 +160,10 @@ export default class MenuItem extends HTMLElement {
     if (this.#hasSubmenu()) {
       const li = this.#root.querySelector("li");
       li.querySelector(".arrow").hidden = false;
-      li.setAttribute("aria-haspopup", "true");
-      li.setAttribute("aria-expanded", "false");
+
+      const a = this.#root.querySelector("a");
+      a.setAttribute("aria-haspopup", "true");
+      a.setAttribute("aria-expanded", "false");
     }
 
     document.addEventListener("keydown", this.#handleKeyDown);
