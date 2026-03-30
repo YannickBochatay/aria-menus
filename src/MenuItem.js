@@ -4,6 +4,11 @@ style.replaceSync(/*css*/`
   :host([active]) li {
     background-color:rgb(229, 236, 255);
   }
+  :host([disabled]) li {
+    color:gray;
+    font-style:italic;
+    cursor:not-allowed;
+  }
   ::slotted([slot=icon]) {
     width:18px;
     vertical-align:middle;
@@ -46,16 +51,6 @@ style.replaceSync(/*css*/`
       }
     }
     
-  }
-
-  [disabled] {
-    color:gray;
-    font-style:italic;
-    cursor:not-allowed;
-  }
-
-  .disabledActive {
-    background-color:#eee;
   }
 
   .arrow {
@@ -132,19 +127,48 @@ export default class MenuItem extends HTMLElement {
     }
   }
 
-  get hasSubmenu() {
+  #hasSubmenu() {
     return Boolean(this.querySelector("[slot=submenu]"));
+  }
+
+  #isLastExpanded() {
+    const subItems = this.querySelectorAll("desktop-menu-item");
+    return !subItems || [...subItems].every(item => !item.expanded);
+  }
+
+  #handleKeyDown = e => {
+    if (!this.active || this.assignedSlot?.hidden || !this.#hasSubmenu() || !this.#isLastExpanded()) return;
+
+    switch (e.key) {
+
+      case "ArrowLeft": case "Escape":
+        this.expanded = false;
+        this.active = true;
+        break;
+      case "ArrowRight": case "Enter": case " ":
+        if (!this.expanded) {
+          this.expanded = true;
+          this.querySelector("desktop-menu").activeItem(0);
+        }
+        break;
+    }
   }
 
   connectedCallback() {
     this.#root.querySelector(".label").textContent = this.getAttribute("label");
 
-    if (this.hasSubmenu) {
+    if (this.#hasSubmenu()) {
       const li = this.#root.querySelector("li");
       li.querySelector(".arrow").hidden = false;
       li.setAttribute("aria-haspopup", "true");
       li.setAttribute("aria-expanded", "false");
     }
+
+    document.addEventListener("keydown", this.#handleKeyDown);
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener("keydown", this.#handleKeyDown);
   }
 
   attributeChangedCallback(prop, prevValue, value) {

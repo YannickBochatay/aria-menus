@@ -40,14 +40,10 @@ export default class DesktopMenu extends HTMLElement {
   }
 
   #handleKeyDown = e => {
+    if (this.assignedSlot?.hidden) return;
+    
     const activeIndex = this.items.findIndex(item => item.active);
     const hasSubmenuExpanded = this.items.some(item => item.expanded);
-    const activeItem = this.items[activeIndex];
-    const subItems = activeItem?.querySelectorAll("desktop-menu-item");
-    const isLastExpanded = !subItems || [...subItems].every(item => !item.expanded);
-    const isHidden = this.assignedSlot?.hidden;
-
-    if (isHidden) return;
 
     switch (e.key) {
 
@@ -71,20 +67,6 @@ export default class DesktopMenu extends HTMLElement {
       
       case "End":
         if (!hasSubmenuExpanded) this.activeItem(this.items.length - 1);
-        break;
-
-      case "ArrowLeft": case "Escape":
-        if (activeItem?.hasSubmenu && isLastExpanded) {
-          activeItem.expanded = false;
-          activeItem.active = true;
-        }
-        break;
-
-      case "ArrowRight": case "Enter": case " ":
-        if (activeItem?.hasSubmenu  && !hasSubmenuExpanded) {
-          activeItem.expanded = true;
-          activeItem.firstElementChild.activeItem(0);
-        }
         break;
 
       default:
