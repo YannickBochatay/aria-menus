@@ -164,9 +164,9 @@ export default class MenuItem extends HTMLElement {
       const a = this.#root.querySelector("a");
       a.setAttribute("aria-haspopup", "true");
       a.setAttribute("aria-expanded", "false");
-    }
 
-    document.addEventListener("keydown", this.#handleKeyDown);
+      document.addEventListener("keydown", this.#handleKeyDown);
+    }
   }
 
   disconnectedCallback() {
