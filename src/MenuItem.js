@@ -42,6 +42,7 @@ style.replaceSync(/*css*/`
 
       .info {
         color:gray;
+        font-size:0.9rem;
       }
     }
     
@@ -90,7 +91,7 @@ export default class MenuItem extends HTMLElement {
 
   #root
 
-  static observedAttributes = ["expanded"];
+  static observedAttributes = ["expanded", "active"];
 
   constructor() {
     super();
@@ -149,6 +150,8 @@ export default class MenuItem extends HTMLElement {
   attributeChangedCallback(prop, prevValue, value) {
     if (prop === "expanded") {
       this.expanded = (value != null);
+    } else if (prop === "active") {
+      if (value != null) this.#root.querySelector("a").focus();
     }
   }
 

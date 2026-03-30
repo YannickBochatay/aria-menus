@@ -74,7 +74,10 @@ export default class DesktopMenu extends HTMLElement {
         break;
 
       case "ArrowLeft": case "Escape":
-        if (activeItem?.hasSubmenu && isLastExpanded) activeItem.expanded = false;
+        if (activeItem?.hasSubmenu && isLastExpanded) {
+          activeItem.expanded = false;
+          activeItem.active = true;
+        }
         break;
 
       case "ArrowRight": case "Enter": case " ":
