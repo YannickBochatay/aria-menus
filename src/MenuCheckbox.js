@@ -1,26 +1,18 @@
+import MenuElement from "./MenuElement.js";
+
 export const style =  new CSSStyleSheet();
 
 style.replaceSync(/*css*/`
-  :host([active]:not([disabled])) li {
-    background-color:rgba(213, 220, 238, 1);
-  }
-  :host([disabled]) li {
-    opacity:0.7;
-    font-style:italic;
-    cursor:not-allowed;
-  }
   li {
-    margin:0;
-    padding:2px 5px;
-
     label {
-      display:block
+      flex:1;
     }
 
     input:focus {
       outline:none;
     }
   }
+    :host
 `);
 
 const template = document.createElement("template");
@@ -32,15 +24,7 @@ template.innerHTML = `
   </li>
 `
 
-function cloneEvent(originalEvent) {
-  return new Event(originalEvent.type, {
-    bubbles: originalEvent.bubbles,
-    cancelable: originalEvent.cancelable,
-    composed: originalEvent.composed, // Optional: for shadow DOM
-  });
-}
-
-export default class MenuCheckbox extends HTMLElement {
+export default class MenuCheckbox extends MenuElement {
 
   #root
   #input
@@ -49,8 +33,8 @@ export default class MenuCheckbox extends HTMLElement {
 
   constructor() {
     super();
-    this.#root = this.attachShadow({ mode : "open" });
-    this.#root.adoptedStyleSheets = [style];
+    this.#root = this.shadowRoot;
+    this.#root.adoptedStyleSheets.push(style);
     this.#root.append(template.content.cloneNode(true));
     this.#input = this.#root.querySelector("input");
   }

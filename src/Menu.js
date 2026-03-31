@@ -1,5 +1,4 @@
-import MenuCheckbox from "./MenuCheckbox.js";
-import MenuItem from "./MenuItem.js";
+import MenuElement from "./MenuElement.js";
 
 const style =  new CSSStyleSheet();
 
@@ -77,9 +76,7 @@ export default class DesktopMenu extends HTMLElement {
   }
 
   get items() {
-    return Array.from(this.children).filter(item => (
-      (item instanceof MenuItem || item instanceof MenuCheckbox) && !item.disabled
-    ));
+    return Array.from(this.children).filter(item => (item instanceof MenuElement) && !item.disabled);
   }
 
   activeItem(index) {
@@ -99,9 +96,7 @@ export default class DesktopMenu extends HTMLElement {
   connectedCallback() {
     this.#root.addEventListener("pointerover", e => {
 
-      const tagName = e.target.tagName.toLowerCase()
-
-      if (!["desktop-menu-item", "desktop-menu-checkbox"].includes(tagName)) return;
+      if (!(e.target instanceof MenuElement)) return;
 
       for (const [ind, item] of this.items.entries()) {
         if (e.target === item) {
