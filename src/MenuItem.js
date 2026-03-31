@@ -21,7 +21,9 @@ template.innerHTML = `
       <span class="icon">
         <slot name="icon"></slot>
       </span>
-      <span class="label"></span>
+      <span class="label">
+        <slot></slot>
+      </span>
       <span class="shortcut">
       </span>
     </a>
@@ -110,7 +112,6 @@ export default class MenuItem extends MenuElement {
   }
 
   connectedCallback() {
-    this.shadowRoot.querySelector(".label").textContent = this.label;
     const a = this.shadowRoot.querySelector("a");
 
     a.addEventListener("click", e => {

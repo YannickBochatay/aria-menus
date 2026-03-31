@@ -26,20 +26,23 @@
       </p>
       <nav aria-label="menu example">
         <desktop-menu>
-          <desktop-menu-item label="aaaaa" shortcut="Ctrl+A" id="selectAll">
+          <desktop-menu-item shortcut="Ctrl+A" id="selectAll">
             <img src="img/icon.svg" alt="linux icon" slot="icon"/>
+            aaaaa
           </desktop-menu-item>
-          <desktop-menu-item label="bbbbb" disabled></desktop-menu-item>
-          <desktop-menu-checkbox label="hhhhh" id="checkbox"></desktop-menu-checkbox>
-          <desktop-menu-checkbox label="jjjjjj" disabled></desktop-menu-checkbox>
+          <desktop-menu-item disabled>bbbbb</desktop-menu-item>
+          <desktop-menu-checkbox id="checkbox">hhhhh</desktop-menu-checkbox>
+          <desktop-menu-checkbox disabled>jjjjjj</desktop-menu-checkbox>
           <desktop-menu-separator></desktop-menu-separator>
-          <desktop-menu-item label="ccccc">
+          <desktop-menu-item>
+            ccccc
             <desktop-menu slot="submenu">
-              <desktop-menu-item label="ddddd"></desktop-menu-item>
-              <desktop-menu-item label="eeeee">
+              <desktop-menu-item>ddddd</desktop-menu-item>
+              <desktop-menu-item>
+                eeeee
                 <desktop-menu slot="submenu">
-                  <desktop-menu-item label="fffff"></desktop-menu-item>
-                  <desktop-menu-item label="ggggg"></desktop-menu-item>
+                  <desktop-menu-item>fffff</desktop-menu-item>
+                  <desktop-menu-item>ggggg</desktop-menu-item>
                 </desktop-menu>
               </desktop-menu-item>
             </desktop-menu>

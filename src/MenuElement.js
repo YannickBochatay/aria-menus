@@ -58,7 +58,7 @@ style.replaceSync(/*css*/`
 
 export default class MenuElement extends HTMLElement {
 
-  static observedAttributes = ["active", "label"];
+  static observedAttributes = ["active"];
 
   constructor() {
     super();
@@ -75,10 +75,6 @@ export default class MenuElement extends HTMLElement {
     else this.removeAttribute("active");
   }
 
-  get label() {
-    return this.getAttribute("label");
-  }
-
   get disabled() {
     return this.hasAttribute("disabled");
   }
@@ -86,8 +82,6 @@ export default class MenuElement extends HTMLElement {
   attributeChangedCallback(prop, prevValue, value) {
     if (prop === "active") {
       if (value != null) this.shadowRoot.querySelector(".focusedElmt").focus();
-    } else if (prop === "label") {
-      this.shadowRoot.querySelector(".label").textContent = this.label;
     }
   }
 }

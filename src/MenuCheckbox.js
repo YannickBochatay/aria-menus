@@ -19,7 +19,9 @@ const template = document.createElement("template");
 template.innerHTML = `
   <li role="none">
     <input type="checkbox" id="checkbox" class="focusedElmt icon">
-    <label for="checkbox" class="label" role="menuitem"></label>
+    <label for="checkbox" class="label" role="menuitem">
+      <slot></slot>
+    </label>
   </li>
 `
 
@@ -27,7 +29,7 @@ export default class MenuCheckbox extends MenuElement {
 
   #input
 
-  static observedAttributes = ["active", "disabled", "label"];
+  static observedAttributes = [...MenuElement.observedAttributes, "disabled"];
 
   constructor() {
     super();
