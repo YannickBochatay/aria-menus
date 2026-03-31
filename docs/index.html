@@ -30,7 +30,8 @@
             <img src="img/icon.svg" alt="linux icon" slot="icon"/>
           </desktop-menu-item>
           <desktop-menu-item label="bbbbb" disabled></desktop-menu-item>
-          <desktop-menu-checkbox label="hhhhh" id="checkbox" disabled></desktop-menu-checkbox>
+          <desktop-menu-checkbox label="hhhhh" id="checkbox"></desktop-menu-checkbox>
+          <desktop-menu-checkbox label="jjjjjj" disabled></desktop-menu-checkbox>
           <desktop-menu-separator></desktop-menu-separator>
           <desktop-menu-item label="ccccc">
             <desktop-menu slot="submenu">
@@ -45,13 +46,17 @@
           </desktop-menu-item>
         </desktop-menu>
       </nav>
+      <p id="result"></p>
     </main>
     <script type="module">
+      function print(str) {
+        document.querySelector("#result").textContent = str;
+      }
       document.querySelector("#selectAll").addEventListener("select", () => {
-        alert("select All !");
+        print("select All !");
       });
       document.querySelector("#checkbox").addEventListener("change", e => {
-        alert("checkbox is " + (e.target.checked ? "checked" : "unchecked"));
+        print("checkbox is " + (e.target.checked ? "checked" : "unchecked"));
       })
     </script>
   </body>

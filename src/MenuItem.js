@@ -44,10 +44,6 @@ style.replaceSync(/*css*/`
         margin-right:15px;
         white-space:nowrap;
         flex:1;
-
-        label {
-          display:block;
-        }
       }
 
       .shortcut {
@@ -210,18 +206,6 @@ export default class MenuItem extends HTMLElement {
     if (this.shortcut) {
       this.#root.querySelector(".shortcut").textContent = this.shortcut;
       document.addEventListener("keydown", this.#handleKeyShortcut);
-    }
-
-    if (this.hasAttribute("checkbox")) {
-      const input = document.createElement("input");
-      input.type = "checkbox";
-      input.id = "desktop-menu-item-checkbox-" + (++idCpt);
-      this.#root.querySelector("slot[name=icon]").append(input);
-
-      const label = document.createElement("label");
-      label.htmlFor = input.id;
-      label.textContent = this.label;
-      this.#root.querySelector(".label").replaceChildren(label);
     }
   }
 
