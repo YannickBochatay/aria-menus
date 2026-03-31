@@ -17,7 +17,7 @@ style.replaceSync(/*css*/`
 const template = document.createElement("template");
 template.innerHTML = `
   <li role="none">
-    <a role="menuitem" href="#">
+    <a role="menuitem" href="#" class="focusedElmt">
       <span class="icon">
         <slot name="icon"></slot>
       </span>
@@ -30,48 +30,26 @@ template.innerHTML = `
   </li>
 `
 
-let idCpt = 0;
-
 export default class MenuItem extends MenuElement {
 
-  #root
-
-  static observedAttributes = ["expanded", "active"];
+  static observedAttributes = [...MenuElement.observedAttributes, "expanded"];
 
   constructor() {
     super();
-    this.#root = this.shadowRoot;
-    this.#root.adoptedStyleSheets.push(style);
-    this.#root.append(template.content.cloneNode(true));
-  }
-
-  get label() {
-    return this.getAttribute("label");
-  }
-
-  get disabled() {
-    return this.hasAttribute("disabled");
-  }
-
-  get active() {
-    return this.hasAttribute("active");
-  }
-
-  set active(bool) {
-    if (bool) this.setAttribute("active", "");
-    else this.removeAttribute("active");
+    this.shadowRoot.adoptedStyleSheets.push(style);
+    this.shadowRoot.append(template.content.cloneNode(true));
   }
 
   get expanded() {
-    const attr = this.#root.querySelector("a").getAttribute("aria-expanded");
+    const attr = this.shadowRoot.querySelector("a").getAttribute("aria-expanded");
     return attr === "true";
   }
 
   set expanded(bool) {
     if (typeof bool !== "boolean") throw new TypeError("expanded value must be a boolean");
 
-    this.#root.querySelector("slot[name=submenu]").hidden = !bool;
-    this.#root.querySelector("a").setAttribute("aria-expanded", String(bool));
+    this.shadowRoot.querySelector("slot[name=submenu]").hidden = !bool;
+    this.shadowRoot.querySelector("a").setAttribute("aria-expanded", String(bool));
 
     if (!bool) {
       this.querySelectorAll("desktop-menu-item").forEach(item => {
@@ -108,7 +86,7 @@ export default class MenuItem extends MenuElement {
   #handleKeyShortcut = e => {
     if (!this.disabled && this.#isShortcut(e)) {
       e.preventDefault();
-      this.#root.querySelector("a").click();
+      this.shadowRoot.querySelector("a").click();
     }
   }
 
@@ -132,8 +110,8 @@ export default class MenuItem extends MenuElement {
   }
 
   connectedCallback() {
-    this.#root.querySelector(".label").textContent = this.label;
-    const a = this.#root.querySelector("a");
+    this.shadowRoot.querySelector(".label").textContent = this.label;
+    const a = this.shadowRoot.querySelector("a");
 
     a.addEventListener("click", e => {
       e.preventDefault();
@@ -143,7 +121,7 @@ export default class MenuItem extends MenuElement {
     });
 
     if (this.hasSubmenu) {
-      const li = this.#root.querySelector("li");
+      const li = this.shadowRoot.querySelector("li");
       li.querySelector(".arrow").hidden = false;
 
       a.setAttribute("aria-haspopup", "true");
@@ -153,7 +131,7 @@ export default class MenuItem extends MenuElement {
     }
 
     if (this.shortcut) {
-      this.#root.querySelector(".shortcut").textContent = this.shortcut;
+      this.shadowRoot.querySelector(".shortcut").textContent = this.shortcut;
       document.addEventListener("keydown", this.#handleKeyShortcut);
     }
   }
@@ -164,10 +142,10 @@ export default class MenuItem extends MenuElement {
   }
 
   attributeChangedCallback(prop, prevValue, value) {
+    super.attributeChangedCallback(...arguments);
+
     if (prop === "expanded" && this.hasSubmenu) {
       this.expanded = (value != null);
-    } else if (prop === "active") {
-      if (value != null) this.#root.querySelector("a").focus();
     }
   }
 

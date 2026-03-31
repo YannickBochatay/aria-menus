@@ -18,42 +18,22 @@ style.replaceSync(/*css*/`
 const template = document.createElement("template");
 template.innerHTML = `
   <li role="none">
-    <label role="menuitem">
-      <input type="checkbox">
-    </label>
+    <input type="checkbox" id="checkbox" class="focusedElmt icon">
+    <label for="checkbox" class="label" role="menuitem"></label>
   </li>
 `
 
 export default class MenuCheckbox extends MenuElement {
 
-  #root
   #input
 
-  static observedAttributes = ["active", "disabled"];
+  static observedAttributes = ["active", "disabled", "label"];
 
   constructor() {
     super();
-    this.#root = this.shadowRoot;
-    this.#root.adoptedStyleSheets.push(style);
-    this.#root.append(template.content.cloneNode(true));
-    this.#input = this.#root.querySelector("input");
-  }
-
-  get label() {
-    return this.getAttribute("label");
-  }
-
-  get disabled() {
-    return this.hasAttribute("disabled");
-  }
-
-  get active() {
-    return this.hasAttribute("active");
-  }
-
-  set active(bool) {
-    if (bool) this.setAttribute("active", "");
-    else this.removeAttribute("active");
+    this.shadowRoot.adoptedStyleSheets.push(style);
+    this.shadowRoot.append(template.content.cloneNode(true));
+    this.#input = this.shadowRoot.querySelector("input");
   }
 
   get checked() {
@@ -68,10 +48,6 @@ export default class MenuCheckbox extends MenuElement {
   }
 
   connectedCallback() {
-    this.#root.querySelector("label").append(
-      document.createTextNode(this.label)
-    );
-
     this.#input.addEventListener("change", e => {
       this.dispatchEvent(new CustomEvent("change", { detail : { originalEvent : e } }));
     });
@@ -84,9 +60,9 @@ export default class MenuCheckbox extends MenuElement {
   }
 
   attributeChangedCallback(prop, prevValue, value) {
-    if (prop === "active") {
-      if (value != null) this.#input.focus();
-    } else if (prop === "disabled") {
+    super.attributeChangedCallback(...arguments);
+
+    if (prop === "disabled") {
       this.#input.disabled = (value != null);
     }
   }
