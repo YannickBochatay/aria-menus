@@ -1,6 +1,9 @@
 const style =  new CSSStyleSheet();
 
 style.replaceSync(/*css*/`
+  :host {
+    --icon-width:1rem;
+  }
   :host([active]:not([disabled])) li {
     background-color:rgba(213, 220, 238, 1);
   }
@@ -12,7 +15,7 @@ style.replaceSync(/*css*/`
     }
   }
   ::slotted([slot=icon]) {
-    width:18px;
+    width:var(--icon-width);
     vertical-align:middle;
   }
   li {
@@ -38,7 +41,7 @@ style.replaceSync(/*css*/`
     }
 
     .icon {
-      width:18px;
+      width:var(--icon-width);
       margin:0 5px 0 0;
       display:inline-block;
     }
