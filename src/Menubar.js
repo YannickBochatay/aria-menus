@@ -1,4 +1,4 @@
-import Menu from "./Menu.js"
+import MenubarItem from "./MenubarItem.js"
 
 const style =  new CSSStyleSheet();
 
@@ -7,16 +7,7 @@ style.replaceSync(/*css*/`
     list-style:none;
     margin:0;
     padding:0;
-  }
-  li {
-    display:inline-block;
-    padding:0.2em 0.5em;
-    cursor:default;
-    margin:0;
-  }
-  ::slotted(desktop-menu) {
-    position:absolute;
-    margin-left:-0.5em;
+    display:flex;
   }
 }`);
 
@@ -32,6 +23,8 @@ export default class MenuBar extends HTMLElement {
 
   static observedAttributes = ["active", "expanded"];
 
+  #active = false;
+
   constructor() {
     super();
     const root = this.attachShadow({ mode : "open" });
@@ -40,27 +33,40 @@ export default class MenuBar extends HTMLElement {
   }
 
   get menus() {
-    return Array.from(this.children).filter(menu => (menu instanceof Menu) && !menu.disabled);
+    return Array.from(this.children).filter(menu => (menu instanceof MenubarItem) && !menu.disabled);
   }
 
-  #findMenuByLabel(label) {
-    return this.menus.find(menu => menu.getAttribute("label") === label);
+  selectMenu(targetMenu) {
+    for (const menu of this.menus) {
+      menu.expanded = (menu === targetMenu);
+    }
+  }
+
+  close() {
+    this.selectMenu(null);
+  }
+
+  #handleClick = e => {
+    if (!this.contains(e.target)) this.selectMenu(null);
+    else if (this.menus.includes(e.target)) {
+      this.#active = !this.#active;
+      this.selectMenu(this.#active ? e.target : null);
+    }
+  }
+
+  #handlePointerOver = e => {
+    if (this.#active && this.menus.includes(e.target)) this.selectMenu(e.target);
   }
 
   connectedCallback() {
-    this.menus.forEach(menu => {
-      const li = document.createElement("li");
-      li.role = "none";
-      li.textContent = menu.getAttribute("label");
-      this.shadowRoot.append(li)
-      menu.style.display = "none";
-    });
-    this.shadowRoot.addEventListener("click", e => {
-      const menu = this.#findMenuByLabel(e.target.textContent);
-      if (menu) menu.style.display = "inline-block";
-    })
+    document.addEventListener("click", this.#handleClick);
+    document.addEventListener("pointerover", this.#handlePointerOver);
   }
 
+  disconnectedCallback() {
+    document.removeEventListener("click", this.#handleClick);
+    document.removeEventListener("pointerover", this.#handlePointerOver);
+  }
 }
 
 customElements.define("desktop-menubar", MenuBar);

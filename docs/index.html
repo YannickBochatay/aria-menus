@@ -26,52 +26,58 @@
       </p>
       <nav aria-label="menu example">
         <desktop-menubar>
-          <desktop-menu label="File">
-            <desktop-menu-item shortcut="Ctrl+A" id="selectAll">
-              <img src="img/icon.svg" alt="linux icon" slot="icon"/>
-              aaaaa
-            </desktop-menu-item>
-            <desktop-menu-item disabled>bbbbb</desktop-menu-item>
-            <desktop-menu-checkbox id="checkbox">hhhhh</desktop-menu-checkbox>
-            <desktop-menu-checkbox disabled>jjjjjj</desktop-menu-checkbox>
-            <desktop-menu-separator></desktop-menu-separator>
-            <desktop-menu-item>
-              ccccc
-              <desktop-menu slot="submenu">
-                <desktop-menu-item>ddddd</desktop-menu-item>
-                <desktop-menu-item>
-                  eeeee
-                  <desktop-menu slot="submenu">
-                    <desktop-menu-item>fffff</desktop-menu-item>
-                    <desktop-menu-item>ggggg</desktop-menu-item>
-                  </desktop-menu>
-                </desktop-menu-item>
-              </desktop-menu>
-            </desktop-menu-item>
-          </desktop-menu>
-          <desktop-menu label="Edition">
-            <desktop-menu-item shortcut="Ctrl+A">
-              <img src="img/icon.svg" alt="linux icon" slot="icon"/>
-              aaaaa
-            </desktop-menu-item>
-            <desktop-menu-item disabled>bbbbb</desktop-menu-item>
-            <desktop-menu-checkbox>hhhhh</desktop-menu-checkbox>
-            <desktop-menu-checkbox disabled>jjjjjj</desktop-menu-checkbox>
-            <desktop-menu-separator></desktop-menu-separator>
-            <desktop-menu-item>
-              ccccc
-              <desktop-menu slot="submenu">
-                <desktop-menu-item>ddddd</desktop-menu-item>
-                <desktop-menu-item>
-                  eeeee
-                  <desktop-menu slot="submenu">
-                    <desktop-menu-item>fffff</desktop-menu-item>
-                    <desktop-menu-item>ggggg</desktop-menu-item>
-                  </desktop-menu>
-                </desktop-menu-item>
-              </desktop-menu>
-            </desktop-menu-item>
-          </desktop-menu>
+          <desktop-menubar-item>
+            File
+            <desktop-menu slot="menu">
+              <desktop-menu-item shortcut="Ctrl+A" id="selectAll">
+                <img src="img/icon.svg" alt="linux icon" slot="icon"/>
+                aaaaa
+              </desktop-menu-item>
+              <desktop-menu-item disabled>bbbbb</desktop-menu-item>
+              <desktop-menu-checkbox id="checkbox">hhhhh</desktop-menu-checkbox>
+              <desktop-menu-checkbox disabled>jjjjjj</desktop-menu-checkbox>
+              <desktop-menu-separator></desktop-menu-separator>
+              <desktop-menu-item>
+                ccccc
+                <desktop-menu slot="submenu">
+                  <desktop-menu-item>ddddd</desktop-menu-item>
+                  <desktop-menu-item>
+                    eeeee
+                    <desktop-menu slot="submenu">
+                      <desktop-menu-item>fffff</desktop-menu-item>
+                      <desktop-menu-item>ggggg</desktop-menu-item>
+                    </desktop-menu>
+                  </desktop-menu-item>
+                </desktop-menu>
+              </desktop-menu-item>
+            </desktop-menu>
+          </desktop-menubar-item>
+          <desktop-menubar-item>
+            Edition
+            <desktop-menu slot="menu">
+              <desktop-menu-item shortcut="Ctrl+A">
+                <img src="img/icon.svg" alt="linux icon" slot="icon"/>
+                aaaaa
+              </desktop-menu-item>
+              <desktop-menu-item disabled>bbbbb</desktop-menu-item>
+              <desktop-menu-checkbox>hhhhh</desktop-menu-checkbox>
+              <desktop-menu-checkbox disabled>jjjjjj</desktop-menu-checkbox>
+              <desktop-menu-separator></desktop-menu-separator>
+              <desktop-menu-item>
+                ccccc
+                <desktop-menu slot="submenu">
+                  <desktop-menu-item>ddddd</desktop-menu-item>
+                  <desktop-menu-item>
+                    eeeee
+                    <desktop-menu slot="submenu">
+                      <desktop-menu-item>fffff</desktop-menu-item>
+                      <desktop-menu-item>ggggg</desktop-menu-item>
+                    </desktop-menu>
+                  </desktop-menu-item>
+                </desktop-menu>
+              </desktop-menu-item>
+            </desktop-menu>
+          </desktop-menubar-item>
         </desktop-menubar>
       </nav>
       <p id="result"></p>
