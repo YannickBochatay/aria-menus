@@ -1,239 +1,66 @@
-/* eslint react/jsx-no-bind:0 */
+import Menu from "./Menu.js"
 
-import React, { Component } from "react"
-import PropTypes from "prop-types"
+const style =  new CSSStyleSheet();
 
-const styles = {
-
-  ul : {
-    listStyle : "none",
-    margin : 0,
-    padding : 0
-  },
-  li : {
-    display : "inline-block",
-    padding : "0.2em 0.5em",
-    cursor : "default",
-    margin : 0
-  },
-  menu : {
-    position : "absolute",
-    marginLeft : "-0.5em"
+style.replaceSync(/*css*/`
+  ul {
+    list-style:none;
+    margin:0;
+    padding:0;
   }
-}
+  li {
+    display:inline-block;
+    padding:0.2em 0.5em;
+    cursor:default;
+    margin:0;
+  }
+  ::slotted(desktop-menu) {
+    position:absolute;
+    margin-left:-0.5em;
+  }
+}`);
 
-class Menubar extends Component {
+const template = document.createElement("template");
 
-  constructor(props) {
+template.innerHTML = `
+  <ul role="menubar">
+    <slot></slot>
+  </ul>
+`;
 
-    super(props)
+export default class MenuBar extends HTMLElement {
 
-    this.state = {
-      showMenus : false,
-      menuActive : null
-    }
+  static observedAttributes = ["active", "expanded"];
 
-    this.handleMouseDown = this.handleMouseDown.bind(this)
-    this.handleClickDoc = this.handleClickDoc.bind(this)
-    this.handleKeyDown = this.handleKeyDown.bind(this)
-    this.handleMouseOut = this.handleMouseOut.bind(this)
-
-    this.items = []
-
+  constructor() {
+    super();
+    const root = this.attachShadow({ mode : "open" });
+    root.adoptedStyleSheets = [style];
+    root.append(template.content.cloneNode(true));
   }
 
-  close() {
-
-    this.setState({ showMenus : false, menuActive : null })
-
+  get menus() {
+    return Array.from(this.children).filter(menu => (menu instanceof Menu) && !menu.disabled);
   }
 
-  handleMouseDown() {
-
-    this.setState({ showMenus : true })
-
+  #findMenuByLabel(label) {
+    return this.menus.find(menu => menu.getAttribute("label") === label);
   }
 
-  handleMouseOver(i) {
-
-    if (i !== this.state.menuActive) {
-
-      this.setState({ menuActive : i })
-
-    }
-
-  }
-
-  handleMouseOut() {
-
-    if (!this.state.showMenus) this.setState({ menuActive : null })
-
-  }
-
-  handleClickDoc(e) {
-
-    if (this.ul && !this.ul.contains(e.target)) this.close()
-
-  }
-
-  handleKeyDown(e) {
-
-    const length = React.Children.count(this.props.children)
-    const current = this.state.menuActive
-    const currentElmt = this.items[current]
-    const submenuDisplay = currentElmt && currentElmt.state.submenuDisplay
-
-    let newValue = null
-
-    switch (e.key) {
-
-    case "Escape" :
-
-      if (!submenuDisplay) this.setState({ showMenus : false, menuActive : null })
-      break
-
-    case "ArrowLeft" :
-
-      if (submenuDisplay || !this.state.showMenus) return
-
-      if (current === null || current - 1 < 0) newValue = length - 1
-      else newValue = current - 1
-      break
-
-    case "ArrowRight" :
-
-      if (submenuDisplay || !this.state.showMenus) return
-
-      if (current === null || current + 1 >= length) newValue = 0
-      else newValue = current + 1
-      break
-
-    default :
-
-      break
-
-    }
-
-    if (newValue !== null) this.setState({ menuActive : newValue })
-
-  }
-
-  addKeyboardListener() {
-
-    document.addEventListener("keydown", this.handleKeyDown)
-
-  }
-
-  removeKeyboardListener() {
-
-    document.removeEventListener("keydown", this.handleKeyDown)
-
-  }
-
-  componentDidMount() {
-
-    document.addEventListener("click", this.handleClickDoc)
-    if (this.props.keyboard) this.addKeyboardListener()
-
-  }
-
-  componentWillUnmount() {
-
-    document.removeEventListener("click", this.handleClickDoc)
-    this.removeKeyboardListener()
-
-  }
-
-  componentDidUpdate(prevProps) {
-
-    if (prevProps.keyboard && !this.props.keyboard) this.removeKeyboardListener()
-    else if (!prevProps.keyboard && this.props.keyboard) this.addKeyboardListener()
-
-  }
-
-  setRef(i, elmt) {
-
-    this.items[i] = elmt
-
-  }
-
-  renderChildren() {
-
-    let index = -1
-
-    return React.Children.map(this.props.children, (child, i) => {
-
-      if (child.type && child.type.isReactDesktopMenu) {
-
-        index++
-
-        const active = this.state.menuActive === i
-
-        const props = {
-          display : this.state.showMenus && active,
-          ref : this.setRef.bind(this, index),
-          style : { ...styles.menu, ...child.props.style }
-        }
-
-        if (!("keyboard" in child.props)) props.keyboard = this.props.keyboard
-
-        const menu = React.cloneElement(child, props)
-
-        const style = { ...styles.li }
-
-        if (active) style.backgroundColor = this.props.itemHoverColor
-
-        return (
-          <li
-            style={ style }
-            onMouseOver={ this.handleMouseOver.bind(this, index) }
-          >
-            { child.props.label }
-            <br/>
-            { menu }
-          </li>
-        )
-
-      } else return child
-
+  connectedCallback() {
+    this.menus.forEach(menu => {
+      const li = document.createElement("li");
+      li.role = "none";
+      li.textContent = menu.getAttribute("label");
+      this.shadowRoot.append(li)
+      menu.style.display = "none";
+    });
+    this.shadowRoot.addEventListener("click", e => {
+      const menu = this.#findMenuByLabel(e.target.textContent);
+      if (menu) menu.style.display = "inline-block";
     })
-
-  }
-
-  render() {
-
-    const { style, ...rest } = this.props
-
-    delete rest.children
-    delete rest.itemHoverColor
-    delete rest.keyboard
-
-    return (
-      <ul
-        { ...rest }
-        style={ { ...styles.ul, ...style } }
-        onMouseDown={ this.handleMouseDown }
-        onMouseOut={ this.handleMouseOut }
-        ref={ node => this.ul = node }
-      >
-        { this.renderChildren() }
-      </ul>
-    )
-
   }
 
 }
 
-Menubar.propTypes = {
-  children : PropTypes.node,
-  style : PropTypes.object,
-  itemHoverColor : PropTypes.string,
-  keyboard : PropTypes.bool
-}
-
-Menubar.defaultProps = {
-  itemHoverColor : "#e5ecff",
-  keyboard : true
-}
-
-export default Menubar
+customElements.define("desktop-menubar", MenuBar);
