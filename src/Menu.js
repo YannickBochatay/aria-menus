@@ -27,16 +27,15 @@ template.innerHTML = `
   </ul>
 `
 
-export default class DesktopMenu extends HTMLElement {
+export default class Menu extends HTMLElement {
 
-  #root
   #timeoutId
 
   constructor() {
-    super()
-    this.#root = this.attachShadow({ mode : "open" });
-    this.#root.adoptedStyleSheets = [style];
-    this.#root.append(template.content.cloneNode(true));
+    super();
+    const root = this.attachShadow({ mode : "open" });
+    root.adoptedStyleSheets = [style];
+    root.append(template.content.cloneNode(true));
   }
 
   #handleKeyDown = e => {
@@ -94,7 +93,9 @@ export default class DesktopMenu extends HTMLElement {
   }
 
   connectedCallback() {
-    this.#root.addEventListener("pointerover", e => {
+    this.shadowRoot.querySelector("ul").setAttribute("aria-label", this.getAttribute("label"));
+
+    this.shadowRoot.addEventListener("pointerover", e => {
 
       if (!(e.target instanceof MenuElement)) return;
 
@@ -120,4 +121,4 @@ export default class DesktopMenu extends HTMLElement {
 
 }
 
-customElements.define("desktop-menu", DesktopMenu);
+customElements.define("desktop-menu", Menu);

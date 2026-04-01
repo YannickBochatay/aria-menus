@@ -15,6 +15,7 @@ style.replaceSync(/*css*/`
 `);
 
 const template = document.createElement("template");
+
 template.innerHTML = `
   <li role="none">
     <a role="menuitem" href="#" class="focusedElmt">
