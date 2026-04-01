@@ -23,6 +23,9 @@ style.replaceSync(/*css*/`
       }
     }
   }
+  li:has(a:focus) {
+    background-color:var(--bg-color);
+  }
   ::slotted(desktop-menu) {
     position:absolute;
     margin-left:-1em;

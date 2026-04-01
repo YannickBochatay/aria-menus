@@ -3,9 +3,10 @@ const style =  new CSSStyleSheet();
 style.replaceSync(/*css*/`
   :host {
     --icon-width:1rem;
+    --bg-color:rgb(213, 220, 238);
   }
   :host([active]:not([disabled])) li {
-    background-color:rgba(213, 220, 238, 1);
+    background-color:var(--bg-color);
   }
   :host([disabled]) li {
     .label {
@@ -56,6 +57,9 @@ style.replaceSync(/*css*/`
       opacity:0.7;
       font-size:0.9rem;
     }
+  }
+  li:has(a:focus) {
+    background-color:var(--bg-color);
   }
 `);
 

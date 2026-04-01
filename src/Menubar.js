@@ -68,7 +68,7 @@ export default class MenuBar extends HTMLElement {
     if (!this.#active || !this.#isLastExpanded()) return;
 
     const menus = this.menus;
-    const currentIndex = menus.findIndex(menu => menu.expanded);
+    const currentIndex = menus.findIndex(menu => menu.active);
 
     if (currentIndex === -1) return;
 
@@ -81,7 +81,11 @@ export default class MenuBar extends HTMLElement {
         break;
       case "Escape":
         this.close();
+        menus[currentIndex].active = true;
         break;
+      case "Enter":
+        this.selectMenu(menus[currentIndex]);
+        menus[currentIndex].querySelector("desktop-menu").activeItem(0);
     }
   }
 
