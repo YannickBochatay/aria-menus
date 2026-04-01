@@ -80,6 +80,7 @@ export default class MenuItem extends MenuElement {
 
     if (meta === "ctrl" && !e.metaKey && !e.ctrlKey) return false;
     if (meta === "shift" && !e.shiftKey) return false;
+    if (meta === "alt" && !e.altKey) return false;
 
     if (key == null) key = meta;
     

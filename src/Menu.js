@@ -63,7 +63,7 @@ export default class Menu extends HTMLElement {
         break;
 
       default:
-        if (e.key.length === 1) {
+        if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
           newIndex = this.items.findIndex(item => (
             item.label.slice(0,1).toLowerCase() === e.key
           ));

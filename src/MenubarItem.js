@@ -1,17 +1,26 @@
 const style =  new CSSStyleSheet();
 
 style.replaceSync(/*css*/`
+  :host {
+    --bg-color:rgb(213, 220, 238);
+  }
+  :host([active]) li {
+    background-color:var(--bg-color);
+  }
   li {
     position:relative;
     margin:0;
     padding:0.3rem 1rem;
     &:hover {
-      background-color:rgba(213, 220, 238, 1);
+      background-color:var(--bg-color);
     }
     a {
       text-decoration:none;
       color:inherit;
       cursor:default;
+      &:focus {
+        outline:none;
+      }
     }
   }
   ::slotted(desktop-menu) {
@@ -52,6 +61,17 @@ export default class MenubarItem extends HTMLElement {
     return attr === "true";
   }
 
+  get active() {
+    return this.hasAttribute("active");
+  }
+
+  set active(bool) {
+    if (typeof bool !== "boolean") throw new TypeError("active value must be a boolean");
+
+    if (bool) this.setAttribute("active", "");
+    else this.removeAttribute("active");
+  }
+
   set expanded(bool) {
     if (typeof bool !== "boolean") throw new TypeError("expanded value must be a boolean");
 
@@ -68,7 +88,7 @@ export default class MenubarItem extends HTMLElement {
 
   attributeChangedCallback(prop, prevValue, value) {
     if (prop === "active") {
-      if (value != null) this.shadowRoot.querySelector(".focusedElmt").focus();
+      if (value != null) this.shadowRoot.querySelector("a").focus();
     } else if (prop === "expanded" && this.hasSubmenu) {
       this.expanded = (value != null);
     }

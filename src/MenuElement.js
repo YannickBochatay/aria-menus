@@ -82,6 +82,10 @@ export default class MenuElement extends HTMLElement {
     return this.hasAttribute("disabled");
   }
 
+  get label() {
+    return [...this.childNodes]?.find(node => node.nodeName === "#text" && node.nodeValue.trim())?.nodeValue.trim();
+  }
+
   attributeChangedCallback(prop, prevValue, value) {
     if (prop === "active") {
       if (value != null) this.shadowRoot.querySelector(".focusedElmt").focus();

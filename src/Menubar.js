@@ -21,8 +21,6 @@ template.innerHTML = `
 
 export default class MenuBar extends HTMLElement {
 
-  static observedAttributes = ["active", "expanded"];
-
   #active = false;
 
   constructor() {
@@ -39,6 +37,7 @@ export default class MenuBar extends HTMLElement {
   selectMenu(targetMenu) {
     for (const menu of this.menus) {
       menu.expanded = (menu === targetMenu);
+      menu.active = (menu === targetMenu);
     }
   }
 
@@ -47,8 +46,10 @@ export default class MenuBar extends HTMLElement {
   }
 
   #handleClick = e => {
-    if (!this.contains(e.target)) this.selectMenu(null);
-    else if (this.menus.includes(e.target)) {
+    if (!this.contains(e.target)) {
+      this.selectMenu(null);
+      this.#active = false;
+    } else if (this.menus.includes(e.target)) {
       this.#active = !this.#active;
       this.selectMenu(this.#active ? e.target : null);
     }
@@ -58,14 +59,42 @@ export default class MenuBar extends HTMLElement {
     if (this.#active && this.menus.includes(e.target)) this.selectMenu(e.target);
   }
 
+  #isLastExpanded() {
+    const subItems = this.querySelectorAll("desktop-menu-item");
+    return subItems.length === 0 || [...subItems].every(item => !item.expanded);
+  }
+
+  #handleKeyDown = e => {
+    if (!this.#active || !this.#isLastExpanded()) return;
+
+    const menus = this.menus;
+    const currentIndex = menus.findIndex(menu => menu.expanded);
+
+    if (currentIndex === -1) return;
+
+    switch (e.key) {
+      case "ArrowLeft":
+        this.selectMenu(currentIndex === 0 ? menus.at(-1) : menus[currentIndex - 1]);
+        break;
+      case "ArrowRight":
+        this.selectMenu(currentIndex === menus.length - 1 ? menus[0] : menus[currentIndex + 1])
+        break;
+      case "Escape":
+        this.close();
+        break;
+    }
+  }
+
   connectedCallback() {
     document.addEventListener("click", this.#handleClick);
     document.addEventListener("pointerover", this.#handlePointerOver);
+    document.addEventListener("keydown", this.#handleKeyDown);
   }
 
   disconnectedCallback() {
     document.removeEventListener("click", this.#handleClick);
     document.removeEventListener("pointerover", this.#handlePointerOver);
+    document.removeEventListener("keydown", this.#handleKeyDown);
   }
 }
 
