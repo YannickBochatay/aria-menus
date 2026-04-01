@@ -100,8 +100,10 @@ export default class MenuItem extends MenuElement {
     switch (e.key) {
 
       case "ArrowLeft": case "Escape":
-        this.expanded = false;
-        this.active = true;
+        setTimeout(() => {
+          this.expanded = false;
+          this.active = true;
+        }, 0); // must execute after menubar keydown event
         break;
 
       case "ArrowRight": case "Enter": case " ":
