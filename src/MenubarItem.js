@@ -59,11 +59,6 @@ export default class MenubarItem extends HTMLElement {
     return this.querySelector("[slot=label]");
   }
 
-  get expanded() {
-    const attr = this.shadowRoot.querySelector("a").getAttribute("aria-expanded");
-    return attr === "true";
-  }
-
   get active() {
     return this.hasAttribute("active");
   }
@@ -75,6 +70,11 @@ export default class MenubarItem extends HTMLElement {
     else this.removeAttribute("active");
   }
 
+  get expanded() {
+    const attr = this.shadowRoot.querySelector("a").getAttribute("aria-expanded");
+    return attr === "true";
+  }
+
   set expanded(bool) {
     if (typeof bool !== "boolean") throw new TypeError("expanded value must be a boolean");
 
@@ -82,9 +82,9 @@ export default class MenubarItem extends HTMLElement {
     this.shadowRoot.querySelector("a").setAttribute("aria-expanded", String(bool));
 
     if (!bool) {
-      this.querySelectorAll("desktop-menu-item").forEach(item => {
+      this.querySelectorAll("desktop-menu-item, desktop-menu-checkbox").forEach(item => {
         item.active = false;
-        item.expanded = false;
+        if (item.hasSubmenu) item.expanded = false;
       })
     }
   }
@@ -93,7 +93,8 @@ export default class MenubarItem extends HTMLElement {
     if (prop === "active") {
       if (value != null) this.shadowRoot.querySelector("a").focus();
     } else if (prop === "expanded" && this.hasSubmenu) {
-      this.expanded = (value != null);
+      const boolValue = (value != null);
+      if (this.expanded !== boolValue) this.expanded = boolValue;
     }
   }
 

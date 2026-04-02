@@ -55,9 +55,9 @@ export default class MenuItem extends MenuElement {
     this.shadowRoot.querySelector("a").setAttribute("aria-expanded", String(bool));
 
     if (!bool) {
-      this.querySelectorAll("desktop-menu-item").forEach(item => {
+      this.querySelectorAll("desktop-menu-item, desktop-menu-checkbox").forEach(item => {
         item.active = false;
-        item.expanded = false;
+        if (item.hasSubmenu) item.expanded = false;
       })
     }
   }
@@ -102,7 +102,7 @@ export default class MenuItem extends MenuElement {
       case "ArrowLeft": case "Escape":
         setTimeout(() => {
           this.expanded = false;
-          this.active = true;
+          // this.active = true;
         }, 0); // must execute after menubar keydown event
         break;
 
@@ -150,7 +150,8 @@ export default class MenuItem extends MenuElement {
     super.attributeChangedCallback(...arguments);
 
     if (prop === "expanded" && this.hasSubmenu) {
-      this.expanded = (value != null);
+      const boolValue = (value != null);
+      if (this.expanded !== boolValue) this.expanded = boolValue;
     }
   }
 

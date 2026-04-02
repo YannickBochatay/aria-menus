@@ -21,8 +21,6 @@ template.innerHTML = `
 
 export default class MenuBar extends HTMLElement {
 
-  #active = false;
-
   constructor() {
     super();
     const root = this.attachShadow({ mode : "open" });
@@ -34,29 +32,30 @@ export default class MenuBar extends HTMLElement {
     return Array.from(this.children).filter(menu => (menu instanceof MenubarItem) && !menu.disabled);
   }
 
-  selectMenu(targetMenu) {
+  get menuActive() {
+    return this.menus.find(menu => menu.active);
+  }
+
+  showMenu(targetMenu) {
     for (const menu of this.menus) {
-      menu.expanded = (menu === targetMenu);
-      menu.active = (menu === targetMenu);
+      menu.expanded = menu.active = (menu === targetMenu);
     }
   }
 
   close() {
-    this.selectMenu(null);
+    this.showMenu(null);
   }
 
   #handleClick = e => {
     if (!this.contains(e.target)) {
-      this.selectMenu(null);
-      this.#active = false;
+      this.showMenu(null);
     } else if (this.menus.includes(e.target)) {
-      this.#active = !this.#active;
-      this.selectMenu(this.#active ? e.target : null);
+      this.showMenu(this.menuActive ? null : e.target);
     }
   }
 
   #handlePointerOver = e => {
-    if (this.#active && this.menus.includes(e.target)) this.selectMenu(e.target);
+    if (this.menuActive && this.menus.includes(e.target)) this.showMenu(e.target);
   }
 
   #isLastExpanded() {
@@ -65,27 +64,30 @@ export default class MenuBar extends HTMLElement {
   }
 
   #handleKeyDown = e => {
-    if (!this.#active || !this.#isLastExpanded()) return;
+    if (!this.menuActive || !this.#isLastExpanded()) return;
 
     const menus = this.menus;
-    const currentIndex = menus.findIndex(menu => menu.active);
+    const menuActive = this.menuActive;
+    const currentIndex = menus.indexOf(menuActive);
 
     if (currentIndex === -1) return;
 
     switch (e.key) {
       case "ArrowLeft":
-        this.selectMenu(currentIndex === 0 ? menus.at(-1) : menus[currentIndex - 1]);
+        this.showMenu(currentIndex === 0 ? menus.at(-1) : menus[currentIndex - 1]);
         break;
       case "ArrowRight":
-        this.selectMenu(currentIndex === menus.length - 1 ? menus[0] : menus[currentIndex + 1])
+        this.showMenu(currentIndex === menus.length - 1 ? menus[0] : menus[currentIndex + 1])
         break;
       case "Escape":
         this.close();
         menus[currentIndex].active = true;
         break;
       case "Enter":
-        this.selectMenu(menus[currentIndex]);
-        menus[currentIndex].querySelector("desktop-menu").activeItem(0);
+        if (!menuActive.expanded) {
+          this.showMenu(menus[currentIndex]);
+          menuActive.querySelector("desktop-menu").activeItem(0);
+        }
     }
   }
 

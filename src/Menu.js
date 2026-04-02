@@ -86,7 +86,7 @@ export default class Menu extends HTMLElement {
     for (const [ind, item] of items.entries()) {
       if (index === ind) item.active = true;
       else {
-        item.expanded = false;
+        if (item.hasSubmenu) item.expanded = false;
         item.active = false;
       }
     }
