@@ -18,9 +18,9 @@ style.replaceSync(/*css*/`
       text-decoration:none;
       color:inherit;
       cursor:default;
-      &:focus {
+      /* &:focus {
         outline:none;
-      }
+      } */
     }
   }
   li:has(a:focus) {

@@ -8,9 +8,9 @@ style.replaceSync(/*css*/`
       flex:1;
     }
 
-    input:focus {
+    /* input:focus {
       outline:none;
-    }
+    } */
   }
     :host
 `);

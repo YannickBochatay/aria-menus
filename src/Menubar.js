@@ -36,6 +36,14 @@ export default class MenuBar extends HTMLElement {
     return this.menus.find(menu => menu.active);
   }
 
+  activeMenu(targetMenu) {
+    let expanded = this.menuActive?.expanded;
+    for (const menu of this.menus) {
+      menu.active = (menu === targetMenu);
+      menu.expanded = (menu == targetMenu) ? expanded : false;
+    }
+  }
+
   showMenu(targetMenu) {
     for (const menu of this.menus) {
       menu.expanded = menu.active = (menu === targetMenu);
@@ -47,7 +55,7 @@ export default class MenuBar extends HTMLElement {
   }
 
   #handleClick = e => {
-    if (!this.contains(e.target)) {
+    if (!this.contains(e.target) || this.menuActive === e.target) {
       this.showMenu(null);
     } else if (this.menus.includes(e.target)) {
       this.showMenu(this.menuActive ? null : e.target);
@@ -55,7 +63,7 @@ export default class MenuBar extends HTMLElement {
   }
 
   #handlePointerOver = e => {
-    if (this.menuActive && this.menus.includes(e.target)) this.showMenu(e.target);
+    if (this.menuActive && this.menus.includes(e.target)) this.activeMenu(e.target);
   }
 
   #isLastExpanded() {
@@ -74,14 +82,16 @@ export default class MenuBar extends HTMLElement {
 
     switch (e.key) {
       case "ArrowLeft":
-        this.showMenu(currentIndex === 0 ? menus.at(-1) : menus[currentIndex - 1]);
+        this.activeMenu(currentIndex === 0 ? menus.at(-1) : menus[currentIndex - 1]);
         break;
       case "ArrowRight":
-        this.showMenu(currentIndex === menus.length - 1 ? menus[0] : menus[currentIndex + 1])
+        this.activeMenu(currentIndex === menus.length - 1 ? menus[0] : menus[currentIndex + 1]);
         break;
       case "Escape":
-        this.close();
-        menus[currentIndex].active = true;
+        if (menuActive.expanded) {
+          this.close();
+          menus[currentIndex].active = true;
+        }
         break;
       case "Enter":
         if (!menuActive.expanded) {
