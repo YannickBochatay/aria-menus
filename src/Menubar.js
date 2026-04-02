@@ -66,13 +66,8 @@ export default class MenuBar extends HTMLElement {
     if (this.menuActive && this.menus.includes(e.target)) this.activeMenu(e.target);
   }
 
-  #isLastExpanded() {
-    const subItems = this.querySelectorAll("desktop-menu-item");
-    return subItems.length === 0 || [...subItems].every(item => !item.expanded);
-  }
-
   #handleKeyDown = e => {
-    if (!this.menuActive || !this.#isLastExpanded()) return;
+    if (!this.menuActive) return;
 
     const menus = this.menus;
     const menuActive = this.menuActive;
@@ -80,12 +75,16 @@ export default class MenuBar extends HTMLElement {
 
     if (currentIndex === -1) return;
 
+    let newIndex
+
     switch (e.key) {
       case "ArrowLeft":
-        this.activeMenu(currentIndex === 0 ? menus.at(-1) : menus[currentIndex - 1]);
+        newIndex = (currentIndex === 0) ? menus.at(-1) : menus[currentIndex - 1]
+        this.activeMenu(newIndex);
         break;
       case "ArrowRight":
-        this.activeMenu(currentIndex === menus.length - 1 ? menus[0] : menus[currentIndex + 1]);
+        newIndex = currentIndex === menus.length - 1 ? menus[0] : menus[currentIndex + 1]
+        this.activeMenu(newIndex);
         break;
       case "Escape":
         if (menuActive.expanded) {
