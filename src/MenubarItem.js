@@ -37,7 +37,7 @@ const template = document.createElement("template");
 
 template.innerHTML = `
   <li role="none">
-    <a role="menuitem" href="#" aria-haspopup="true" aria-expanded="false">
+    <a role="menuitem" href="#" aria-haspopup="true" aria-expanded="false" tabindex="-1">
       <slot></slot>
     </a>
     <slot name="menu" hidden></slot>

@@ -18,7 +18,7 @@ style.replaceSync(/*css*/`
 const template = document.createElement("template");
 template.innerHTML = `
   <li role="none">
-    <input type="checkbox" id="checkbox" class="focusedElmt icon">
+    <input type="checkbox" id="checkbox" class="focusedElmt icon" tabindex="-1">
     <label for="checkbox" class="label" role="menuitem">
       <slot></slot>
     </label>

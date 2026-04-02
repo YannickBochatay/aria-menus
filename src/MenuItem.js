@@ -18,7 +18,7 @@ const template = document.createElement("template");
 
 template.innerHTML = `
   <li role="none">
-    <a role="menuitem" href="#" class="focusedElmt">
+    <a role="menuitem" href="#" class="focusedElmt" tabindex="-1">
       <span class="icon">
         <slot name="icon"></slot>
       </span>
@@ -100,10 +100,8 @@ export default class MenuItem extends MenuElement {
     switch (e.key) {
 
       case "ArrowLeft": case "Escape":
-        setTimeout(() => {
-          this.expanded = false;
-          // this.active = true;
-        }, 0); // must execute after menubar keydown event
+        this.expanded = false;
+        this.active = true;
         break;
 
       case "ArrowRight": case "Enter": case " ":
