@@ -35,7 +35,7 @@ template.innerHTML = `
 
 export default class MenuItem extends MenuElement {
 
-  static observedAttributes = [...MenuElement.observedAttributes, "expanded"];
+  static observedAttributes = [...MenuElement.observedAttributes, "expanded" ,"href"];
 
   constructor() {
     super();
@@ -70,6 +70,14 @@ export default class MenuItem extends MenuElement {
     return Boolean(this.querySelector("[slot=submenu]"));
   }
 
+  get href() {
+    return this.getAttribute("href");
+  }
+
+  set href(url) {
+    this.setAttribute("href", url);
+  }
+
   #isLastExpanded() {
     const subItems = this.querySelectorAll("desktop-menu-item");
     return subItems.length === 0 || [...subItems].every(item => !item.expanded);
@@ -89,7 +97,6 @@ export default class MenuItem extends MenuElement {
 
   #handleKeyShortcut = e => {
     if (!this.disabled && this.#isShortcut(e)) {
-      e.preventDefault();
       this.shadowRoot.querySelector("a").click();
     }
   }
@@ -121,7 +128,7 @@ export default class MenuItem extends MenuElement {
     const a = this.shadowRoot.querySelector("a");
 
     a.addEventListener("click", e => {
-      e.preventDefault();
+      if (!this.href) e.preventDefault();
       if (!this.disabled) {
         this.dispatchEvent(new CustomEvent("select", { detail : { originalEvent : e } }));
       }
@@ -154,6 +161,8 @@ export default class MenuItem extends MenuElement {
     if (prop === "expanded" && this.hasSubmenu) {
       const boolValue = (value != null);
       if (this.expanded !== boolValue) this.expanded = boolValue;
+    } else if (prop === "href") {
+      this.shadowRoot.querySelector("a").href = value;
     }
   }
 
