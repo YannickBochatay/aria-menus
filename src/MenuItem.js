@@ -100,12 +100,16 @@ export default class MenuItem extends MenuElement {
     switch (e.key) {
 
       case "ArrowLeft": case "Escape":
-        this.expanded = false;
-        this.active = true;
+        if (this.expanded) {
+          e.stopPropagation();
+          this.expanded = false;
+          this.active = true;
+        }
         break;
 
       case "ArrowRight": case "Enter": case " ":
         if (!this.expanded) {
+          e.stopPropagation();
           this.expanded = true;
           this.querySelector("desktop-menu").activeItem(0);
         }
@@ -130,7 +134,7 @@ export default class MenuItem extends MenuElement {
       a.setAttribute("aria-haspopup", "true");
       a.setAttribute("aria-expanded", "false");
 
-      document.addEventListener("keydown", this.#handleKeyNavigation);
+      this.addEventListener("keydown", this.#handleKeyNavigation);
     }
 
     if (this.shortcut) {
@@ -140,7 +144,7 @@ export default class MenuItem extends MenuElement {
   }
 
   disconnectedCallback() {
-    document.removeEventListener("keydown", this.#handleKeyNavigation);
+    this.removeEventListener("keydown", this.#handleKeyNavigation);
     document.removeEventListener("keydown", this.#handleKeyShortcut);
   }
 
