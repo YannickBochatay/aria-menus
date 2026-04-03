@@ -37,7 +37,7 @@ const template = document.createElement("template");
 
 template.innerHTML = `
   <li role="none">
-    <a role="menuitem" href="#" aria-haspopup="true" aria-expanded="false" tabindex="0">
+    <a role="menuitem" href="#" aria-haspopup="true" aria-expanded="false" tabindex="-1">
       <slot></slot>
     </a>
     <slot name="menu" hidden></slot>
@@ -66,8 +66,14 @@ export default class MenubarItem extends HTMLElement {
   set active(bool) {
     if (typeof bool !== "boolean") throw new TypeError("active value must be a boolean");
 
-    if (bool) this.setAttribute("active", "");
-    else this.removeAttribute("active");
+    const a = this.shadowRoot.querySelector("a");
+    if (bool) {
+      this.setAttribute("active", "");
+      a.tabIndex = 0;
+    } else {
+      this.removeAttribute("active");
+      a.tabIndex = -1;
+    }
   }
 
   get expanded() {

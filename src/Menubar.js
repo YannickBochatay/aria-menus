@@ -14,7 +14,7 @@ style.replaceSync(/*css*/`
 const template = document.createElement("template");
 
 template.innerHTML = `
-  <ul role="menubar">
+  <ul role="menubar" tabindex="0">
     <slot></slot>
   </ul>
 `;
@@ -104,6 +104,11 @@ export default class MenuBar extends HTMLElement {
     document.addEventListener("click", this.#handleClick);
     document.addEventListener("pointerover", this.#handlePointerOver);
     this.addEventListener("keydown", this.#handleKeyDown);
+    this.addEventListener("focus", () => {
+      this.shadowRoot.querySelector("ul").tabIndex = -1;
+      let menu = this.menuActive ?? this.menus[0];
+      menu.active = true;
+    })
   }
 
   disconnectedCallback() {
