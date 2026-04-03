@@ -78,11 +78,6 @@ export default class MenuItem extends MenuElement {
     this.setAttribute("href", url);
   }
 
-  #isLastExpanded() {
-    const subItems = this.querySelectorAll("desktop-menu-item");
-    return subItems.length === 0 || [...subItems].every(item => !item.expanded);
-  }
-
   #isShortcut(e) {
     let [meta, key] = this.shortcut.toLowerCase().split(/\s*\+\s*/);
 
@@ -102,8 +97,6 @@ export default class MenuItem extends MenuElement {
   }
 
   #handleKeyNavigation = e => {
-    if (!this.disabled && !this.active || this.assignedSlot?.hidden || !this.hasSubmenu || !this.#isLastExpanded()) return;
-
     switch (e.key) {
 
       case "ArrowLeft": case "Escape":
