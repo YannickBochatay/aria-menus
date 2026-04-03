@@ -75,26 +75,26 @@ export default class MenuBar extends HTMLElement {
 
     if (currentIndex === -1) return;
 
-    let newIndex
+    let newMenu
 
     switch (e.key) {
       case "ArrowLeft":
-        newIndex = (currentIndex === 0) ? menus.at(-1) : menus[currentIndex - 1]
-        this.activeMenu(newIndex);
+        newMenu = (currentIndex === 0) ? menus.at(-1) : menus[currentIndex - 1]
+        this.activeMenu(newMenu);
         break;
       case "ArrowRight":
-        newIndex = currentIndex === menus.length - 1 ? menus[0] : menus[currentIndex + 1]
-        this.activeMenu(newIndex);
+        newMenu = currentIndex === menus.length - 1 ? menus[0] : menus[currentIndex + 1]
+        this.activeMenu(newMenu);
         break;
       case "Escape":
         if (menuActive.expanded) {
           this.close();
-          menus[currentIndex].active = true;
+          menuActive.active = true;
         }
         break;
-      case "Enter":
+      case "Enter": case "ArrowDown":
         if (!menuActive.expanded) {
-          this.showMenu(menus[currentIndex]);
+          this.showMenu(menuActive);
           menuActive.querySelector("desktop-menu").activeItem(0);
         }
     }
@@ -103,13 +103,13 @@ export default class MenuBar extends HTMLElement {
   connectedCallback() {
     document.addEventListener("click", this.#handleClick);
     document.addEventListener("pointerover", this.#handlePointerOver);
-    document.addEventListener("keydown", this.#handleKeyDown);
+    this.addEventListener("keydown", this.#handleKeyDown);
   }
 
   disconnectedCallback() {
     document.removeEventListener("click", this.#handleClick);
     document.removeEventListener("pointerover", this.#handlePointerOver);
-    document.removeEventListener("keydown", this.#handleKeyDown);
+    this.removeEventListener("keydown", this.#handleKeyDown);
   }
 }
 
