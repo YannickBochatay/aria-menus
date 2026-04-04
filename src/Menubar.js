@@ -103,10 +103,28 @@ export default class MenuBar extends HTMLElement {
     }
   }
 
+  #handleFocusIn = e => {
+    if (!this.contains(e.relatedTarget)) {
+      if (!this.menus.some(menu => menu.active)) {
+        this.menus[0].active = true;
+      }
+    }
+  }
+
+  #handleFocusOut = e => {
+    if (!this.contains(e.relatedTarget)) {
+      this.menus.forEach(menu => {
+        if (menu.expanded) menu.expanded = false;
+      })
+    }
+  }
+
   connectedCallback() {
     document.addEventListener("click", this.#handleClick);
     document.addEventListener("pointerover", this.#handlePointerOver);
     this.addEventListener("keydown", this.#handleKeyDown);
+    this.addEventListener("focusin",this.#handleFocusIn);
+    this.addEventListener("focusout",this.#handleFocusOut);
   }
 
   disconnectedCallback() {

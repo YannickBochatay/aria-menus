@@ -59,6 +59,15 @@ export default class MenubarItem extends HTMLElement {
     return this.querySelector("[slot=label]");
   }
 
+  get focusable() {
+    return this.shadowRoot.querySelector("a").tabIndex === 0;
+  }
+
+  set focusable(value) {
+    if (typeof value !== "boolean") throw new TypeError("focusable value must be a boolean");
+    this.shadowRoot.querySelector("a").tabIndex = value ? 0 : -1;
+  }
+
   get active() {
     return this.hasAttribute("active");
   }
@@ -66,13 +75,12 @@ export default class MenubarItem extends HTMLElement {
   set active(bool) {
     if (typeof bool !== "boolean") throw new TypeError("active value must be a boolean");
 
-    const a = this.shadowRoot.querySelector("a");
     if (bool) {
       this.setAttribute("active", "");
-      a.tabIndex = 0;
+      this.focusable = true;
     } else {
       this.removeAttribute("active");
-      a.tabIndex = -1;
+      this.focusable = false;
     }
   }
 
@@ -93,6 +101,11 @@ export default class MenubarItem extends HTMLElement {
         if (item.hasSubmenu) item.expanded = false;
       })
     }
+  }
+
+  connectedCallback() {
+    const a = this.shadowRoot.querySelector("a");
+    a.addEventListener("click", e => e.preventDefault());
   }
 
   attributeChangedCallback(prop, prevValue, value) {
