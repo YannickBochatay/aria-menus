@@ -14,7 +14,7 @@ style.replaceSync(/*css*/`
 const template = document.createElement("template");
 
 template.innerHTML = `
-  <ul role="menubar" tabindex="0">
+  <ul role="menubar">
     <slot></slot>
   </ul>
 `;
@@ -37,7 +37,7 @@ export default class MenuBar extends HTMLElement {
   }
 
   activeMenu(targetMenu) {
-    let expanded = this.menuActive?.expanded;
+    let expanded = Boolean(this.menuActive?.expanded);
     for (const menu of this.menus) {
       menu.active = (menu === targetMenu);
       menu.expanded = (menu == targetMenu) ? expanded : false;
@@ -48,6 +48,8 @@ export default class MenuBar extends HTMLElement {
     for (const menu of this.menus) {
       menu.expanded = menu.active = (menu === targetMenu);
     }
+    // always keep one menu focusable
+    if (!targetMenu) this.menus[0].focusable = true;
   }
 
   close() {
@@ -89,11 +91,12 @@ export default class MenuBar extends HTMLElement {
       case "Escape":
         if (menuActive.expanded) {
           this.close();
-          menuActive.active = true;
+          this.activeMenu(menuActive);
         }
         break;
       case "Enter": case "ArrowDown":
         if (!menuActive.expanded) {
+          e.stopPropagation();
           this.showMenu(menuActive);
           menuActive.querySelector("desktop-menu").activeItem(0);
         }
@@ -104,17 +107,11 @@ export default class MenuBar extends HTMLElement {
     document.addEventListener("click", this.#handleClick);
     document.addEventListener("pointerover", this.#handlePointerOver);
     this.addEventListener("keydown", this.#handleKeyDown);
-    this.addEventListener("focus", () => {
-      this.shadowRoot.querySelector("ul").tabIndex = -1;
-      let menu = this.menuActive ?? this.menus[0];
-      menu.active = true;
-    })
   }
 
   disconnectedCallback() {
     document.removeEventListener("click", this.#handleClick);
     document.removeEventListener("pointerover", this.#handlePointerOver);
-    this.removeEventListener("keydown", this.#handleKeyDown);
   }
 }
 
