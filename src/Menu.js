@@ -93,8 +93,6 @@ export default class Menu extends HTMLElement {
   }
 
   connectedCallback() {
-    this.shadowRoot.querySelector("ul").setAttribute("aria-label", this.getAttribute("label"));
-
     this.shadowRoot.addEventListener("pointerover", e => {
 
       if (!(e.target instanceof MenuElement)) return;
