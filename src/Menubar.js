@@ -21,6 +21,8 @@ template.innerHTML = `
 
 export default class MenuBar extends HTMLElement {
 
+  #pointerDown
+
   constructor() {
     super();
     const root = this.attachShadow({ mode : "open" });
@@ -39,14 +41,19 @@ export default class MenuBar extends HTMLElement {
   activeMenu(targetMenu) {
     let expanded = Boolean(this.menuActive?.expanded);
     for (const menu of this.menus) {
-      menu.active = (menu === targetMenu);
-      menu.expanded = (menu == targetMenu) ? expanded : false;
+      const value = (menu === targetMenu);
+      if (menu.active !== value) menu.active = value;
+      
+      const expandedValue = (menu == targetMenu) ? expanded : false;
+      if (menu.expanded !== expandedValue) menu.expanded = expandedValue;
     }
   }
 
   showMenu(targetMenu) {
     for (const menu of this.menus) {
-      menu.expanded = menu.active = (menu === targetMenu);
+      const value = (menu === targetMenu);
+      if (menu.active !== value) menu.active = value;
+      if (menu.expanded !== value) menu.expanded = value;
     }
     // always keep one menu focusable
     if (!targetMenu) this.menus[0].focusable = true;
@@ -57,7 +64,7 @@ export default class MenuBar extends HTMLElement {
   }
 
   #handleClick = e => {
-    if (!this.contains(e.target)) this.showMenu(null);
+    if (!this.contains(e.target) && !this.shadowRoot.contains(e.target)) this.showMenu(null);
     else if (this.menus.includes(e.target)) {
       this.showMenu(this.menuActive?.expanded ? null : e.target);
     }
@@ -103,25 +110,34 @@ export default class MenuBar extends HTMLElement {
   }
 
   #handleFocusIn = e => {
-    if (!this.contains(e.relatedTarget)) {
-      if (!this.menus.some(menu => menu.active)) {
-        this.menus[0].active = true;
-      }
+    if (!this.#pointerDown && !this.contains(e.relatedTarget)) {
+      if (!this.menuActive && !this.menus.includes(e)) this.menus[0].active = true;
     }
   }
 
   #handleFocusOut = e => {
-    if (!this.contains(e.relatedTarget)) {
+    if (!this.#pointerDown && !this.contains(e.relatedTarget)) {
       this.menus.forEach(menu => {
         if (menu.expanded) menu.expanded = false;
       })
     }
   }
 
+  #handlePointerDown = () => {
+    this.#pointerDown = true;
+  }
+
+  #handlePointerUp = () => {
+    this.#pointerDown = false;
+  }
+
   connectedCallback() {
     document.addEventListener("click", this.#handleClick);
     document.addEventListener("pointerover", this.#handlePointerOver);
+
     this.addEventListener("keydown", this.#handleKeyDown);
+    this.addEventListener("pointerdown", this.#handlePointerDown);
+    this.addEventListener("pointerup", this.#handlePointerUp);
     this.addEventListener("focusin",this.#handleFocusIn);
     this.addEventListener("focusout",this.#handleFocusOut);
   }
