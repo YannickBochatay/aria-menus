@@ -18,9 +18,6 @@ style.replaceSync(/*css*/`
       text-decoration:none;
       color:inherit;
       cursor:default;
-      /* &:focus {
-        outline:none;
-      } */
     }
   }
   li:has(a:focus) {
@@ -53,10 +50,6 @@ export default class MenubarItem extends HTMLElement {
     const root = this.attachShadow({ mode : "open" });
     root.adoptedStyleSheets = [style];
     root.append(template.content.cloneNode(true));
-  }
-
-  get label() {
-    return this.querySelector("[slot=label]");
   }
 
   get focusable() {
@@ -106,6 +99,8 @@ export default class MenubarItem extends HTMLElement {
   connectedCallback() {
     const a = this.shadowRoot.querySelector("a");
     a.addEventListener("click", e => e.preventDefault());
+
+    if (!this.previousElementSibling) this.focusable = true;
   }
 
   attributeChangedCallback(prop, prevValue, value) {

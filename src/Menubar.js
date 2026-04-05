@@ -63,15 +63,26 @@ export default class MenuBar extends HTMLElement {
     this.showMenu(null);
   }
 
+  #getTargetMenu(node) {
+    if (!node) return null;
+    else if (node instanceof MenubarItem) return node;
+    else if (node.assignedSlot?.parentNode?.role !== "menuitem") return null;
+
+    return this.#getTargetMenu(node.parentNode);
+  }
+
   #handleClick = e => {
-    if (!this.contains(e.target) && !this.shadowRoot.contains(e.target)) this.showMenu(null);
-    else if (this.menus.includes(e.target)) {
-      this.showMenu(this.menuActive?.expanded ? null : e.target);
-    }
+    if (this.contains(e.target)) {
+      const menu = this.#getTargetMenu(e.target);
+      if (menu) this.showMenu(this.menuActive?.expanded ? null : menu);
+    } else this.showMenu(null);
   }
 
   #handlePointerOver = e => {
-    if (this.menuActive && this.menus.includes(e.target)) this.activeMenu(e.target);
+    if (this.menuActive) {
+      const menu = this.#getTargetMenu(e.target);
+      if (menu) this.activeMenu(menu);
+    }
   }
 
   #handleKeyDown = e => {
@@ -111,7 +122,10 @@ export default class MenuBar extends HTMLElement {
 
   #handleFocusIn = e => {
     if (!this.#pointerDown && !this.contains(e.relatedTarget)) {
-      if (!this.menuActive && !this.menus.includes(e)) this.menus[0].active = true;
+      if (!this.menuActive) {
+        const menu = this.#getTargetMenu(e.target);
+        menu.active = true;
+      }
     }
   }
 
@@ -133,8 +147,8 @@ export default class MenuBar extends HTMLElement {
 
   connectedCallback() {
     document.addEventListener("click", this.#handleClick);
-    document.addEventListener("pointerover", this.#handlePointerOver);
-
+    
+    this.addEventListener("pointerover", this.#handlePointerOver);
     this.addEventListener("keydown", this.#handleKeyDown);
     this.addEventListener("pointerdown", this.#handlePointerDown);
     this.addEventListener("pointerup", this.#handlePointerUp);
@@ -144,7 +158,6 @@ export default class MenuBar extends HTMLElement {
 
   disconnectedCallback() {
     document.removeEventListener("click", this.#handleClick);
-    document.removeEventListener("pointerover", this.#handlePointerOver);
   }
 }
 

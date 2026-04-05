@@ -35,10 +35,6 @@ style.replaceSync(/*css*/`
       align-items:baseline;
       cursor:default;
       flex:1;
-
-     /*  &:focus {
-        outline:none;
-      } */
     }
 
     .icon {
