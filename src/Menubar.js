@@ -113,6 +113,7 @@ export default class MenuBar extends HTMLElement {
         break;
       case "Enter": case "ArrowDown":
         if (!menuActive.expanded) {
+          e.preventDefault();
           e.stopPropagation();
           this.showMenu(menuActive);
           menuActive.querySelector("desktop-menu").activeItem(0);
