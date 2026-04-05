@@ -57,10 +57,9 @@ export default class MenuBar extends HTMLElement {
   }
 
   #handleClick = e => {
-    if (!this.contains(e.target) || this.menuActive === e.target) {
-      this.showMenu(null);
-    } else if (this.menus.includes(e.target)) {
-      this.showMenu(this.menuActive ? null : e.target);
+    if (!this.contains(e.target)) this.showMenu(null);
+    else if (this.menus.includes(e.target)) {
+      this.showMenu(this.menuActive?.expanded ? null : e.target);
     }
   }
 
