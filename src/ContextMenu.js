@@ -23,7 +23,7 @@ export default class ContextMenu extends HTMLElement {
 
   close() {
     this.style.display = "none";
-    this.target.setAttribute("aria-expanded", false);
+    this.setAttribute("aria-expanded", false);
   }
 
   open(e) {
@@ -31,7 +31,7 @@ export default class ContextMenu extends HTMLElement {
     const {x,y} = this.#computePosition(e);
     this.style.left = x + "px";
     this.style.top = y + "px";
-    this.target.setAttribute("aria-expanded", true);
+    this.setAttribute("aria-expanded", true);
   }
 
   #handleBlurWindow = () => this.close()
@@ -67,6 +67,7 @@ export default class ContextMenu extends HTMLElement {
   }
 
   connectedCallback() {
+    this.target.setAttribute("aria-haspopup", "menu");
     document.addEventListener("mousedown", this.#handleClickDoc);
     window.addEventListener("blur", this.#handleBlurWindow);
     this.target.addEventListener("contextmenu", this.#handleContextMenu);
