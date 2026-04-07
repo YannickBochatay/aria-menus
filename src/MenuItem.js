@@ -43,25 +43,6 @@ export default class MenuItem extends MenuElement {
     this.shadowRoot.append(template.content.cloneNode(true));
   }
 
-  get expanded() {
-    const attr = this.shadowRoot.querySelector("a").getAttribute("aria-expanded");
-    return attr === "true";
-  }
-
-  set expanded(bool) {
-    if (typeof bool !== "boolean") throw new TypeError("expanded value must be a boolean");
-
-    this.shadowRoot.querySelector("slot[name=submenu]").hidden = !bool;
-    this.shadowRoot.querySelector("a").setAttribute("aria-expanded", String(bool));
-
-    if (!bool) {
-      this.querySelectorAll("desktop-menu-item, desktop-menu-checkbox").forEach(item => {
-        item.active = false;
-        if (item.hasSubmenu) item.expanded = false;
-      })
-    }
-  }
-
   get shortcut() {
     return this.getAttribute("shortcut");
   }
@@ -76,6 +57,15 @@ export default class MenuItem extends MenuElement {
 
   set href(url) {
     this.setAttribute("href", url);
+  }
+
+  get expanded() {
+    return this.hasAttribute("expanded");
+  }
+
+  set expanded(value) {
+    if (value) this.setAttribute("expanded", "");
+    else this.removeAttribute("expanded");
   }
 
   #isShortcut(e) {
@@ -152,8 +142,17 @@ export default class MenuItem extends MenuElement {
     super.attributeChangedCallback(...arguments);
 
     if (prop === "expanded" && this.hasSubmenu) {
-      const boolValue = (value != null);
-      if (this.expanded !== boolValue) this.expanded = boolValue;
+      const bool = (value != null);
+      this.shadowRoot.querySelector("slot[name=submenu]").hidden = !bool;
+      this.shadowRoot.querySelector("a").setAttribute("aria-expanded", String(bool));
+
+      if (!bool) {
+        this.querySelectorAll("desktop-menu-item, desktop-menu-checkbox").forEach(item => {
+          item.active = false;
+          if (item.hasSubmenu) item.expanded = false;
+        })
+      }
+
     } else if (prop === "href") {
       this.shadowRoot.querySelector("a").href = value;
     }
