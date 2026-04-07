@@ -43,7 +43,7 @@ template.innerHTML = `
 
 export default class MenubarItem extends HTMLElement {
 
-  static observedAttributes = ["active", "expanded"];
+  static observedAttributes = ["active", "expanded", "focusable"];
 
   constructor() {
     super();
@@ -53,62 +53,59 @@ export default class MenubarItem extends HTMLElement {
   }
 
   get focusable() {
-    return this.shadowRoot.querySelector("a").tabIndex === 0;
+    return this.hasAttribute("focusable");
   }
 
   set focusable(value) {
-    if (typeof value !== "boolean") throw new TypeError("focusable value must be a boolean");
-    this.shadowRoot.querySelector("a").tabIndex = value ? 0 : -1;
+    if (value) this.setAttribute("focusable", "");
+    else this.removeAttribute("focusable");
   }
 
   get active() {
     return this.hasAttribute("active");
   }
 
-  set active(bool) {
-    if (typeof bool !== "boolean") throw new TypeError("active value must be a boolean");
-
-    if (bool) {
-      this.setAttribute("active", "");
-      this.focusable = true;
-    } else {
-      this.removeAttribute("active");
-      this.focusable = false;
-    }
+  set active(value) {
+    if (value) this.setAttribute("active", "");
+    else this.removeAttribute("active");
   }
 
   get expanded() {
-    const attr = this.shadowRoot.querySelector("a").getAttribute("aria-expanded");
-    return attr === "true";
+    return this.hasAttribute("expanded");
   }
 
-  set expanded(bool) {
-    if (typeof bool !== "boolean") throw new TypeError("expanded value must be a boolean");
-
-    this.shadowRoot.querySelector("slot[name=menu]").hidden = !bool;
-    this.shadowRoot.querySelector("a").setAttribute("aria-expanded", String(bool));
-
-    if (!bool) {
-      this.querySelectorAll("desktop-menu-item, desktop-menu-checkbox").forEach(item => {
-        item.active = false;
-        if (item.hasSubmenu) item.expanded = false;
-      })
-    }
+  set expanded(value) {
+    if (value) this.setAttribute("expanded", "");
+    else this.removeAttribute("expanded");
   }
 
   connectedCallback() {
     const a = this.shadowRoot.querySelector("a");
     a.addEventListener("click", e => e.preventDefault());
-
-    if (!this.previousElementSibling) this.focusable = true;
   }
 
   attributeChangedCallback(prop, prevValue, value) {
     if (prop === "active") {
-      if (value != null) this.shadowRoot.querySelector("a").focus();
-    } else if (prop === "expanded" && this.hasSubmenu) {
-      const boolValue = (value != null);
-      if (this.expanded !== boolValue) this.expanded = boolValue;
+      if (value == null) this.focusable = false;
+      else {
+        this.focusable = true;
+        this.shadowRoot.querySelector("a").focus();
+      }
+
+    } else if (prop === "expanded") {
+      const bool = (value != null);
+      this.shadowRoot.querySelector("slot[name=menu]").hidden = !bool;
+      this.shadowRoot.querySelector("a").setAttribute("aria-expanded", String(bool));
+
+      if (!bool) {
+        this.querySelectorAll("desktop-menu-item, desktop-menu-checkbox").forEach(item => {
+          item.active = false;
+          if (item.hasSubmenu) item.expanded = false;
+        })
+      }
+
+    } else if (prop === "focusable") {
+      this.shadowRoot.querySelector("a").tabIndex = (value == null) ? -1 : 0;
     }
   }
 

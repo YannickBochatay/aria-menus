@@ -40,12 +40,10 @@ export default class MenuBar extends HTMLElement {
 
   activeMenu(targetMenu) {
     let expanded = Boolean(this.menuActive?.expanded);
+
     for (const menu of this.menus) {
-      const value = (menu === targetMenu);
-      if (menu.active !== value) menu.active = value;
-      
-      const expandedValue = (menu == targetMenu) ? expanded : false;
-      if (menu.expanded !== expandedValue) menu.expanded = expandedValue;
+      menu.active = (menu === targetMenu);
+      menu.expanded = (menu === targetMenu) ? expanded : false;
     }
   }
 
@@ -155,6 +153,8 @@ export default class MenuBar extends HTMLElement {
     this.addEventListener("pointerup", this.#handlePointerUp);
     this.addEventListener("focusin",this.#handleFocusIn);
     this.addEventListener("focusout",this.#handleFocusOut);
+
+    if (this.menus.every(menu => !menu.focusable)) this.menus[0].focusable = true;
   }
 
   disconnectedCallback() {
