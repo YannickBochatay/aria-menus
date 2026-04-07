@@ -24,6 +24,7 @@ export default class ContextMenu extends HTMLElement {
   close() {
     this.style.display = "none";
     this.setAttribute("aria-expanded", false);
+    this.target.focus();
   }
 
   open(e) {
@@ -32,6 +33,7 @@ export default class ContextMenu extends HTMLElement {
     this.style.left = x + "px";
     this.style.top = y + "px";
     this.setAttribute("aria-expanded", true);
+    this.firstElementChild.focus();
   }
 
   #handleBlurWindow = () => this.close()
@@ -66,11 +68,20 @@ export default class ContextMenu extends HTMLElement {
     this.open(e);
   }
 
+  #handleKeyDown = e => {
+    if (e.key === "Escape") this.close();
+  }
+
   connectedCallback() {
-    this.target.setAttribute("aria-haspopup", "menu");
-    document.addEventListener("mousedown", this.#handleClickDoc);
     window.addEventListener("blur", this.#handleBlurWindow);
+    document.addEventListener("mousedown", this.#handleClickDoc);
+
+    this.target.setAttribute("aria-haspopup", "menu");
     this.target.addEventListener("contextmenu", this.#handleContextMenu);
+
+    this.addEventListener("keydown", this.#handleKeyDown);
+
+    this.firstElementChild.tabIndex = -1;
   }
 
   disconnectedCallback() {

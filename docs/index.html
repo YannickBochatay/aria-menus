@@ -83,10 +83,7 @@
           </desktop-menubar-item>
         </desktop-menubar>
       </nav>
-      <p id="result"></p>
-      <p>
-        <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/">Reference W3C</a>
-      </p>
+      <div id="result" tabindex="0"></div>
       <desktop-contextmenu for="result">
         <desktop-menu>
           <desktop-menu-item>ddddd</desktop-menu-item>
@@ -99,6 +96,9 @@
           </desktop-menu-item>
         </desktop-menu>
       </desktop-contextmenu>
+      <p>
+        <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/">Reference W3C</a>
+      </p>
     </main>
     <script type="module">
       const menubar = document.querySelector("desktop-menubar");
