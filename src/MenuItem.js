@@ -1,6 +1,6 @@
 import MenuCheckbox from "./MenuCheckbox.js";
 import MenuElement from "./MenuElement.js"
-import MenuList from "./Menu.js";
+import MenuList from "./MenuList.js";
 
 const style =  new CSSStyleSheet();
 
@@ -171,5 +171,3 @@ export default class MenuItem extends MenuElement {
   }
 
 }
-
-customElements.define("desktop-menu-item", MenuItem);

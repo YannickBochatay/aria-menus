@@ -28,80 +28,80 @@
         <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/" target="_blank">Reference W3C</a>
       </p>
       <nav aria-label="menu example">
-        <desktop-menubar>
-          <desktop-menubar-item>
+        <menu-bar>
+          <menu-bar-item>
             <span>File</span>
-            <desktop-menu slot="menu">
-              <desktop-menu-item shortcut="Ctrl+A" id="selectAll">
+            <menu-list slot="menu">
+              <menu-item shortcut="Ctrl+A" id="selectAll">
                 <img src="img/icon.svg" alt="linux icon" slot="icon"/>
                 aaaaa
-              </desktop-menu-item>
-              <desktop-menu-item disabled>bbbbb</desktop-menu-item>
-              <desktop-menu-checkbox id="checkbox">hhhhh</desktop-menu-checkbox>
-              <desktop-menu-checkbox disabled>jjjjjj</desktop-menu-checkbox>
-              <desktop-menu-separator></desktop-menu-separator>
-              <desktop-menu-item>
+              </menu-item>
+              <menu-item disabled>bbbbb</menu-item>
+              <menu-checkbox id="checkbox">hhhhh</menu-checkbox>
+              <menu-checkbox disabled>jjjjjj</menu-checkbox>
+              <menu-separator></menu-separator>
+              <menu-item>
                 ccccc
-                <desktop-menu slot="menu">
-                  <desktop-menu-item>ddddd</desktop-menu-item>
-                  <desktop-menu-item>
+                <menu-list slot="menu">
+                  <menu-item>ddddd</menu-item>
+                  <menu-item>
                     eeeee
-                    <desktop-menu slot="menu">
-                      <desktop-menu-item>fffff</desktop-menu-item>
-                      <desktop-menu-item>ggggg</desktop-menu-item>
-                    </desktop-menu>
-                  </desktop-menu-item>
-                </desktop-menu>
-              </desktop-menu-item>
-            </desktop-menu>
-          </desktop-menubar-item>
-          <desktop-menubar-item>
+                    <menu-list slot="menu">
+                      <menu-item>fffff</menu-item>
+                      <menu-item>ggggg</menu-item>
+                    </menu-list>
+                  </menu-item>
+                </menu-list>
+              </menu-item>
+            </menu-list>
+          </menu-bar-item>
+          <menu-bar-item>
             Edition
-            <desktop-menu slot="menu">
-              <desktop-menu-item shortcut="Ctrl+A">
+            <menu-list slot="menu">
+              <menu-item shortcut="Ctrl+A">
                 <img src="img/icon.svg" alt="linux icon" slot="icon"/>
                 aaaaa
-              </desktop-menu-item>
-              <desktop-menu-item disabled>bbbbb</desktop-menu-item>
-              <desktop-menu-checkbox>hhhhh</desktop-menu-checkbox>
-              <desktop-menu-checkbox disabled>jjjjjj</desktop-menu-checkbox>
-              <desktop-menu-separator></desktop-menu-separator>
-              <desktop-menu-item>
+              </menu-item>
+              <menu-item disabled>bbbbb</menu-item>
+              <menu-checkbox>hhhhh</menu-checkbox>
+              <menu-checkbox disabled>jjjjjj</menu-checkbox>
+              <menu-separator></menu-separator>
+              <menu-item>
                 ccccc
-                <desktop-menu slot="menu">
-                  <desktop-menu-item>ddddd</desktop-menu-item>
-                  <desktop-menu-item>
+                <menu-list slot="menu">
+                  <menu-item>ddddd</menu-item>
+                  <menu-item>
                     eeeee
-                    <desktop-menu slot="menu">
-                      <desktop-menu-item>fffff</desktop-menu-item>
-                      <desktop-menu-item>ggggg</desktop-menu-item>
-                    </desktop-menu>
-                  </desktop-menu-item>
-                </desktop-menu>
-              </desktop-menu-item>
-            </desktop-menu>
-          </desktop-menubar-item>
-        </desktop-menubar>
+                    <menu-list slot="menu">
+                      <menu-item>fffff</menu-item>
+                      <menu-item>ggggg</menu-item>
+                    </menu-list>
+                  </menu-item>
+                </menu-list>
+              </menu-item>
+            </menu-list>
+          </menu-bar-item>
+        </menu-bar>
       </nav>
       <div id="result" tabindex="0"></div>
-      <desktop-contextmenu for="result">
-        <desktop-menu>
-          <desktop-menu-item>ddddd</desktop-menu-item>
-          <desktop-menu-item>
+      <menu-context for="result">
+        <menu-list>
+          <menu-item>ddddd</menu-item>
+          <menu-item>
             eeeee
-            <desktop-menu slot="menu">
-              <desktop-menu-item>fffff</desktop-menu-item>
-              <desktop-menu-item>ggggg</desktop-menu-item>
-            </desktop-menu>
-          </desktop-menu-item>
-        </desktop-menu>
-      </desktop-contextmenu>
+            <menu-list slot="menu">
+              <menu-item>fffff</menu-item>
+              <menu-item>ggggg</menu-item>
+            </menu-list>
+          </menu-item>
+        </menu-list>
+      </menu-context>
       <p>
         <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/">Reference W3C</a>
       </p>
     </main>
     <script type="module">
-      const menubar = document.querySelector("desktop-menubar");
+      const menubar = document.querySelector("menu-bar");
       function print(str) {
         document.querySelector("#result").textContent = str;
       }

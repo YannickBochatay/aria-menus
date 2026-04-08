@@ -27,7 +27,7 @@ template.innerHTML = `
   </ul>
 `
 
-export default class Menu extends HTMLElement {
+export default class MenuList extends HTMLElement {
 
   #timeoutId
 
@@ -118,5 +118,3 @@ export default class Menu extends HTMLElement {
   }
 
 }
-
-customElements.define("desktop-menu", Menu);

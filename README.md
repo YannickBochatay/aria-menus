@@ -14,22 +14,46 @@ Web components for desktop app menus. This is a **WORK IN PROGRESS**.
     <script src="https://cdn.jsdelivr.net/npm/desktop-menu@1" type="module"></script>
   </head>
   <body>
-    <dkt-menu>
-      <dkt-item label="Toto"></dkt-item>
-      <dkt-item label="Tata"></dkt-item>
-      <dkt-separator></dkt-separator>
-      <dkt-item label="Titi">
-        <dkt-menu>
-          <dkt-item label="Tutu"></dkt-item>
-          <dkt-item label="Tete">
-            <dkt-menu>
-              <dkt-item label="Tutu"></dkt-item>
-              <dkt-item label="Tete"></dkt-item>
-            </dkt-menu>
-          </dkt-item>
-        </dkt-menu>
-      </dkt-item>
-    </dkt-menu>
+    <menu-bar>
+      <menu-bar-item>
+        <span>File</span>
+        <menu-list slot="menu">
+          <menu-item shortcut="Ctrl+A" id="selectAll">
+            <img src="img/icon.svg" alt="linux icon" slot="icon"/>
+            aaaaa
+          </menu-item>
+          <menu-item disabled>bbbbb</menu-item>
+          <menu-checkbox id="checkbox">hhhhh</menu-checkbox>
+          <menu-checkbox disabled>jjjjjj</menu-checkbox>
+          <menu-separator></menu-separator>
+          <menu-item>
+            ccccc
+            <menu-list slot="menu">
+              <menu-item>ddddd</menu-item>
+              <menu-item>
+                eeeee
+                <menu-list slot="menu">
+                  <menu-item>fffff</menu-item>
+                  <menu-item>ggggg</menu-item>
+                </menu-list>
+              </menu-item>
+            </menu-list>
+          </menu-item>
+        </menu-list>
+      </menu-bar-item>
+      <menu-bar-item>
+        Edition
+        <menu-list slot="menu">
+          <menu-item shortcut="Ctrl+A">
+            <img src="img/icon.svg" alt="linux icon" slot="icon"/>
+            aaaaa
+          </menu-item>
+          <menu-item disabled>bbbbb</menu-item>
+          <menu-checkbox>hhhhh</menu-checkbox>
+          <menu-checkbox disabled>jjjjjj</menu-checkbox>
+        </menu-list>
+      </menu-bar-item>
+    </menu-bar>
   </body>
 </html>
 ```

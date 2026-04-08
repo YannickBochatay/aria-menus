@@ -91,6 +91,3 @@ export default class ContextMenu extends HTMLElement {
   }
 
 }
-
-customElements.define("desktop-contextmenu", ContextMenu);
-

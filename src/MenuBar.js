@@ -1,5 +1,5 @@
-import MenubarItem from "./MenubarItem.js"
-import MenuList from "./Menu.js"
+import MenuBarItem from "./MenuBarItem.js"
+import MenuList from "./MenuList.js"
 
 const style =  new CSSStyleSheet();
 
@@ -32,7 +32,7 @@ export default class MenuBar extends HTMLElement {
   }
 
   get menus() {
-    return Array.from(this.children).filter(menu => (menu instanceof MenubarItem) && !menu.disabled);
+    return Array.from(this.children).filter(menu => (menu instanceof MenuBarItem) && !menu.disabled);
   }
 
   get menuActive() {
@@ -64,7 +64,7 @@ export default class MenuBar extends HTMLElement {
 
   #getTargetMenu(node) {
     if (!node) return null;
-    else if (node instanceof MenubarItem) return node;
+    else if (node instanceof MenuBarItem) return node;
     else if (node.assignedSlot?.parentNode?.role !== "menuitem") return null;
 
     return this.#getTargetMenu(node.parentNode);
@@ -167,5 +167,3 @@ export default class MenuBar extends HTMLElement {
     document.removeEventListener("click", this.#handleClick);
   }
 }
-
-customElements.define("desktop-menubar", MenuBar);

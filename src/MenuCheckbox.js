@@ -72,5 +72,3 @@ export default class MenuCheckbox extends MenuElement {
   }
 
 }
-
-customElements.define("desktop-menu-checkbox", MenuCheckbox);

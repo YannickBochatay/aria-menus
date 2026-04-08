@@ -44,7 +44,7 @@ template.innerHTML = `
   </li>
 `
 
-export default class MenubarItem extends HTMLElement {
+export default class MenuBarItem extends HTMLElement {
 
   static observedAttributes = ["active", "expanded", "focusable"];
 
@@ -119,5 +119,3 @@ export default class MenubarItem extends HTMLElement {
   }
 
 }
-
-customElements.define("desktop-menubar-item", MenubarItem);

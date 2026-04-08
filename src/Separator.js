@@ -23,4 +23,3 @@ export default class Separator extends HTMLElement {
   }
 }
 
-customElements.define("desktop-menu-separator", Separator)

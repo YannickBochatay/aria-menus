@@ -1,7 +1,10 @@
-export { default as Menu } from "./Menu.js"
-export { default as MenuItem } from "./MenuItem.js"
-export { default as MenuCheckbox } from "./MenuCheckbox.js"
-export { default as Separator } from "./Separator.js"
-export { default as Menubar } from "./Menubar.js"
-export { default as MenubarItem } from "./MenubarItem.js"
-export { default as ContextMenu } from "./ContextMenu.js"
+import * as components from "./components.js";
+export * from "./components.js";
+
+customElements.define("menu-item", components.MenuItem);
+customElements.define("menu-checkbox", components.MenuCheckbox);
+customElements.define("menu-separator", components.Separator);
+customElements.define("menu-list", components.MenuList);
+customElements.define("menu-bar-item", components.MenuBarItem);
+customElements.define("menu-bar", components.MenuBar);
+customElements.define("menu-context", components.ContextMenu);
