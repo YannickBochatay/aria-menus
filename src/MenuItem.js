@@ -1,4 +1,6 @@
+import MenuCheckbox from "./MenuCheckbox.js";
 import MenuElement from "./MenuElement.js"
+import MenuList from "./Menu.js";
 
 const style =  new CSSStyleSheet();
 
@@ -7,7 +9,7 @@ style.replaceSync(/*css*/`
     font-size:0.6rem;
   }
 
-  ::slotted(desktop-menu) {
+  slot[name=menu]::slotted(*) {
     position:absolute;
     left:100%;
     top:0;
@@ -28,7 +30,7 @@ template.innerHTML = `
       <span class="shortcut">
       </span>
     </a>
-    <slot name="submenu" hidden></slot>
+    <slot name="menu" hidden></slot>
     <span class="arrow" hidden>▶</span>
   </li>
 `
@@ -48,7 +50,7 @@ export default class MenuItem extends MenuElement {
   }
 
   get hasSubmenu() {
-    return Boolean(this.querySelector("[slot=submenu]"));
+    return Boolean(this.querySelector("[slot=menu]"));
   }
 
   get href() {
@@ -66,6 +68,10 @@ export default class MenuItem extends MenuElement {
   set expanded(value) {
     if (value) this.setAttribute("expanded", "");
     else this.removeAttribute("expanded");
+  }
+
+  #findMenuList() {
+    return [...this.children].find(child => child instanceof MenuList);
   }
 
   #isShortcut(e) {
@@ -101,7 +107,7 @@ export default class MenuItem extends MenuElement {
         if (!this.expanded) {
           e.stopPropagation();
           this.expanded = true;
-          this.querySelector("desktop-menu").activeItem(0);
+          this.#findMenuList().activeItem(0);
         }
         break;
     }
@@ -138,16 +144,22 @@ export default class MenuItem extends MenuElement {
     document.removeEventListener("keydown", this.#handleKeyShortcut);
   }
 
+  #findAllItems() {
+    return [...this.querySelectorAll("*")].filter(node => (
+      node instanceof MenuItem || node instanceof MenuCheckbox
+    ))
+  }
+
   attributeChangedCallback(prop, prevValue, value) {
     super.attributeChangedCallback(...arguments);
 
     if (prop === "expanded" && this.hasSubmenu) {
       const bool = (value != null);
-      this.shadowRoot.querySelector("slot[name=submenu]").hidden = !bool;
+      this.shadowRoot.querySelector("slot[name=menu]").hidden = !bool;
       this.shadowRoot.querySelector("a").setAttribute("aria-expanded", String(bool));
 
       if (!bool) {
-        this.querySelectorAll("desktop-menu-item, desktop-menu-checkbox").forEach(item => {
+        this.#findAllItems().forEach(item => {
           item.active = false;
           if (item.hasSubmenu) item.expanded = false;
         })

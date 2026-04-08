@@ -1,4 +1,5 @@
 import MenubarItem from "./MenubarItem.js"
+import MenuList from "./Menu.js"
 
 const style =  new CSSStyleSheet();
 
@@ -83,6 +84,11 @@ export default class MenuBar extends HTMLElement {
     }
   }
 
+  #findMenuList(menu) {
+    if (!menu) return null
+    return [...menu.children].find(child => child instanceof MenuList);
+  }
+
   #handleKeyDown = e => {
     if (!this.menuActive) return;
 
@@ -114,7 +120,7 @@ export default class MenuBar extends HTMLElement {
           e.preventDefault();
           e.stopPropagation();
           this.showMenu(menuActive);
-          menuActive.querySelector("desktop-menu").activeItem(0);
+          this.#findMenuList(menuActive).activeItem(0);
         }
     }
   }

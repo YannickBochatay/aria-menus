@@ -42,11 +42,11 @@
               <desktop-menu-separator></desktop-menu-separator>
               <desktop-menu-item>
                 ccccc
-                <desktop-menu slot="submenu">
+                <desktop-menu slot="menu">
                   <desktop-menu-item>ddddd</desktop-menu-item>
                   <desktop-menu-item>
                     eeeee
-                    <desktop-menu slot="submenu">
+                    <desktop-menu slot="menu">
                       <desktop-menu-item>fffff</desktop-menu-item>
                       <desktop-menu-item>ggggg</desktop-menu-item>
                     </desktop-menu>
@@ -68,11 +68,11 @@
               <desktop-menu-separator></desktop-menu-separator>
               <desktop-menu-item>
                 ccccc
-                <desktop-menu slot="submenu">
+                <desktop-menu slot="menu">
                   <desktop-menu-item>ddddd</desktop-menu-item>
                   <desktop-menu-item>
                     eeeee
-                    <desktop-menu slot="submenu">
+                    <desktop-menu slot="menu">
                       <desktop-menu-item>fffff</desktop-menu-item>
                       <desktop-menu-item>ggggg</desktop-menu-item>
                     </desktop-menu>
@@ -89,7 +89,7 @@
           <desktop-menu-item>ddddd</desktop-menu-item>
           <desktop-menu-item>
             eeeee
-            <desktop-menu slot="submenu">
+            <desktop-menu slot="menu">
               <desktop-menu-item>fffff</desktop-menu-item>
               <desktop-menu-item>ggggg</desktop-menu-item>
             </desktop-menu>
@@ -111,7 +111,7 @@
       });
       document.querySelector("#checkbox").addEventListener("change", e => {
         print("checkbox is " + (e.target.checked ? "checked" : "unchecked"));
-        menubar.close();
+        // menubar.close();
       })
     </script>
   </body>

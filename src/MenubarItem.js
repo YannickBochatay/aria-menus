@@ -1,3 +1,6 @@
+import MenuItem from "./MenuItem.js";
+import MenuCheckbox from "./MenuCheckbox.js";
+
 const style =  new CSSStyleSheet();
 
 style.replaceSync(/*css*/`
@@ -23,7 +26,7 @@ style.replaceSync(/*css*/`
   li:has(a:focus) {
     background-color:var(--bg-color);
   }
-  ::slotted(desktop-menu) {
+  slot[name=menu]::slotted(*) {
     position:absolute;
     margin-left:-1em;
     margin-top:0.1rem;
@@ -84,6 +87,12 @@ export default class MenubarItem extends HTMLElement {
     a.addEventListener("click", e => e.preventDefault());
   }
 
+  #findAllItems() {
+    return [...this.querySelectorAll("*")].filter(node => (
+      node instanceof MenuItem || node instanceof MenuCheckbox
+    ))
+  }
+
   attributeChangedCallback(prop, prevValue, value) {
     if (prop === "active") {
       if (value == null) this.focusable = false;
@@ -98,7 +107,7 @@ export default class MenubarItem extends HTMLElement {
       this.shadowRoot.querySelector("a").setAttribute("aria-expanded", String(bool));
 
       if (!bool) {
-        this.querySelectorAll("desktop-menu-item, desktop-menu-checkbox").forEach(item => {
+        this.#findAllItems().forEach(item => {
           item.active = false;
           if (item.hasSubmenu) item.expanded = false;
         })
