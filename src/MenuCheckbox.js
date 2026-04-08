@@ -4,24 +4,26 @@ export const style =  new CSSStyleSheet();
 
 style.replaceSync(/*css*/`
   li {
-    label {
+    > div {
+      display:flex;
       flex:1;
+      
+      label {
+        flex:1;
+      }
     }
-
-    /* input:focus {
-      outline:none;
-    } */
   }
-    :host
 `);
 
 const template = document.createElement("template");
 template.innerHTML = `
   <li role="none">
-    <input type="checkbox" id="checkbox" class="focusedElmt icon" tabindex="-1">
-    <label for="checkbox" class="label" role="menuitem">
-      <slot></slot>
-    </label>
+    <div role="menuitem" class="focusedElmt" tabindex="-1">
+      <input type="checkbox" id="checkbox" class="icon" tabindex="-1">
+      <label for="checkbox" class="label">
+        <slot></slot>
+      </label>
+    </div>
   </li>
 `
 
