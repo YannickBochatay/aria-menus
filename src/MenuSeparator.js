@@ -13,7 +13,7 @@ template.innerHTML = `
   <li role="separator"></li>
 `
 
-export default class Separator extends HTMLElement {
+export default class MenuSeparator extends HTMLElement {
 
   constructor() {
     super();

@@ -9,7 +9,7 @@ template.innerHTML = `
   <slot></slot>
 `
 
-export default class ContextMenu extends HTMLElement {
+export default class MenuContext extends HTMLElement {
 
   constructor() {
     super()
