@@ -52,6 +52,8 @@ export default class MenuCheckbox extends MenuElement {
   }
 
   connectedCallback() {
+    super.connectedCallback();
+
     this.#input.addEventListener("change", e => {
       this.dispatchEvent(new CustomEvent("change", { detail : { originalEvent : e } }));
     });

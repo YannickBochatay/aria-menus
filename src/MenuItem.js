@@ -14,6 +14,38 @@ style.replaceSync(/*css*/`
     left:100%;
     top:0;
   }
+
+  li {
+    a {
+      text-decoration:none;
+      color:inherit;
+      display:flex;
+      align-items:baseline;
+      cursor:default;
+      flex:1;
+    }
+
+    .icon {
+      width:var(--icon-width);
+      margin:0 5px 0 0;
+      display:inline-block;
+    }
+    ::slotted([slot=icon]) {
+      width:var(--icon-width);
+      vertical-align:middle;
+    }
+    
+    .label {
+      margin-right:15px;
+      white-space:nowrap;
+      flex:1;
+    }
+
+    .info {
+      opacity:0.7;
+      font-size:0.9rem;
+    }
+  }
 `);
 
 const template = document.createElement("template");
@@ -119,6 +151,8 @@ export default class MenuItem extends MenuElement {
   }
 
   connectedCallback() {
+    super.connectedCallback();
+
     const a = this.shadowRoot.querySelector("a");
 
     a.addEventListener("click", e => {

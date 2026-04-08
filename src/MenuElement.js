@@ -15,10 +15,6 @@ style.replaceSync(/*css*/`
       cursor:not-allowed;
     }
   }
-  ::slotted([slot=icon]) {
-    width:var(--icon-width);
-    vertical-align:middle;
-  }
   li {
     margin:0;
     padding:2px 5px;
@@ -27,35 +23,6 @@ style.replaceSync(/*css*/`
     box-sizing:border-box;
     display:flex;
     align-items:center;
-
-    a {
-      text-decoration:none;
-      color:inherit;
-      display:flex;
-      align-items:baseline;
-      cursor:default;
-      flex:1;
-    }
-
-    .icon {
-      width:var(--icon-width);
-      margin:0 5px 0 0;
-      display:inline-block;
-    }
-    
-    .label {
-      margin-right:15px;
-      white-space:nowrap;
-      flex:1;
-    }
-
-    .info {
-      opacity:0.7;
-      font-size:0.9rem;
-    }
-  }
-  li:has(a:focus) {
-    background-color:var(--bg-color);
   }
 `);
 
@@ -84,6 +51,14 @@ export default class MenuElement extends HTMLElement {
 
   get label() {
     return [...this.childNodes]?.find(node => node.nodeName === "#text" && node.nodeValue.trim())?.nodeValue.trim();
+  }
+
+  connectedCallback() {
+    const slottedLabel = this.querySelector("[slot=label]");
+    if (slottedLabel) {
+      slottedLabel.removeAttribute("slot");
+      this.shadowRoot.querySelector("slot:not([name])").assign(slottedLabel);
+    }
   }
 
   attributeChangedCallback(prop, prevValue, value) {
