@@ -18,7 +18,7 @@ Web components for desktop app menus. This is a **WORK IN PROGRESS**.
       <menu-bar-item>
         <span>File</span>
         <menu-list slot="menu">
-          <menu-item shortcut="Ctrl+A" id="selectAll">
+          <menu-item info="Ctrl+A" id="selectAll">
             <img src="img/icon.svg" alt="linux icon" slot="icon"/>
             aaaaa
           </menu-item>
@@ -44,7 +44,7 @@ Web components for desktop app menus. This is a **WORK IN PROGRESS**.
       <menu-bar-item>
         Edition
         <menu-list slot="menu">
-          <menu-item shortcut="Ctrl+A">
+          <menu-item info="Ctrl+A">
             <img src="img/icon.svg" alt="linux icon" slot="icon"/>
             aaaaa
           </menu-item>

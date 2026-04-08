@@ -27,7 +27,7 @@ template.innerHTML = `
       <span class="label">
         <slot></slot>
       </span>
-      <span class="shortcut">
+      <span class="info">
       </span>
     </a>
     <slot name="menu" hidden></slot>
@@ -45,8 +45,8 @@ export default class MenuItem extends MenuElement {
     this.shadowRoot.append(template.content.cloneNode(true));
   }
 
-  get shortcut() {
-    return this.getAttribute("shortcut");
+  get info() {
+    return this.getAttribute("info");
   }
 
   get hasSubmenu() {
@@ -72,24 +72,6 @@ export default class MenuItem extends MenuElement {
 
   #findMenuList() {
     return [...this.children].find(child => child instanceof MenuList);
-  }
-
-  #isShortcut(e) {
-    let [meta, key] = this.shortcut.toLowerCase().split(/\s*\+\s*/);
-
-    if (meta === "ctrl" && !e.metaKey && !e.ctrlKey) return false;
-    if (meta === "shift" && !e.shiftKey) return false;
-    if (meta === "alt" && !e.altKey) return false;
-
-    if (key == null) key = meta;
-    
-    return key === e.key.toLowerCase();
-  }
-
-  #handleKeyShortcut = e => {
-    if (!this.disabled && this.#isShortcut(e)) {
-      this.shadowRoot.querySelector("a").click();
-    }
   }
 
   #handleKeyNavigation = e => {
@@ -133,15 +115,13 @@ export default class MenuItem extends MenuElement {
       this.addEventListener("keydown", this.#handleKeyNavigation);
     }
 
-    if (this.shortcut) {
-      this.shadowRoot.querySelector(".shortcut").textContent = this.shortcut;
-      document.addEventListener("keydown", this.#handleKeyShortcut);
+    if (this.info) {
+      this.shadowRoot.querySelector(".info").textContent = this.info;
     }
   }
 
   disconnectedCallback() {
     this.removeEventListener("keydown", this.#handleKeyNavigation);
-    document.removeEventListener("keydown", this.#handleKeyShortcut);
   }
 
   #findAllItems() {

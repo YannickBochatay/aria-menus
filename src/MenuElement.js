@@ -49,7 +49,7 @@ style.replaceSync(/*css*/`
       flex:1;
     }
 
-    .shortcut {
+    .info {
       opacity:0.7;
       font-size:0.9rem;
     }
