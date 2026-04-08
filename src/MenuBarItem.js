@@ -95,12 +95,7 @@ export default class MenuBarItem extends HTMLElement {
 
   attributeChangedCallback(prop, prevValue, value) {
     if (prop === "active") {
-      if (value == null) this.focusable = false;
-      else {
-        this.focusable = true;
-        this.shadowRoot.querySelector("a").focus();
-      }
-
+      if (value != null) this.shadowRoot.querySelector("a").focus();
     } else if (prop === "expanded") {
       const bool = (value != null);
       this.shadowRoot.querySelector("slot[name=menu]").hidden = !bool;

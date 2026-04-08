@@ -43,8 +43,10 @@ export default class MenuBar extends HTMLElement {
     let expanded = Boolean(this.menuActive?.expanded);
 
     for (const menu of this.menus) {
-      menu.active = (menu === targetMenu);
-      menu.expanded = (menu === targetMenu) ? expanded : false;
+      const value = (menu === targetMenu)
+      menu.active = value;
+      menu.focusable = value;
+      menu.expanded = value ? expanded : false;
     }
   }
 
@@ -52,6 +54,7 @@ export default class MenuBar extends HTMLElement {
     for (const menu of this.menus) {
       const value = (menu === targetMenu);
       if (menu.active !== value) menu.active = value;
+      if (menu.focusable !== value) menu.focusable = value;
       if (menu.expanded !== value) menu.expanded = value;
     }
     // always keep one menu focusable
@@ -129,6 +132,7 @@ export default class MenuBar extends HTMLElement {
     if (!this.#pointerDown && !this.contains(e.relatedTarget)) {
       if (!this.menuActive) {
         const menu = this.#getTargetMenu(e.target);
+        menu.focusable = true;
         menu.active = true;
       }
     }
