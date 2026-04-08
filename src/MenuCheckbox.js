@@ -7,6 +7,11 @@ style.replaceSync(/*css*/`
     > div {
       display:flex;
       flex:1;
+
+      input {
+        width:var(--icon-width);
+        margin:0 5px;
+      }
       
       label {
         flex:1;

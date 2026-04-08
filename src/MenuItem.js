@@ -9,41 +9,58 @@ style.replaceSync(/*css*/`
     font-size:0.6rem;
   }
 
-  slot[name=menu]::slotted(*) {
-    position:absolute;
-    left:100%;
-    top:0;
+  :host([direction=column]) {
+    li {
+      padding:0.3rem 1rem;
+    }
+    li:has(a:focus) {
+      background-color:var(--bg-color);
+    }
+    slot[name=menu]::slotted(*) {
+      position:absolute;
+      margin-left:-1em;
+      margin-top:0.1rem;
+    }
   }
 
-  li {
-    a {
-      text-decoration:none;
-      color:inherit;
-      display:flex;
-      align-items:baseline;
-      cursor:default;
-      flex:1;
+  :host([direction=row]) {
+    slot[name=menu]::slotted(*) {
+      position:absolute;
+      left:100%;
+      top:0;
     }
 
-    .icon {
-      width:var(--icon-width);
-      margin:0 5px 0 0;
-      display:inline-block;
-    }
-    ::slotted([slot=icon]) {
-      width:var(--icon-width);
-      vertical-align:middle;
-    }
-    
-    .label {
-      margin-right:15px;
-      white-space:nowrap;
-      flex:1;
-    }
+    li {
+      padding:2px 5px;
+      a {
+        text-decoration:none;
+        color:inherit;
+        display:flex;
+        align-items:baseline;
+        cursor:default;
+        flex:1;
+      }
 
-    .info {
-      opacity:0.7;
-      font-size:0.9rem;
+      .icon {
+        width:var(--icon-width);
+        margin:0 5px 0 0;
+        display:inline-block;
+      }
+      ::slotted([slot=icon]) {
+        width:var(--icon-width);
+        vertical-align:middle;
+      }
+      
+      .label {
+        margin-right:15px;
+        white-space:nowrap;
+        flex:1;
+      }
+
+      .info {
+        opacity:0.7;
+        font-size:0.9rem;
+      }
     }
   }
 `);
@@ -157,7 +174,7 @@ export default class MenuItem extends MenuElement {
 
     a.addEventListener("click", e => {
       if (!this.href) e.preventDefault();
-      if (!this.disabled) {
+      if (!this.disabled && !this.hasSubmenu) {
         this.dispatchEvent(new CustomEvent("select", { detail : { originalEvent : e } }));
       }
     });
@@ -174,10 +191,6 @@ export default class MenuItem extends MenuElement {
 
     if (this.info) {
       this.shadowRoot.querySelector(".info").textContent = this.info;
-    }
-
-    if (!this.hasAttribute("direction")) {
-      this.setAttribute("direction", "row");
     }
   }
 

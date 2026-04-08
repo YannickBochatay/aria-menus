@@ -16,7 +16,7 @@ style.replaceSync(/*css*/ `
     list-style : none;
     padding : 3px 0px;
     margin : 0;
-    line-height:1.4;
+    line-height:1.5;
   }
 `);
 

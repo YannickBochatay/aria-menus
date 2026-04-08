@@ -5,24 +5,30 @@ style.replaceSync(/*css*/`
     --icon-width:1rem;
     --bg-color:rgb(213, 220, 238);
   }
-  :host([active]:not([disabled])) li {
+  :host([active]) li {
     background-color:var(--bg-color);
   }
   :host([disabled]) li {
+    background-color:unset;
     .label {
       opacity:0.7;
       font-style:italic;
       cursor:not-allowed;
     }
   }
-  li {
-    margin:0;
-    padding:2px 5px;
-    position:relative;
+  :host([direction=row]) li {
     width:100%;
-    box-sizing:border-box;
     display:flex;
     align-items:center;
+  }
+  li {
+    margin:0;
+    position:relative;
+    box-sizing:border-box;
+    position:relative;
+    &:hover {
+      background-color:var(--bg-color);
+    } 
   }
 `);
 
@@ -58,6 +64,10 @@ export default class MenuElement extends HTMLElement {
     if (slottedLabel) {
       slottedLabel.removeAttribute("slot");
       this.shadowRoot.querySelector("slot:not([name])").assign(slottedLabel);
+    }
+
+    if (!this.hasAttribute("direction")) {
+      this.setAttribute("direction", "row");
     }
   }
 
