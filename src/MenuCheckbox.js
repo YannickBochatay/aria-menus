@@ -4,13 +4,14 @@ export const style =  new CSSStyleSheet();
 
 style.replaceSync(/*css*/`
   li {
+    padding:2px 5px;
     > div {
       display:flex;
       flex:1;
 
       input {
         width:var(--icon-width);
-        margin:0 5px;
+        margin:0 5px 0 0;
       }
       
       label {

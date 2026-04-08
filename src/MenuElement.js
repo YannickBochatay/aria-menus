@@ -16,16 +16,12 @@ style.replaceSync(/*css*/`
       cursor:not-allowed;
     }
   }
-  :host([direction=row]) li {
-    width:100%;
-    display:flex;
-    align-items:center;
-  }
   li {
     margin:0;
     position:relative;
     box-sizing:border-box;
-    position:relative;
+    display:flex;
+    align-items:center;
     &:hover {
       background-color:var(--bg-color);
     } 

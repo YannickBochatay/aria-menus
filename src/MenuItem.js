@@ -7,19 +7,44 @@ const style =  new CSSStyleSheet();
 style.replaceSync(/*css*/`
   .arrow {
     font-size:0.6rem;
+    margin-left:15px;
+  }
+  .label {
+    white-space:nowrap;
+    flex:1;
   }
 
   :host([direction=column]) {
     li {
       padding:0.3rem 1rem;
+
+      a {
+        text-decoration:none;
+        color:inherit;
+        cursor:default;
+        flex:1;
+      }
+      
+      .arrow {
+        transform:rotate(90deg);
+        transition:transform 0.3s;
+      }
+
+      slot[name=menu]::slotted(*) {
+        position:absolute;
+        top:100%;
+        margin-left:-1em;
+      }
     }
     li:has(a:focus) {
       background-color:var(--bg-color);
     }
-    slot[name=menu]::slotted(*) {
-      position:absolute;
-      margin-left:-1em;
-      margin-top:0.1rem;
+  }
+  
+  :host([direction=column][expanded]) {
+    .arrow {
+      transform:rotate(-90deg);
+      transition:transform 0.3s;
     }
   }
 
@@ -51,15 +76,10 @@ style.replaceSync(/*css*/`
         vertical-align:middle;
       }
       
-      .label {
-        margin-right:15px;
-        white-space:nowrap;
-        flex:1;
-      }
-
       .info {
         opacity:0.7;
         font-size:0.9rem;
+        margin-left:15px;
       }
     }
   }
@@ -77,6 +97,7 @@ template.innerHTML = `
         <slot></slot>
       </span>
       <span class="info">
+        <slot name="info"></slot>
       </span>
     </a>
     <slot name="menu" hidden></slot>
@@ -180,8 +201,7 @@ export default class MenuItem extends MenuElement {
     });
 
     if (this.hasSubmenu) {
-      const li = this.shadowRoot.querySelector("li");
-      li.querySelector(".arrow").hidden = false;
+      this.shadowRoot.querySelector(".arrow").hidden = false;
 
       a.setAttribute("aria-haspopup", "true");
       a.setAttribute("aria-expanded", "false");

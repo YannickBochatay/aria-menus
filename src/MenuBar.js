@@ -1,4 +1,4 @@
-import MenuItem from "./MenuBarItem.js"
+import MenuItem from "./MenuItem.js"
 import MenuList from "./MenuList.js"
 
 const style =  new CSSStyleSheet();
@@ -66,10 +66,9 @@ export default class MenuBar extends HTMLElement {
   }
 
   #getTargetMenu(node) {
-    if (!node) return null;
-    else if (node instanceof MenuItem) return node;
-    else if (node.assignedSlot?.parentNode?.role !== "menuitem") return null;
-
+    if (!node || node === this) return null;
+    else if (node instanceof MenuItem && node.direction === "column") return node;
+    
     return this.#getTargetMenu(node.parentNode);
   }
 
@@ -164,9 +163,7 @@ export default class MenuBar extends HTMLElement {
     this.addEventListener("focusin",this.#handleFocusIn);
     this.addEventListener("focusout",this.#handleFocusOut);
 
-    this.menus.forEach(menu => {
-      if (!menu.hasAttribute("direction")) menu.setAttribute("direction", "column");
-    });
+    this.menus.forEach(menu => menu.direction = "column");
 
     if (this.menus.every(menu => !menu.focusable)) this.menus[0].focusable = true;
   }
