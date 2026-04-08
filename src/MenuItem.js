@@ -37,12 +37,33 @@ template.innerHTML = `
 
 export default class MenuItem extends MenuElement {
 
-  static observedAttributes = [...MenuElement.observedAttributes, "expanded" ,"href"];
+  static observedAttributes = [...MenuElement.observedAttributes, "expanded" ,"href", "focusable"];
 
   constructor() {
     super();
     this.shadowRoot.adoptedStyleSheets.push(style);
     this.shadowRoot.append(template.content.cloneNode(true));
+  }
+
+  get direction() {
+    return this.getAttribute("direction");
+  }
+
+  set direction(value) {
+    if (["column", "row"].includes(value)) {
+      this.setAttribute("direction", value);
+    } else {
+      throw new Error("direction value must be column or row");
+    }
+  }
+
+  get focusable() {
+    return this.hasAttribute("focusable");
+  }
+
+  set focusable(value) {
+    if (value) this.setAttribute("focusable", "");
+    else this.removeAttribute("focusable");
   }
 
   get info() {
@@ -75,6 +96,8 @@ export default class MenuItem extends MenuElement {
   }
 
   #handleKeyNavigation = e => {
+    if (this.getAttribute("direction") === "column") return;
+
     switch (e.key) {
 
       case "ArrowLeft": case "Escape":
@@ -118,6 +141,10 @@ export default class MenuItem extends MenuElement {
     if (this.info) {
       this.shadowRoot.querySelector(".info").textContent = this.info;
     }
+
+    if (!this.hasAttribute("direction")) {
+      this.setAttribute("direction", "row");
+    }
   }
 
   disconnectedCallback() {
@@ -144,6 +171,9 @@ export default class MenuItem extends MenuElement {
           if (item.hasSubmenu) item.expanded = false;
         })
       }
+
+    } else if (prop === "focusable") {
+      this.shadowRoot.querySelector("a").tabIndex = (value == null) ? -1 : 0;
 
     } else if (prop === "href") {
       this.shadowRoot.querySelector("a").href = value;
