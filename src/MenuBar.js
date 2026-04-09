@@ -1,5 +1,4 @@
 import MenuItem from "./MenuItem.js"
-import MenuList from "./MenuList.js"
 
 const style =  new CSSStyleSheet();
 
@@ -67,7 +66,9 @@ export default class MenuBar extends HTMLElement {
 
   #getTargetMenu(node) {
     if (!node || node === this) return null;
-    else if (node instanceof MenuItem && node.direction === "column") return node;
+    else if (node instanceof MenuItem) {
+      return Array.from(this.children).includes(node) ? node : null;
+    }
     
     return this.#getTargetMenu(node.parentNode);
   }

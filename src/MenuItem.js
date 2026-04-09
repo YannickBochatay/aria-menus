@@ -156,6 +156,7 @@ export default class MenuItem extends MenuElement {
 
       case expandKey: case "Enter": case " ":
         if (!this.expanded) {
+          e.preventDefault();
           e.stopPropagation();
           this.expanded = true;
           this.#findMenuList().activeItem(0);
