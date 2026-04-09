@@ -5,6 +5,5 @@ customElements.define("menu-item", components.MenuItem);
 customElements.define("menu-checkbox", components.MenuCheckbox);
 customElements.define("menu-separator", components.MenuSeparator);
 customElements.define("menu-list", components.MenuList);
-customElements.define("menu-bar-item", components.MenuBarItem);
 customElements.define("menu-bar", components.MenuBar);
 customElements.define("menu-context", components.MenuContext);
