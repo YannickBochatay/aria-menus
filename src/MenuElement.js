@@ -16,6 +16,9 @@ style.replaceSync(/*css*/`
       cursor:not-allowed;
     }
   }
+  :host([nocaret]) li .arrow {
+    display:none;
+  }
   li {
     margin:0;
     position:relative;
