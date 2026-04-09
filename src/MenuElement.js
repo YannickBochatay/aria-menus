@@ -4,6 +4,8 @@ style.replaceSync(/*css*/`
   :host {
     --icon-width:1rem;
     --bg-color:rgb(213, 220, 238);
+    --margin-left:2rem;
+    --icon-margin:0 0.4rem 0 0;
   }
   :host([active]) li {
     background-color:var(--bg-color);
@@ -20,6 +22,7 @@ style.replaceSync(/*css*/`
     display:none;
   }
   li {
+    padding:0.2rem 0.3rem;
     margin:0;
     position:relative;
     box-sizing:border-box;
@@ -28,14 +31,22 @@ style.replaceSync(/*css*/`
     &:hover {
       background-color:var(--bg-color);
     }
+    a {
+      text-decoration:none;
+      color:inherit;
+      cursor:default;
+      flex:1;
+      
+      .label {
+        white-space:nowrap;
+        flex:1;
+      }
+    }
     .arrow {
       font-size:0.6rem;
-      margin-left:15px;
+      margin-left:var(--margin-left);
     }
-    .label {
-      white-space:nowrap;
-      flex:1;
-    }
+    
   }
 `);
 

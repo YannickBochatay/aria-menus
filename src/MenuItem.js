@@ -7,13 +7,6 @@ const columnStyle =  new CSSStyleSheet();
 columnStyle.replaceSync(/*css*/`
   li {
     padding:0.3rem 1rem;
-
-    a {
-      text-decoration:none;
-      color:inherit;
-      cursor:default;
-      flex:1;
-    }
     
     .arrow {
       transform:rotate(90deg);
@@ -45,14 +38,9 @@ rowStyle.replaceSync(/*css*/`
   }
 
   li {
-    padding:2px 5px;
     a {
-      text-decoration:none;
-      color:inherit;
       display:flex;
       align-items:baseline;
-      cursor:default;
-      flex:1;
     }
 
     .icon {
