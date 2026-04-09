@@ -46,7 +46,9 @@ style.replaceSync(/*css*/`
       font-size:0.6rem;
       margin-left:var(--margin-left);
     }
-    
+  }
+  ::slotted([slot=menu]) {
+    z-index:1;
   }
 `);
 
