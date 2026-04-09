@@ -24,7 +24,15 @@ style.replaceSync(/*css*/`
     align-items:center;
     &:hover {
       background-color:var(--bg-color);
-    } 
+    }
+    .arrow {
+      font-size:0.6rem;
+      margin-left:15px;
+    }
+    .label {
+      white-space:nowrap;
+      flex:1;
+    }
   }
 `);
 

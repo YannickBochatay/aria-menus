@@ -2,85 +2,73 @@ import MenuCheckbox from "./MenuCheckbox.js";
 import MenuElement from "./MenuElement.js"
 import MenuList from "./MenuList.js";
 
-const style =  new CSSStyleSheet();
+const columnStyle =  new CSSStyleSheet();
 
-style.replaceSync(/*css*/`
-  .arrow {
-    font-size:0.6rem;
-    margin-left:15px;
-  }
-  .label {
-    white-space:nowrap;
-    flex:1;
-  }
+columnStyle.replaceSync(/*css*/`
+  li {
+    padding:0.3rem 1rem;
 
-  :host([direction=column]) {
-    li {
-      padding:0.3rem 1rem;
-
-      a {
-        text-decoration:none;
-        color:inherit;
-        cursor:default;
-        flex:1;
-      }
-      
-      .arrow {
-        transform:rotate(90deg);
-        transition:transform 0.3s;
-      }
-
-      slot[name=menu]::slotted(*) {
-        position:absolute;
-        top:100%;
-        margin-left:-1em;
-      }
+    a {
+      text-decoration:none;
+      color:inherit;
+      cursor:default;
+      flex:1;
     }
-    li:has(a:focus) {
-      background-color:var(--bg-color);
-    }
-  }
-  
-  :host([direction=column][expanded]) {
+    
     .arrow {
-      transform:rotate(-90deg);
-      transition:transform 0.3s;
+      transform:rotate(90deg);
     }
-  }
 
-  :host([direction=row]) {
     slot[name=menu]::slotted(*) {
       position:absolute;
-      left:100%;
-      top:0;
+      top:100%;
+      margin-left:-1em;
+    }
+  }
+  li:has(a:focus) {
+    background-color:var(--bg-color);
+  }
+  
+  :host([expanded]) {
+    .arrow {
+      transform:rotate(-90deg);
+    }
+  }`);
+
+const rowStyle = new CSSStyleSheet();
+
+rowStyle.replaceSync(/*css*/`
+  slot[name=menu]::slotted(*) {
+    position:absolute;
+    left:100%;
+    top:0;
+  }
+
+  li {
+    padding:2px 5px;
+    a {
+      text-decoration:none;
+      color:inherit;
+      display:flex;
+      align-items:baseline;
+      cursor:default;
+      flex:1;
     }
 
-    li {
-      padding:2px 5px;
-      a {
-        text-decoration:none;
-        color:inherit;
-        display:flex;
-        align-items:baseline;
-        cursor:default;
-        flex:1;
-      }
-
-      .icon {
-        width:var(--icon-width);
-        margin:0 5px 0 0;
-        display:inline-block;
-      }
-      ::slotted([slot=icon]) {
-        width:var(--icon-width);
-        vertical-align:middle;
-      }
-      
-      .info {
-        opacity:0.7;
-        font-size:0.9rem;
-        margin-left:15px;
-      }
+    .icon {
+      width:var(--icon-width);
+      margin:0 5px 0 0;
+      display:inline-block;
+    }
+    ::slotted([slot=icon]) {
+      width:var(--icon-width);
+      vertical-align:middle;
+    }
+    
+    .info {
+      opacity:0.7;
+      font-size:0.9rem;
+      margin-left:15px;
     }
   }
 `);
@@ -107,11 +95,10 @@ template.innerHTML = `
 
 export default class MenuItem extends MenuElement {
 
-  static observedAttributes = [...MenuElement.observedAttributes, "expanded" ,"href", "focusable"];
+  static observedAttributes = [...MenuElement.observedAttributes, "expanded" ,"href", "focusable", "direction"];
 
   constructor() {
     super();
-    this.shadowRoot.adoptedStyleSheets.push(style);
     this.shadowRoot.append(template.content.cloneNode(true));
   }
 
@@ -244,6 +231,12 @@ export default class MenuItem extends MenuElement {
 
     } else if (prop === "href") {
       this.shadowRoot.querySelector("a").href = value;
+
+    } else if (prop === "direction") {
+      const styles = this.shadowRoot.adoptedStyleSheets;
+      if (styles.length === 2) styles.pop();
+      if (value === "row") styles.push(rowStyle);
+      else styles.push(columnStyle);
     }
   }
 
