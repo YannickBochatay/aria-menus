@@ -153,11 +153,12 @@ export default class MenuItem extends MenuElement {
   }
 
   #handleKeyNavigation = e => {
-    if (this.getAttribute("direction") === "column") return;
+    const expandKey = (this.direction === "column") ? "ArrowDown" : "ArrowRight"
+    const hideKey = (this.direction === "column") ? null : "ArrowLeft"
 
     switch (e.key) {
 
-      case "ArrowLeft": case "Escape":
+      case hideKey: case "Escape":
         if (this.expanded) {
           e.stopPropagation();
           this.expanded = false;
@@ -165,7 +166,7 @@ export default class MenuItem extends MenuElement {
         }
         break;
 
-      case "ArrowRight": case "Enter": case " ":
+      case expandKey: case "Enter": case " ":
         if (!this.expanded) {
           e.stopPropagation();
           this.expanded = true;

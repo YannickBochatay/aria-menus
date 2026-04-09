@@ -117,13 +117,6 @@ export default class MenuBar extends HTMLElement {
           this.activeMenu(menuActive);
         }
         break;
-      case "Enter": case "ArrowDown":
-        if (!menuActive.expanded) {
-          e.preventDefault();
-          e.stopPropagation();
-          this.showMenu(menuActive);
-          this.#findMenuList(menuActive).activeItem(0);
-        }
     }
   }
 
