@@ -87,11 +87,6 @@ export default class MenuBar extends HTMLElement {
     }
   }
 
-  #findMenuList(menu) {
-    if (!menu) return null
-    return [...menu.children].find(child => child instanceof MenuList);
-  }
-
   #handleKeyDown = e => {
     if (!this.menuActive) return;
 
