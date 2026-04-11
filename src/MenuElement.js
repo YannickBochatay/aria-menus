@@ -45,6 +45,7 @@ style.replaceSync(/*css*/`
     .arrow {
       font-size:0.6rem;
       margin-left:var(--margin-left);
+      cursor:default;
     }
   }
   ::slotted([slot=menu]) {
