@@ -78,6 +78,13 @@ export default class MenuList extends HTMLElement {
     return Array.from(this.children).filter(item => (item instanceof MenuElement) && !item.disabled);
   }
 
+  closeSubmenus() {
+    for (const item of this.items) {
+      if (item.hasSubmenu) item.expanded = false;
+      item.active = false;
+    }
+  }
+
   activeItem(index) {
     const items = this.items;
     if (index > items.length - 1) index = 0;

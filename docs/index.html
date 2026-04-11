@@ -27,32 +27,23 @@
       <p>
         <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/" target="_blank">Reference W3C</a>
       </p>
+      
       <p>
-        <menu-list slot="menu">
-          <menu-item>ddddd</menu-item>
-          <menu-item>
-            eeeee
+        <menu-bar>
+          <menu-item direction="column">
+            ccccc
             <menu-list slot="menu">
-              <menu-item>fffff</menu-item>
-              <menu-item>ggggg</menu-item>
+              <menu-item>ddddd</menu-item>
+              <menu-item>
+                eeeee
+                <menu-list slot="menu">
+                  <menu-item>fffff</menu-item>
+                  <menu-item>ggggg</menu-item>
+                </menu-list>
+              </menu-item>
             </menu-list>
           </menu-item>
-        </menu-list>
-      </p>
-      <p>
-        <menu-item direction="column" tabindex="0">
-          ccccc
-          <menu-list slot="menu">
-            <menu-item>ddddd</menu-item>
-            <menu-item>
-              eeeee
-              <menu-list slot="menu">
-                <menu-item>fffff</menu-item>
-                <menu-item>ggggg</menu-item>
-              </menu-list>
-            </menu-item>
-          </menu-list>
-        </menu-item>
+        </menu-bar>
       </p>
       <nav aria-label="menu example">
         <menu-bar>
@@ -107,6 +98,9 @@
                 </menu-list>
               </menu-item>
             </menu-list>
+          </menu-item>
+          <menu-item href="#toto" disabled>
+            Test
           </menu-item>
         </menu-bar>
       </nav>

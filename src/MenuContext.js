@@ -22,9 +22,13 @@ export default class MenuContext extends HTMLElement {
   }
 
   close() {
+    this.firstElementChild?.closeSubmenus?.();
     this.style.display = "none";
     this.setAttribute("aria-expanded", false);
     this.target.focus();
+
+    window.removeEventListener("blur", this.#handleBlurWindow);
+    document.removeEventListener("mousedown", this.#handleClickDoc);
   }
 
   open(e) {
@@ -34,6 +38,9 @@ export default class MenuContext extends HTMLElement {
     this.style.top = y + "px";
     this.setAttribute("aria-expanded", true);
     this.firstElementChild.focus();
+
+    window.addEventListener("blur", this.#handleBlurWindow);
+    document.addEventListener("mousedown", this.#handleClickDoc);
   }
 
   #handleBlurWindow = () => this.close()
@@ -73,9 +80,6 @@ export default class MenuContext extends HTMLElement {
   }
 
   connectedCallback() {
-    window.addEventListener("blur", this.#handleBlurWindow);
-    document.addEventListener("mousedown", this.#handleClickDoc);
-
     this.target.setAttribute("aria-haspopup", "menu");
     this.target.addEventListener("contextmenu", this.#handleContextMenu);
 
@@ -88,6 +92,7 @@ export default class MenuContext extends HTMLElement {
     document.removeEventListener("mousedown", this.#handleClickDoc);
     window.removeEventListener("blur", this.#handleBlurWindow);
     this.target.removeEventListener("contextmenu", this.#handleContextMenu);
+    this.target.removeAttribute("aria-haspopup");
   }
 
 }
