@@ -100,12 +100,16 @@ export default class MenuBar extends HTMLElement {
 
     switch (e.key) {
       case "ArrowLeft":
-        newMenu = (currentIndex === 0) ? menus.at(-1) : menus[currentIndex - 1]
-        this.activeMenu(newMenu);
+        if (menus.length > 1) {
+          newMenu = (currentIndex === 0) ? menus.at(-1) : menus[currentIndex - 1]
+          this.activeMenu(newMenu);
+        }
         break;
       case "ArrowRight":
-        newMenu = currentIndex === menus.length - 1 ? menus[0] : menus[currentIndex + 1]
-        this.activeMenu(newMenu);
+        if (menus.length > 1) {
+          newMenu = currentIndex === menus.length - 1 ? menus[0] : menus[currentIndex + 1]
+          this.activeMenu(newMenu);
+        }
         break;
       case "Escape":
         if (menuActive.expanded) {
