@@ -171,7 +171,7 @@ export default class MenuItem extends MenuElement {
     const a = this.shadowRoot.querySelector("a");
 
     a.addEventListener("click", e => {
-      if (!this.href) e.preventDefault();
+      if (!this.href || this.disabled) e.preventDefault();
       if (!this.disabled && !this.hasSubmenu) {
         this.dispatchEvent(new CustomEvent("select", { detail : { originalEvent : e } }));
       }
