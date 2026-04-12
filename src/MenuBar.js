@@ -83,7 +83,7 @@ export default class MenuBar extends HTMLElement {
   #handlePointerOver = e => {
     if (this.menuActive) {
       const menu = this.#getTargetMenu(e.target);
-      if (menu) this.activeMenu(menu);
+      if (menu && !menu.disabled) this.activeMenu(menu);
     }
   }
 
