@@ -31,16 +31,18 @@ style.replaceSync(/*css*/`
     &:hover {
       background-color:var(--bg-color);
     }
-    a {
+    &:has(a:focus) {
+      background-color:var(--bg-color);
+    }
+    a, .focusedElmt {
       text-decoration:none;
       color:inherit;
       cursor:default;
       flex:1;
-      
-      .label {
-        white-space:nowrap;
-        flex:1;
-      }
+    }
+    .label {
+      white-space:nowrap;
+      flex:1;
     }
     .arrow {
       font-size:0.6rem;
@@ -50,6 +52,30 @@ style.replaceSync(/*css*/`
   }
   ::slotted([slot=menu]) {
     z-index:1;
+  }
+  :host([direction=row]), :host([type]) {
+    li {
+      .focusedElmt {
+        display:flex;
+        align-items:baseline;
+      }
+
+      .icon {
+        width:var(--icon-width);
+        margin:0 5px 0 0;
+        display:inline-block;
+      }
+      ::slotted([slot=icon]) {
+        width:var(--icon-width);
+        vertical-align:middle;
+      }
+      
+      .info {
+        opacity:0.7;
+        font-size:0.9rem;
+        margin-left:15px;
+      }
+    }
   }
 `);
 

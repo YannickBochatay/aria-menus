@@ -1,11 +1,10 @@
-import MenuCheckbox from "./MenuCheckbox.js";
 import MenuElement from "./MenuElement.js"
 import MenuList from "./MenuList.js";
 
-const columnStyle =  new CSSStyleSheet();
+const style =  new CSSStyleSheet();
 
-columnStyle.replaceSync(/*css*/`
-  li {
+style.replaceSync(/*css*/`
+  :host([direction=column]) li {
     padding:0.3rem 1rem;
     
     .arrow {
@@ -18,47 +17,19 @@ columnStyle.replaceSync(/*css*/`
       margin-left:-1em;
     }
   }
-  li:has(a:focus) {
-    background-color:var(--bg-color);
-  }
-  
-  :host([expanded]) {
+  :host([direction=column][expanded]) {
     .arrow {
       transform:rotate(-90deg);
     }
-  }`);
-
-const rowStyle = new CSSStyleSheet();
-
-rowStyle.replaceSync(/*css*/`
-  slot[name=menu]::slotted(*) {
-    position:absolute;
-    left:100%;
-    top:0;
   }
-
-  li {
-    a {
-      display:flex;
-      align-items:baseline;
+  :host([direction=row]) {
+    slot[name=menu]::slotted(*) {
+      position:absolute;
+      left:100%;
+      top:0;
     }
-
-    .icon {
-      width:var(--icon-width);
-      margin:0 5px 0 0;
-      display:inline-block;
-    }
-    ::slotted([slot=icon]) {
-      width:var(--icon-width);
-      vertical-align:middle;
-    }
+  }
     
-    .info {
-      opacity:0.7;
-      font-size:0.9rem;
-      margin-left:15px;
-    }
-  }
 `);
 
 const template = document.createElement("template");
@@ -83,11 +54,12 @@ template.innerHTML = `
 
 export default class MenuItem extends MenuElement {
 
-  static observedAttributes = [...MenuElement.observedAttributes, "expanded" ,"href", "focusable", "direction"];
+  static observedAttributes = [...MenuElement.observedAttributes, "expanded" ,"href", "focusable"];
 
   constructor() {
     super();
     this.shadowRoot.append(template.content.cloneNode(true));
+    this.shadowRoot.adoptedStyleSheets.push(style);
   }
 
   get direction() {
@@ -196,9 +168,7 @@ export default class MenuItem extends MenuElement {
   }
 
   #findAllItems() {
-    return [...this.querySelectorAll("*")].filter(node => (
-      node instanceof MenuItem || node instanceof MenuCheckbox
-    ))
+    return [...this.querySelectorAll("*")].filter(node => node instanceof MenuElement)
   }
 
   attributeChangedCallback(prop, prevValue, value) {
@@ -222,11 +192,6 @@ export default class MenuItem extends MenuElement {
     } else if (prop === "href") {
       this.shadowRoot.querySelector("a").href = value;
 
-    } else if (prop === "direction") {
-      const styles = this.shadowRoot.adoptedStyleSheets;
-      if (styles.length === 2) styles.pop();
-      if (value === "row") styles.push(rowStyle);
-      else styles.push(columnStyle);
     }
   }
 
