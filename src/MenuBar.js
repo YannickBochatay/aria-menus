@@ -1,4 +1,4 @@
-import MenuItem from "./MenuItem.js"
+import MenuElement from "./MenuElement.js"
 
 const style =  new CSSStyleSheet();
 
@@ -31,7 +31,7 @@ export default class MenuBar extends HTMLElement {
   }
 
   get menus() {
-    return Array.from(this.children).filter(menu => (menu instanceof MenuItem) && !menu.disabled);
+    return Array.from(this.children).filter(menu => (menu instanceof MenuElement) && !menu.disabled);
   }
 
   get menuActive() {
@@ -66,7 +66,7 @@ export default class MenuBar extends HTMLElement {
 
   #getTargetMenu(node) {
     if (!node || node === this) return null;
-    else if (node instanceof MenuItem) {
+    else if (node instanceof MenuElement) {
       return Array.from(this.children).includes(node) ? node : null;
     }
     

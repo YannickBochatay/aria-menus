@@ -1,6 +1,6 @@
 export { default as MenuList } from "./MenuList.js"
 export { default as MenuItem } from "./MenuItem.js"
-export { default as MenuCheckbox } from "./MenuCheckbox.js"
+export { default as MenuInput } from "./MenuInput.js"
 export { default as MenuSeparator } from "./MenuSeparator.js"
 export { default as MenuBar } from "./MenuBar.js"
 export { default as MenuContext } from "./MenuContext.js"

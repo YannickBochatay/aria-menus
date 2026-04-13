@@ -2,7 +2,7 @@ import * as components from "./components.js";
 export * from "./components.js";
 
 customElements.define("menu-item", components.MenuItem);
-customElements.define("menu-checkbox", components.MenuCheckbox);
+customElements.define("menu-input", components.MenuInput);
 customElements.define("menu-separator", components.MenuSeparator);
 customElements.define("menu-list", components.MenuList);
 customElements.define("menu-bar", components.MenuBar);
