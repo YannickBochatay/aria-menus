@@ -37,7 +37,7 @@ const template = document.createElement("template");
 template.innerHTML = `
   <li role="none">
     <a role="menuitem" href="#" class="focusedElmt" tabindex="-1">
-      <span class="icon">
+      <span aria-hidden="true" class="icon">
         <slot name="icon"></slot>
       </span>
       <span class="label">
