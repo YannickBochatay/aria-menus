@@ -1,4 +1,4 @@
-import MenuElement from "./MenuElement.js"
+import MenuElement from "./MenuElement.js";
 import MenuList from "./MenuList.js";
 
 const style =  new CSSStyleSheet();
@@ -161,10 +161,6 @@ export default class MenuItem extends MenuElement {
     if (this.info) {
       this.shadowRoot.querySelector(".info").textContent = this.info;
     }
-  }
-
-  disconnectedCallback() {
-    this.removeEventListener("keydown", this.#handleKeyNavigation);
   }
 
   #findAllItems() {
