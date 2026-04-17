@@ -11,15 +11,12 @@ style.replaceSync(/*css*/`
   button {
     display:block;
     font-size:1rem;
+    display:flex;
+    align-items:center;
   }
   slot[name=menu]::slotted(*) {
     position:absolute;
     top:100%;
-  }
-  :host([expanded]) {
-    .arrow {
-      transform:rotate(-90deg);
-    }
   }
   .arrow {
     font-size:0.6rem;
@@ -28,9 +25,11 @@ style.replaceSync(/*css*/`
   }
   [aria-expanded=false] .arrow {
     transform:rotate(90deg);
+    transition:transform 0.3s;
   }
   [aria-expanded=true] .arrow {
     transform:rotate(-90deg);
+    transition:transform 0.3s;
   }
   ::slotted([slot=menu]) {
     z-index:1;
