@@ -4,7 +4,7 @@ style.replaceSync(/*css*/`
   :host {
     --icon-width:1rem;
     --bg-color:rgb(213, 220, 238);
-    --margin-left:2rem;
+    --margin-left:1rem;
     --icon-margin:0 0.4rem 0 0;
   }
   :host([active]) li {
