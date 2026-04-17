@@ -119,7 +119,7 @@ export default class MenuItem extends MenuElement {
     switch (e.key) {
 
       case hideKey: case "Escape":
-        if (this.expanded) {
+        if (this.hasSubmenu && this.expanded) {
           e.stopPropagation();
           this.expanded = false;
           this.active = true;
@@ -127,11 +127,13 @@ export default class MenuItem extends MenuElement {
         break;
 
       case expandKey: case "Enter": case " ":
-        if (!this.expanded) {
+        if (this.hasSubmenu && !this.expanded) {
           e.preventDefault();
           e.stopPropagation();
           this.expanded = true;
           this.#findMenuList().activeItem(0);
+        } else if (e.key === " ") {
+          this.shadowRoot.querySelector("a").click();
         }
         break;
     }
@@ -154,13 +156,13 @@ export default class MenuItem extends MenuElement {
 
       a.setAttribute("aria-haspopup", "true");
       a.setAttribute("aria-expanded", "false");
-
-      this.addEventListener("keydown", this.#handleKeyNavigation);
     }
 
     if (this.info) {
       this.shadowRoot.querySelector(".info").textContent = this.info;
     }
+
+    this.addEventListener("keydown", this.#handleKeyNavigation);
   }
 
   #findAllItems() {
