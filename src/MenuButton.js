@@ -25,11 +25,9 @@ style.replaceSync(/*css*/`
   }
   [aria-expanded=false] .arrow {
     transform:rotate(90deg);
-    transition:transform 0.3s;
   }
   [aria-expanded=true] .arrow {
     transform:rotate(-90deg);
-    transition:transform 0.3s;
   }
   ::slotted([slot=menu]) {
     z-index:1;
