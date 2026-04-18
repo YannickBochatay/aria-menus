@@ -36,7 +36,7 @@ const template = document.createElement("template");
 
 template.innerHTML = `
   <li role="none">
-    <a role="menuitem" href="#" class="focusedElmt" tabindex="-1">
+    <a role="menuitem" href="#" tabindex="-1">
       <span aria-hidden="true" class="icon">
         <slot name="icon"></slot>
       </span>
@@ -185,7 +185,7 @@ export default class MenuItem extends MenuElement {
       }
 
     } else if (prop === "focusable") {
-      this.shadowRoot.querySelector("a").tabIndex = (value == null) ? -1 : 0;
+      this.shadowRoot.querySelector("[role=menuitem]").tabIndex = (value == null) ? -1 : 0;
 
     } else if (prop === "href") {
       this.shadowRoot.querySelector("a").href = value;

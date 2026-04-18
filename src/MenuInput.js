@@ -13,8 +13,8 @@ style.replaceSync(/*css*/`
 
 const template = document.createElement("template");
 template.innerHTML = `
-  <li role="menuitemcheckbox" aria-checked="false">
-    <span class="focusedElmt" tabindex="-1">
+  <li role="none">
+    <span role="menuitemcheckbox" aria-checked="false" tabindex="-1">
       <span aria-hidden="true" class="icon">
         <slot name="icon"></slot>
       </span>
@@ -32,13 +32,13 @@ export default class MenuInput extends MenuElement {
 
   static observedAttributes = [...MenuElement.observedAttributes, "disabled", "checked", "type"];
 
-  #li
+  #menuitem
 
   constructor() {
     super();
     this.shadowRoot.adoptedStyleSheets.push(style);
     this.shadowRoot.append(template.content.cloneNode(true));
-    this.#li = this.shadowRoot.querySelector("li");
+    this.#menuitem = this.shadowRoot.querySelector("[role^=menuitem]");
   }
 
   get type() {
@@ -51,7 +51,7 @@ export default class MenuInput extends MenuElement {
   }
 
   get value() {
-    return this.getAttribute("value") || this.#li.textContent;
+    return this.getAttribute("value") || this.#menuitem.textContent;
   }
 
   get label() {
@@ -104,10 +104,10 @@ export default class MenuInput extends MenuElement {
           if (item !== this) item.checked = false;
         })
       }
-      this.#li.setAttribute("aria-checked", value == null ? "false" : "true");
+      this.#menuitem.setAttribute("aria-checked", value == null ? "false" : "true");
 
     } else if (prop === "type") {
-      this.#li.setAttribute("role", "menuitem" + value);
+      this.#menuitem.setAttribute("role", "menuitem" + value);
     }
   }
 }

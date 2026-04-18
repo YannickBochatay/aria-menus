@@ -32,7 +32,8 @@
         <menu-button>
           ccccc
           <menu-list slot="menu">
-            <menu-item>ddddd</menu-item>
+            <menu-action>ddddd</menu-action>
+            <menu-action id="menu-action-k" info="exec">kkkkk</menu-action>
             <menu-item>
               eeeee
               <menu-list slot="menu">
@@ -130,6 +131,9 @@
       function print(str) {
         document.querySelector("#result").textContent = str;
       }
+      document.querySelector("#menu-action-k").addEventListener("click", () => {
+        print("action executed ! " + Math.random());
+      })
       document.querySelector("#selectAll").addEventListener("select", () => {
         print("select All !");
         menubar.close();

@@ -28,13 +28,14 @@ style.replaceSync(/*css*/`
     box-sizing:border-box;
     display:flex;
     align-items:center;
+    cursor:default;
     &:hover {
       background-color:var(--bg-color);
     }
     &:has(a:focus) {
       background-color:var(--bg-color);
     }
-    a, .focusedElmt {
+    [role^=menuitem] {
       text-decoration:none;
       color:inherit;
       cursor:default;
@@ -55,7 +56,7 @@ style.replaceSync(/*css*/`
   }
   :host([direction=row]), :host([type]) {
     li {
-      .focusedElmt {
+      [role^=menuitem] {
         display:flex;
         align-items:baseline;
       }
@@ -120,7 +121,7 @@ export default class MenuElement extends HTMLElement {
 
   attributeChangedCallback(prop, prevValue, value) {
     if (prop === "active") {
-      if (value != null) this.shadowRoot.querySelector(".focusedElmt").focus();
+      if (value != null) this.shadowRoot.querySelector("[role^=menuitem]").focus();
     }
   }
 }
