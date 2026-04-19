@@ -32,15 +32,15 @@
         <menu-button>
           ccccc
           <menu-list slot="menu">
-            <menu-action>ddddd</menu-action>
+            <menu-link>ddddd</menu-link>
             <menu-action id="menu-action-k" info="exec">kkkkk</menu-action>
-            <menu-item>
+            <menu-sub>
               eeeee
               <menu-list slot="menu">
-                <menu-item>fffff</menu-item>
-                <menu-item>ggggg</menu-item>
+                <menu-action>fffff</menu-action>
+                <menu-action>ggggg</menu-action>
               </menu-list>
-            </menu-item>
+            </menu-sub>
             <menu-input type="radio" name="zoom">100%</menu-input>
             <menu-input type="radio" name="zoom">80%</menu-input>
             <menu-input type="radio" name="zoom">60%</menu-input>
@@ -52,74 +52,74 @@
       </p>
       <nav aria-label="menu example">
         <menu-bar>
-          <menu-item nocaret>
+          <menu-sub nocaret>
             <span>File</span>
             <menu-list slot="menu">
-              <menu-item info="Ctrl+A" id="selectAll">
+              <menu-action info="Ctrl+A" id="selectAll">
                 <img src="img/icon.svg" alt="linux icon" slot="icon"/>
                 <span slot="label">aaaaa</span>
-              </menu-item>
-              <menu-item disabled>bbbbb</menu-item>
+              </menu-action>
+              <menu-action disabled>bbbbb</menu-action>
               <menu-input id="checkbox">hhhhh</menu-input>
               <menu-input disabled>toto tata toto</menu-input>
               <menu-separator></menu-separator>
-              <menu-item>
+              <menu-sub>
                 ccccc
                 <menu-list slot="menu">
-                  <menu-item>ddddd</menu-item>
-                  <menu-item>
+                  <menu-action>ddddd</menu-action>
+                  <menu-sub>
                     eeeee
                     <menu-list slot="menu">
-                      <menu-item>fffff</menu-item>
-                      <menu-item>ggggg</menu-item>
+                      <menu-action>fffff</menu-action>
+                      <menu-action>ggggg</menu-action>
                     </menu-list>
-                  </menu-item>
+                  </menu-sub>
                 </menu-list>
-              </menu-item>
+              </menu-sub>
             </menu-list>
-          </menu-item>
-          <menu-item nocaret>
+          </menu-sub>
+          <menu-sub nocaret>
             Edition
             <menu-list slot="menu">
-              <menu-item info="Ctrl+A">
+              <menu-action info="Ctrl+A">
                 <img src="img/icon.svg" alt="linux icon" slot="icon"/>
                 aaaaa
-              </menu-item>
-              <menu-item disabled>bbbbb</menu-item>
+              </menu-action>
+              <menu-action disabled>bbbbb</menu-action>
               <menu-input>hhhhh</menu-input>
               <menu-input disabled>jjjjjj</menu-input>
               <menu-separator></menu-separator>
-              <menu-item>
+              <menu-sub>
                 ccccc
                 <menu-list slot="menu">
-                  <menu-item>ddddd</menu-item>
-                  <menu-item>
+                  <menu-action>ddddd</menu-action>
+                  <menu-sub>
                     eeeee
                     <menu-list slot="menu">
-                      <menu-item>fffff</menu-item>
-                      <menu-item>ggggg</menu-item>
+                      <menu-action>fffff</menu-action>
+                      <menu-action>ggggg</menu-action>
                     </menu-list>
-                  </menu-item>
+                  </menu-sub>
                 </menu-list>
-              </menu-item>
+              </menu-sub>
             </menu-list>
-          </menu-item>
-          <menu-item href="#toto" disabled>
+          </menu-sub>
+          <menu-sub href="#toto" disabled>
             Test
-          </menu-item>
+          </menu-sub>
         </menu-bar>
       </nav>
       <div id="result" tabindex="0"></div>
       <menu-context for="result">
         <menu-list>
-          <menu-item>ddddd</menu-item>
-          <menu-item>
+          <menu-action>ddddd</menu-action>
+          <menu-sub>
             eeeee
             <menu-list slot="menu">
-              <menu-item>fffff</menu-item>
-              <menu-item>ggggg</menu-item>
+              <menu-action>fffff</menu-action>
+              <menu-action>ggggg</menu-action>
             </menu-list>
-          </menu-item>
+          </menu-sub>
         </menu-list>
       </menu-context>
       <p>
