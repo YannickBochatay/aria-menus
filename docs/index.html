@@ -32,94 +32,94 @@
         <menu-button>
           ccccc
           <menu-list slot="menu">
-            <menu-link>ddddd</menu-link>
-            <menu-action id="menu-action-k" info="exec">kkkkk</menu-action>
-            <menu-sub>
+            <menu-item-link>ddddd</menu-item-link>
+            <menu-item id="menu-item-k" info="exec">kkkkk</menu-item>
+            <menu-item-sub>
               eeeee
               <menu-list slot="menu">
-                <menu-action>fffff</menu-action>
-                <menu-action>ggggg</menu-action>
+                <menu-item>fffff</menu-item>
+                <menu-item>ggggg</menu-item>
               </menu-list>
-            </menu-sub>
-            <menu-input type="radio" name="zoom">100%</menu-input>
-            <menu-input type="radio" name="zoom">80%</menu-input>
-            <menu-input type="radio" name="zoom">60%</menu-input>
-            <menu-input>bold</menu-input>
-            <menu-input>italic</menu-input>
-            <menu-input>underline</menu-input>
+            </menu-item-sub>
+            <menu-item-input type="radio" name="zoom">100%</menu-item-input>
+            <menu-item-input type="radio" name="zoom">80%</menu-item-input>
+            <menu-item-input type="radio" name="zoom">60%</menu-item-input>
+            <menu-item-input>bold</menu-item-input>
+            <menu-item-input>italic</menu-item-input>
+            <menu-item-input>underline</menu-item-input>
           </menu-list>
         </menu-button>
       </p>
       <nav aria-label="menu example">
         <menu-bar>
-          <menu-sub nocaret>
+          <menu-item-sub nocaret>
             <span>File</span>
             <menu-list slot="menu">
-              <menu-action info="Ctrl+A" id="selectAll">
+              <menu-item info="Ctrl+A" id="selectAll">
                 <img src="img/icon.svg" alt="linux icon" slot="icon"/>
                 <span slot="label">aaaaa</span>
-              </menu-action>
-              <menu-action disabled>bbbbb</menu-action>
-              <menu-input id="checkbox">hhhhh</menu-input>
-              <menu-input disabled>toto tata toto</menu-input>
+              </menu-item>
+              <menu-item disabled>bbbbb</menu-item>
+              <menu-item-input id="checkbox">hhhhh</menu-item-input>
+              <menu-item-input disabled>toto tata toto</menu-item-input>
               <menu-separator></menu-separator>
-              <menu-sub>
+              <menu-item-sub>
                 ccccc
                 <menu-list slot="menu">
-                  <menu-action>ddddd</menu-action>
-                  <menu-sub>
+                  <menu-item>ddddd</menu-item>
+                  <menu-item-sub>
                     eeeee
                     <menu-list slot="menu">
-                      <menu-action>fffff</menu-action>
-                      <menu-action>ggggg</menu-action>
+                      <menu-item>fffff</menu-item>
+                      <menu-item>ggggg</menu-item>
                     </menu-list>
-                  </menu-sub>
+                  </menu-item-sub>
                 </menu-list>
-              </menu-sub>
+              </menu-item-sub>
             </menu-list>
-          </menu-sub>
-          <menu-sub nocaret>
+          </menu-item-sub>
+          <menu-item-sub nocaret>
             Edition
             <menu-list slot="menu">
-              <menu-action info="Ctrl+A">
+              <menu-item info="Ctrl+A">
                 <img src="img/icon.svg" alt="linux icon" slot="icon"/>
                 aaaaa
-              </menu-action>
-              <menu-action disabled>bbbbb</menu-action>
-              <menu-input>hhhhh</menu-input>
-              <menu-input disabled>jjjjjj</menu-input>
+              </menu-item>
+              <menu-item disabled>bbbbb</menu-item>
+              <menu-item-input>hhhhh</menu-item-input>
+              <menu-item-input disabled>jjjjjj</menu-item-input>
               <menu-separator></menu-separator>
-              <menu-sub>
+              <menu-item-sub>
                 ccccc
                 <menu-list slot="menu">
-                  <menu-action>ddddd</menu-action>
-                  <menu-sub>
+                  <menu-item>ddddd</menu-item>
+                  <menu-item-sub>
                     eeeee
                     <menu-list slot="menu">
-                      <menu-action>fffff</menu-action>
-                      <menu-action>ggggg</menu-action>
+                      <menu-item>fffff</menu-item>
+                      <menu-item>ggggg</menu-item>
                     </menu-list>
-                  </menu-sub>
+                  </menu-item-sub>
                 </menu-list>
-              </menu-sub>
+              </menu-item-sub>
             </menu-list>
-          </menu-sub>
-          <menu-sub href="#toto" disabled>
+          </menu-item-sub>
+          <menu-item-sub href="#toto" disabled nocaret>
             Test
-          </menu-sub>
+          </menu-item-sub>
         </menu-bar>
       </nav>
       <div id="result" tabindex="0"></div>
       <menu-context for="result">
         <menu-list>
-          <menu-action>ddddd</menu-action>
-          <menu-sub>
+          <menu-item>ddddd</menu-item>
+          <menu-item-sub>
             eeeee
             <menu-list slot="menu">
-              <menu-action>fffff</menu-action>
-              <menu-action>ggggg</menu-action>
+              <menu-item>fffff</menu-item>
+              <menu-item>ggggg</menu-item>
             </menu-list>
-          </menu-sub>
+          </menu-item-sub>
         </menu-list>
       </menu-context>
       <p>
@@ -131,7 +131,7 @@
       function print(str) {
         document.querySelector("#result").textContent = str;
       }
-      document.querySelector("#menu-action-k").addEventListener("click", () => {
+      document.querySelector("#menu-item-k").addEventListener("click", () => {
         print("action executed ! " + Math.random());
       })
       document.querySelector("#selectAll").addEventListener("select", () => {

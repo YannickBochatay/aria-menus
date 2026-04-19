@@ -46,7 +46,7 @@ template.innerHTML = `
 
 export default class MenuSub extends MenuElement {
 
-  static observedAttributes = [...MenuElement.observedAttributes, "expanded" , "focusable"];
+  static observedAttributes = [...MenuElement.observedAttributes, "expanded"];
 
   constructor() {
     super();
@@ -64,15 +64,6 @@ export default class MenuSub extends MenuElement {
     } else {
       throw new Error("direction value must be column or row");
     }
-  }
-
-  get focusable() {
-    return this.hasAttribute("focusable");
-  }
-
-  set focusable(value) {
-    if (value) this.setAttribute("focusable", "");
-    else this.removeAttribute("focusable");
   }
 
   get expanded() {
@@ -139,9 +130,6 @@ export default class MenuSub extends MenuElement {
           if ("expanded" in item) item.expanded = false;
         })
       }
-
-    } else if (prop === "focusable") {
-      menuItem.tabIndex = (value == null) ? -1 : 0;
     }
   }
 

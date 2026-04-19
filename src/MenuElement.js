@@ -94,7 +94,7 @@ export const labelTemplate = `
 
 export default class MenuElement extends HTMLElement {
 
-  static observedAttributes = ["active", "info"];
+  static observedAttributes = ["active", "info", "focusable"];
 
   constructor() {
     super();
@@ -120,6 +120,15 @@ export default class MenuElement extends HTMLElement {
     else this.removeAttribute("active");
   }
 
+  get focusable() {
+    return this.hasAttribute("focusable");
+  }
+
+  set focusable(value) {
+    if (value) this.setAttribute("focusable", "");
+    else this.removeAttribute("focusable");
+  }
+
   get disabled() {
     return this.hasAttribute("disabled");
   }
@@ -141,11 +150,14 @@ export default class MenuElement extends HTMLElement {
   }
 
   attributeChangedCallback(prop, prevValue, value) {
+    const menuItem = this.shadowRoot.querySelector("[role^=menuitem]");
     if (prop === "active") {
-      if (value != null) this.shadowRoot.querySelector("[role^=menuitem]").focus();
+      if (value != null) menuItem.focus();
     } else if (prop === "info") {
       const node = this.shadowRoot.querySelector(".info")
       if (node) node.textContent = value;
+    } else if (prop === "focusable") {
+      menuItem.tabIndex = (value == null) ? -1 : 0;
     }
   }
 }
