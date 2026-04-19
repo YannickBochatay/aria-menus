@@ -83,10 +83,6 @@ export default class MenuItem extends MenuElement {
     else this.removeAttribute("focusable");
   }
 
-  get info() {
-    return this.getAttribute("info");
-  }
-
   get hasSubmenu() {
     return Boolean(this.querySelector("[slot=menu]"));
   }
@@ -156,10 +152,6 @@ export default class MenuItem extends MenuElement {
 
       a.setAttribute("aria-haspopup", "true");
       a.setAttribute("aria-expanded", "false");
-    }
-
-    if (this.info) {
-      this.shadowRoot.querySelector(".info").textContent = this.info;
     }
 
     this.addEventListener("keydown", this.#handleKeyNavigation);

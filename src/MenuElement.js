@@ -82,12 +82,21 @@ style.replaceSync(/*css*/`
 
 export default class MenuElement extends HTMLElement {
 
-  static observedAttributes = ["active"];
+  static observedAttributes = ["active", "info"];
 
   constructor() {
     super();
     const root = this.attachShadow({ mode : "open" });
     root.adoptedStyleSheets = [style];
+  }
+
+  get info() {
+    return this.getAttribute("info");
+  }
+
+  set info(value) {
+    if (typeof value !== "string") throw new TypeError("info must be a string");
+    this.setAttribute("info", value);
   }
 
   get active() {
@@ -122,6 +131,9 @@ export default class MenuElement extends HTMLElement {
   attributeChangedCallback(prop, prevValue, value) {
     if (prop === "active") {
       if (value != null) this.shadowRoot.querySelector("[role^=menuitem]").focus();
+    } else if (prop === "info") {
+      const node = this.shadowRoot.querySelector(".info")
+      if (node) node.textContent = value;
     }
   }
 }

@@ -36,14 +36,6 @@ export default class MenuAction extends MenuElement {
     else this.removeAttribute("focusable");
   }
 
-  get info() {
-    return this.getAttribute("info");
-  }
-
-  set info(value) {
-    this.setAttribute("info", value);
-  }
-
   #handleKeyNavigation = e => {
     if (this.disabled) return;
 
@@ -56,11 +48,6 @@ export default class MenuAction extends MenuElement {
 
   connectedCallback() {
     super.connectedCallback();
-
-    if (this.info) {
-      this.shadowRoot.querySelector(".info").textContent = this.info;
-    }
-
     this.addEventListener("keydown", this.#handleKeyNavigation);
   }
 }
