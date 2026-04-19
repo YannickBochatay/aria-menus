@@ -1,4 +1,4 @@
-import MenuElement from "./MenuElement.js";
+import MenuElement, { labelTemplate } from "./MenuElement.js";
 import MenuList from "./MenuList.js";
 
 const style =  new CSSStyleSheet();
@@ -37,15 +37,7 @@ const template = document.createElement("template");
 template.innerHTML = `
   <li role="none">
     <a role="menuitem" href="#" tabindex="-1">
-      <span aria-hidden="true" class="icon">
-        <slot name="icon"></slot>
-      </span>
-      <span class="label">
-        <slot></slot>
-      </span>
-      <span class="info">
-        <slot name="info"></slot>
-      </span>
+      ${labelTemplate}
     </a>
     <slot name="menu" hidden></slot>
     <span class="arrow" hidden>▶</span>

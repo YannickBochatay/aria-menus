@@ -80,6 +80,18 @@ style.replaceSync(/*css*/`
   }
 `);
 
+export const labelTemplate = `
+  <span aria-hidden="true" class="icon">
+    <slot name="icon"></slot>
+  </span>
+  <span class="label">
+    <slot></slot>
+  </span>
+  <span class="info">
+    <slot name="info"></slot>
+  </span>
+`
+
 export default class MenuElement extends HTMLElement {
 
   static observedAttributes = ["active", "info"];
