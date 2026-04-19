@@ -1,5 +1,4 @@
 import MenuElement from "./MenuElement.js";
-import MenuSub from "./MenuSub.js";
 
 const style =  new CSSStyleSheet();
 
@@ -81,7 +80,7 @@ export default class MenuList extends HTMLElement {
 
   closeSubmenus() {
     for (const item of this.items) {
-      if (item instanceof MenuSub) item.expanded = false;
+      if ("expanded" in item) item.expanded = false;
       item.active = false;
     }
   }
@@ -94,7 +93,7 @@ export default class MenuList extends HTMLElement {
     for (const [ind, item] of items.entries()) {
       if (index === ind) item.active = true;
       else {
-        if (item instanceof MenuSub) item.expanded = false;
+        if ("expanded" in item) item.expanded = false;
         item.active = false;
       }
     }
@@ -109,7 +108,7 @@ export default class MenuList extends HTMLElement {
         if (e.target === item) {
           this.activeItem(ind);
           clearTimeout(this.#timeoutId);
-          if (item instanceof MenuSub) {
+          if ("expanded" in item) {
             this.#timeoutId = setTimeout(() => item.expanded = true, 300);
           }
           break;

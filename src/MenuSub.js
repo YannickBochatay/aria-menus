@@ -136,7 +136,7 @@ export default class MenuSub extends MenuElement {
       if (!bool) {
         this.#findAllItems().forEach(item => {
           item.active = false;
-          if (item instanceof MenuSub) item.expanded = false;
+          if ("expanded" in item) item.expanded = false;
         })
       }
 

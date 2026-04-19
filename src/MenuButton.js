@@ -1,6 +1,5 @@
 import MenuElement from "./MenuElement.js";
 import MenuList from "./MenuList.js";
-import MenuSub from "./MenuSub.js";
 
 const style =  new CSSStyleSheet();
 
@@ -130,7 +129,7 @@ export default class MenuButton extends HTMLElement {
       if (!bool) {
         this.#findAllItems().forEach(item => {
           item.active = false;
-          if (item instanceof MenuSub) item.expanded = false;
+          if ("expanded" in item) item.expanded = false;
         })
         button.focus();
       }
