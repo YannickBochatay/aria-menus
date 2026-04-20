@@ -17,6 +17,9 @@
       #result {
         font-size:4rem;
       }
+      .underline {
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body>
@@ -32,7 +35,7 @@
         <menu-button>
           ccccc
           <menu-list slot="menu">
-            <menu-item-link>ddddd</menu-item-link>
+            <menu-item-link href="https://github.com/YannickBochatay">ddddd</menu-item-link>
             <menu-item id="menu-item-k" info="exec">kkkkk</menu-item>
             <menu-item-sub>
               eeeee
@@ -44,9 +47,15 @@
             <menu-item-radio name="zoom">100%</menu-item-radio>
             <menu-item-radio name="zoom">80%</menu-item-radio>
             <menu-item-radio name="zoom">60%</menu-item-radio>
-            <menu-item-checkbox>bold</menu-item-checkbox>
-            <menu-item-checkbox>italic</menu-item-checkbox>
-            <menu-item-checkbox>underline</menu-item-checkbox>
+            <menu-item-checkbox>
+              <strong>bold</strong>
+            </menu-item-checkbox>
+            <menu-item-checkbox>
+              <i>italic</i>
+            </menu-item-checkbox>
+            <menu-item-checkbox>
+              <span class="underline">underline</span>
+            </menu-item-checkbox>
           </menu-list>
         </menu-button>
       </p>

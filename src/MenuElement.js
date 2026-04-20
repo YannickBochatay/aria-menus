@@ -36,9 +36,7 @@ style.replaceSync(/*css*/`
       background-color:var(--bg-color);
     }
     [role^=menuitem] {
-      text-decoration:none;
       color:inherit;
-      cursor:default;
       flex:1;
     }
     .label {
