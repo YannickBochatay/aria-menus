@@ -10,7 +10,7 @@ template.innerHTML = `
   </li>
 `
 
-export default class MenuItem extends MenuElement {
+export default class MenuLink extends MenuElement {
 
   static observedAttributes = [...MenuElement.observedAttributes, "href"];
 

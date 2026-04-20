@@ -1,16 +1,5 @@
 import MenuElement, { labelTemplate } from "./MenuElement.js";
 
-export const style =  new CSSStyleSheet();
-
-style.replaceSync(/*css*/`
-  :host([type=radio]) [aria-checked=true] .icon::before {
-    content:"●";
-  }
-  :host([type=checkbox]) [aria-checked=true] .icon::before {
-    content:"✓";
-  }
-`);
-
 const template = document.createElement("template");
 template.innerHTML = `
   <li role="none">
@@ -22,24 +11,14 @@ template.innerHTML = `
 
 export default class MenuInput extends MenuElement {
 
-  static observedAttributes = [...MenuElement.observedAttributes, "disabled", "checked", "type"];
+  static observedAttributes = [...MenuElement.observedAttributes, "disabled", "checked"];
 
   #menuitem
 
   constructor() {
     super();
-    this.shadowRoot.adoptedStyleSheets.push(style);
     this.shadowRoot.append(template.content.cloneNode(true));
     this.#menuitem = this.shadowRoot.querySelector("[role^=menuitem]");
-  }
-
-  get type() {
-    return this.getAttribute("type") || "checkbox";
-  }
-
-  set type(value) {
-    if (!["radio", "checkbox"].includes(value)) throw new Error("type value must be radio or checkbox");
-    this.setAttribute("type", value);
   }
 
   get value() {
@@ -83,23 +62,12 @@ export default class MenuInput extends MenuElement {
     super.connectedCallback();
     this.addEventListener("click", this.click);
     this.addEventListener("keydown", this.#handleKeyDown);
-
-    if (!this.hasAttribute("type")) this.type = "checkbox";
   }
 
   attributeChangedCallback(prop, prevValue, value) {
     super.attributeChangedCallback(prop, prevValue, value);
-
     if (prop === "checked") {
-      if (value != null && this.type === "radio") {
-        this.parentNode.querySelectorAll(`[name="${this.name}"]`).forEach(item => {
-          if (item !== this) item.checked = false;
-        })
-      }
       this.#menuitem.setAttribute("aria-checked", value == null ? "false" : "true");
-
-    } else if (prop === "type") {
-      this.#menuitem.setAttribute("role", "menuitem" + value);
     }
   }
 }
