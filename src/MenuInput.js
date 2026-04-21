@@ -22,11 +22,7 @@ export default class MenuInput extends MenuElement {
   }
 
   get value() {
-    return this.getAttribute("value") || this.#menuitem.textContent;
-  }
-
-  get label() {
-    return this.getAttribute("label") || this.value;
+    return this.getAttribute("value") || this.label;
   }
 
   get name() {

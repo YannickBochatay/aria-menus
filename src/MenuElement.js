@@ -118,15 +118,20 @@ export default class MenuElement extends HTMLElement {
     return this.hasAttribute("disabled");
   }
 
+  #getSlotLabel() {
+    return this.shadowRoot.querySelector("slot:not([name])");
+  }
+
   get label() {
-    return [...this.childNodes]?.find(node => node.nodeName === "#text" && node.nodeValue.trim())?.nodeValue.trim();
+    const slottedNodes = [...this.#getSlotLabel().assignedNodes()];
+    return slottedNodes.reduce((label, elmt) => label + elmt.textContent.trim(), "");
   }
 
   connectedCallback() {
     const slottedLabel = this.querySelector("[slot=label]");
     if (slottedLabel) {
       slottedLabel.removeAttribute("slot");
-      this.shadowRoot.querySelector("slot:not([name])").assign(slottedLabel);
+      this.#getSlotLabel().assign(slottedLabel);
     }
   }
 
