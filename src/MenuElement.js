@@ -18,7 +18,7 @@ style.replaceSync(/*css*/`
       cursor:not-allowed;
     }
   }
-  :host([nocaret]) li .arrow {
+  :host([nocaret]) li .caret {
     display:none;
   }
   li {
@@ -36,17 +36,28 @@ style.replaceSync(/*css*/`
       background-color:var(--bg-color);
     }
     [role^=menuitem] {
+      display:flex;
+      align-items:baseline;
       color:inherit;
       flex:1;
+    }
+    .icon {
+      width:var(--icon-width);
+      margin:0 5px 0 0;
+      display:inline-block;
+    }
+    ::slotted([slot=icon]) {
+      width:var(--icon-width);
+      vertical-align:middle;
     }
     .label {
       white-space:nowrap;
       flex:1;
     }
-    .arrow {
-      font-size:0.6rem;
-      margin-left:var(--margin-left);
-      cursor:default;
+    .info {
+      opacity:0.7;
+      font-size:0.9rem;
+      margin-left:15px;
     }
   }
   ::slotted([slot=menu]) {
@@ -59,21 +70,9 @@ style.replaceSync(/*css*/`
         align-items:baseline;
       }
 
-      .icon {
-        width:var(--icon-width);
-        margin:0 5px 0 0;
-        display:inline-block;
-      }
-      ::slotted([slot=icon]) {
-        width:var(--icon-width);
-        vertical-align:middle;
-      }
       
-      .info {
-        opacity:0.7;
-        font-size:0.9rem;
-        margin-left:15px;
-      }
+      
+      
     }
   }
 `);
@@ -140,10 +139,6 @@ export default class MenuElement extends HTMLElement {
     if (slottedLabel) {
       slottedLabel.removeAttribute("slot");
       this.shadowRoot.querySelector("slot:not([name])").assign(slottedLabel);
-    }
-
-    if (!this.hasAttribute("direction")) {
-      this.setAttribute("direction", "row");
     }
   }
 

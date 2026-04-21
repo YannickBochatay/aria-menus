@@ -4,10 +4,15 @@ import MenuList from "./MenuList.js";
 const style =  new CSSStyleSheet();
 
 style.replaceSync(/*css*/`
+  .caret {
+    font-size:0.6rem;
+    margin-left:var(--margin-left);
+    cursor:default;
+  }
   :host([direction=column]) li {
     padding:0.3rem 1rem;
     
-    .arrow {
+    .caret {
       transform:rotate(90deg);
     }
 
@@ -18,7 +23,7 @@ style.replaceSync(/*css*/`
     }
   }
   :host([direction=column][expanded]) {
-    .arrow {
+    .caret {
       transform:rotate(-90deg);
     }
   }
@@ -39,7 +44,7 @@ template.innerHTML = `
     <span role="menuitem" tabindex="-1" aria-haspopup="true" aria-expanded="false">
       ${labelTemplate}
     </span>
-    <span class="arrow">▶</span>
+    <span class="caret">▶</span>
     <slot name="menu" hidden></slot>
   </li>
 `

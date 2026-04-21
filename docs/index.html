@@ -35,7 +35,10 @@
         <menu-button>
           ccccc
           <menu-list slot="menu">
-            <menu-item-link href="https://github.com/YannickBochatay">ddddd</menu-item-link>
+            <menu-item-link href="https://github.com/YannickBochatay">
+              <img src="img/icon.svg" alt="linux icon" slot="icon"/>
+              <span slot="label">ddddd</span>
+            </menu-item-link>
             <menu-item id="menu-item-k" info="exec">kkkkk</menu-item>
             <menu-item-sub>
               eeeee
@@ -62,7 +65,9 @@
       <nav aria-label="menu example">
         <menu-bar>
           <menu-item-sub nocaret>
+            <img src="img/icon.svg" alt="linux icon" slot="icon"/>
             <span>File</span>
+            <span slot="info">1er menu</span>
             <menu-list slot="menu">
               <menu-item info="Ctrl+A" id="selectAll">
                 <img src="img/icon.svg" alt="linux icon" slot="icon"/>
