@@ -30,8 +30,12 @@ export default class MenuBar extends HTMLElement {
     root.append(template.content.cloneNode(true));
   }
 
+  #getAllMenus() {
+    return Array.from(this.children).filter(menu => (menu instanceof MenuElement));
+  }
+
   get menus() {
-    return Array.from(this.children).filter(menu => (menu instanceof MenuElement) && !menu.disabled);
+    return this.#getAllMenus().filter(menu => !menu.disabled);
   }
 
   get menuActive() {
@@ -156,7 +160,7 @@ export default class MenuBar extends HTMLElement {
     this.addEventListener("focusin",this.#handleFocusIn);
     this.addEventListener("focusout",this.#handleFocusOut);
 
-    this.menus.forEach(menu => menu.direction = "column");
+    this.#getAllMenus().forEach(menu => menu.direction = "column");
 
     if (this.menus.every(menu => !menu.focusable)) this.menus[0].focusable = true;
   }

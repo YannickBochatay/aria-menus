@@ -2,10 +2,10 @@ const style =  new CSSStyleSheet();
 
 style.replaceSync(/*css*/`
   :host {
-    --icon-width:1rem;
     --bg-color:rgb(213, 220, 238);
-    --margin-left:1rem;
+    --icon-width:1rem;
     --icon-margin:0 0.4rem 0 0;
+    --margin-left:1.4rem;
   }
   :host([active]) li {
     background-color:var(--bg-color);
@@ -43,7 +43,7 @@ style.replaceSync(/*css*/`
     }
     .icon {
       width:var(--icon-width);
-      margin:0 5px 0 0;
+      margin:var(--icon-margin);
       display:inline-block;
     }
     ::slotted([slot=icon]) {
@@ -57,23 +57,11 @@ style.replaceSync(/*css*/`
     .info {
       opacity:0.7;
       font-size:0.9rem;
-      margin-left:15px;
+      margin-left:var(--margin-left);
     }
   }
   ::slotted([slot=menu]) {
     z-index:1;
-  }
-  :host([direction=row]), :host([type]) {
-    li {
-      [role^=menuitem] {
-        display:flex;
-        align-items:baseline;
-      }
-
-      
-      
-      
-    }
   }
 `);
 

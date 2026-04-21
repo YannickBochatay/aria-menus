@@ -67,7 +67,6 @@
           <menu-item-sub nocaret>
             <img src="img/icon.svg" alt="linux icon" slot="icon"/>
             <span>File</span>
-            <span slot="info">1er menu</span>
             <menu-list slot="menu">
               <menu-item info="Ctrl+A" id="selectAll">
                 <img src="img/icon.svg" alt="linux icon" slot="icon"/>
@@ -118,9 +117,12 @@
               </menu-item-sub>
             </menu-list>
           </menu-item-sub>
-          <menu-item-sub href="#toto" disabled nocaret>
-            Test
-          </menu-item-sub>
+          <menu-item-sub disabled nocaret>
+            Disabled menu
+            <menu-list slot="menu">
+              <menu-item>Hello</menu-item>
+            </menu-list>
+          </menu-item>
         </menu-bar>
       </nav>
       <div id="result" tabindex="0"></div>
