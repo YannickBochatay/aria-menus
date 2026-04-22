@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Desktop menu">
     <title>Desktop menu</title>
+    <script src="https://cdn.jsdelivr.net/npm/code-snippet-wc" type="module"></script>
+    <script src="components/snippet.js" type="module"></script>
     <script src="../src/index.js" type="module"></script>
     <style>
       :not(:defined) {
@@ -13,6 +15,9 @@
       :root {
         font-family:Arial, Helvetica, sans-serif;
         color:#222;
+        font-size:16px;
+        margin:auto;
+        max-width:80ch;
       }
       #result {
         font-size:4rem;
@@ -24,9 +29,55 @@
   </head>
   <body>
     <header>
-      <h1>Desktop menu</h1>
+      <hgroup>
+        <h1>Menu Web Components</h1>
+        <p>Full accessible menus, context menus, menu bars and menu buttons.</p>
+      </hgroup>
     </header>
     <main>
+      <section>
+        <h2>Installation</h2>
+        <section>
+        <h3>CDN</h3>
+        <code-snippet>&lt;script>
+  src="https://cdn.jsdelivr.net/npm/menu-wc"
+  type="module"
+>&lt;/script></code-snippet>
+        </section>
+        <h3>NPM</h3>
+        <code-snippet language="sh">npm install menu-wc</code-snippet>
+        </section>
+      </section>
+
+      <section>
+        <h2>Components</h2>
+        <section>
+          <h3>menu-item</h3>
+          <section>
+            <menu-snippet>
+              <menu-item>
+  Simple menu item
+</menu-item>
+            </menu-snippet>
+          </section>
+          <section>
+            <h4>Active</h4>
+            <menu-snippet>
+              <menu-item active>
+  Active menu item
+</menu-item>
+            </menu-snippet>
+          </section>
+          <section>
+            <h4>Disabled</h4>
+            <menu-snippet>
+              <menu-item disabled>
+  Disabled menu item
+</menu-item>
+            </menu-snippet>
+          </section>
+        </section>
+      </section>
       <p>
         <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/" target="_blank">Reference W3C</a>
       </p>
