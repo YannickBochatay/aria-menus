@@ -52,45 +52,60 @@
       <section>
         <h2>Components</h2>
         <section>
-          <h3>menu-item</h3>
+          <h3>&lt;menu-list&gt; and &lt;menu-item&gt;</h3>
           <section>
             <menu-snippet>
-              <menu-item>
-  Simple menu item
-</menu-item>
-            </menu-snippet>
-          </section>
-          <section>
-            <h4>Active</h4>
-            <menu-snippet>
-              <menu-item active>
-  Active menu item
-</menu-item>
+              <menu-list>
+  <menu-item>
+    Simple menu item
+  </menu-item>
+  <menu-item>
+    Another menu item
+  </menu-item>
+</menu-list>
             </menu-snippet>
           </section>
           <section>
             <h4>Disabled</h4>
             <menu-snippet>
-              <menu-item disabled>
-  Disabled menu item
-</menu-item>
-            </menu-snippet>
+              <menu-list>
+  <menu-item>
+    Simple menu item
+  </menu-item>
+  <menu-item disabled>
+    Disabled menu item
+  </menu-item>
+</menu-list>
           </section>
           <section>
             <h4>Info</h4>
             <menu-snippet>
-              <menu-item info="Ctrl+S">
-  Menu item with info
-</menu-item>
+              <menu-list>
+  <menu-item>
+    Simple menu item
+  </menu-item>
+  <menu-item info="Ctrl+F">
+    Menu item with info
+  </menu-item>
+</menu-list>
             </menu-snippet>
           </section>
           <section>
             <h4>Icon</h4>
             <menu-snippet>
-              <menu-item>
-  <img src="img/icon.svg" alt="tux icon" slot="icon">
-  Menu item with icon
-</menu-item>
+              <menu-list>
+  <menu-item>
+    Simple menu item
+  </menu-item>
+  <menu-item>
+    <img
+      src="img/icon.svg"
+      alt="tux icon"
+      slot="icon"
+    >
+    Menu item with icon
+  </menu-item>
+</menu-list>
             </menu-snippet>
           </section>
           <section>

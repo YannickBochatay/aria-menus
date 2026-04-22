@@ -71,7 +71,11 @@ export default class MenuList extends HTMLElement {
         }
     }
 
-    if (newIndex != null) this.activeItem(newIndex);
+    if (newIndex != null) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.activeItem(newIndex);
+    }
   }
 
   get items() {
@@ -117,11 +121,6 @@ export default class MenuList extends HTMLElement {
 
     });
 
-    document.addEventListener("keydown", this.#handleKeyDown);
+    this.addEventListener("keydown", this.#handleKeyDown);
   }
-
-  disconnectedCallback() {
-    document.removeEventListener("keydown", this.#handleKeyDown);
-  }
-
 }
