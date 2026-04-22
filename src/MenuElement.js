@@ -37,7 +37,7 @@ style.replaceSync(/*css*/`
     }
     [role^=menuitem] {
       display:flex;
-      align-items:baseline;
+      align-items:center;
       color:inherit;
       flex:1;
     }

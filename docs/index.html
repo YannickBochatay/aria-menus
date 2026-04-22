@@ -95,7 +95,8 @@
             <menu-snippet>
               <menu-list>
   <menu-item>
-    Simple menu item
+    <span slot="icon">☯</span>
+    Menu item with symbol icon
   </menu-item>
   <menu-item>
     <img
@@ -103,7 +104,7 @@
       alt="tux icon"
       slot="icon"
     >
-    Menu item with icon
+    Menu item with image icon
   </menu-item>
 </menu-list>
             </menu-snippet>
@@ -111,9 +112,14 @@
           <section>
             <h4>Styling</h4>
             <menu-snippet>
-              <menu-item style="--bg-color:pink">
-  Styled menu item
-</menu-item>
+              <menu-list>
+  <menu-item>
+    Simple menu item
+  </menu-item>
+  <menu-item style="--bg-color:turquoise">
+    Styled menu item
+  </menu-item>
+</menu-list>
             </menu-snippet>
           </section>
         </section>
