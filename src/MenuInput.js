@@ -50,6 +50,10 @@ export default class MenuInput extends MenuElement {
 
   #handleKeyDown = e => {
     if (this.active && e.key === "Enter" || e.key === " ") {
+      if (!this.disabled) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
       this.click()
     }
   }
