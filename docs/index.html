@@ -31,7 +31,9 @@
     <header>
       <hgroup>
         <h1>Menu Web Components</h1>
-        <p>Full accessible menus, context menus, menu bars and menu buttons.</p>
+        <p>Full accessible menus, context menus, menu bars and menu buttons,
+          according to the <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank">ARIA Authoring Practices Guide</a>.
+        </p>
       </hgroup>
     </header>
     <main>
@@ -59,41 +61,12 @@
   <menu-item>
     Simple menu item
   </menu-item>
-  <menu-item>
-    Another menu item
-  </menu-item>
-</menu-list>
-            </menu-snippet>
-          </section>
-          <section>
-            <h4>Disabled</h4>
-            <menu-snippet>
-              <menu-list>
-  <menu-item>
-    Simple menu item
-  </menu-item>
   <menu-item disabled>
     Disabled menu item
-  </menu-item>
-</menu-list>
-          </section>
-          <section>
-            <h4>Info</h4>
-            <menu-snippet>
-              <menu-list>
-  <menu-item>
-    Simple menu item
   </menu-item>
   <menu-item info="Ctrl+F">
     Menu item with info
   </menu-item>
-</menu-list>
-            </menu-snippet>
-          </section>
-          <section>
-            <h4>Icon</h4>
-            <menu-snippet>
-              <menu-list>
   <menu-item>
     <span slot="icon">☯</span>
     Menu item with symbol icon
@@ -109,7 +82,6 @@
 </menu-list>
             </menu-snippet>
           </section>
-        </section>
         <section>
           <h3>&lt;menu-item-link&gt;</h3>
             <menu-snippet>
@@ -195,9 +167,9 @@
           <h3>&lt;menu-bar&gt;</h3>
             <menu-snippet>
 <menu-bar>
-  <menu-item-link>
+  <menu-item>
     Accueil
-  </menu-item-link>
+  </menu-item>
   <menu-item-submenu>
     Menu 1
     <menu-list slot="menu">
@@ -227,138 +199,43 @@
 </menu-bar>
             </menu-snippet>
         </section>
-      </section>
-      <p>
-        <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/" target="_blank">Reference W3C</a>
-      </p>
-      
-      <p>
-        <menu-button>
-          ccccc
-          <menu-list slot="menu">
-            <menu-item-link href="https://github.com/YannickBochatay">
-              <img src="img/icon.svg" alt="linux icon" slot="icon"/>
-              <span slot="label">ddddd</span>
-            </menu-item-link>
-            <menu-item id="menu-item-k" info="exec">kkkkk</menu-item>
-            <menu-item-submenu>
-              <span>eeeee</span>
-              <menu-list slot="menu">
-                <menu-item>fffff</menu-item>
-                <menu-item>ggggg</menu-item>
-              </menu-list>
-            </menu-item-submenu>
-            <menu-item-radio>100%</menu-item-radio>
-            <menu-item-radio>80%</menu-item-radio>
-            <menu-item-radio>60%</menu-item-radio>
-            <menu-item-checkbox>
-              <strong>bold</strong>
-            </menu-item-checkbox>
-            <menu-item-checkbox>
-              <i>italic</i>
-            </menu-item-checkbox>
-            <menu-item-checkbox>
-              <span class="underline">underline</span>
-            </menu-item-checkbox>
-          </menu-list>
-        </menu-button>
-      </p>
-      <nav aria-label="menu example">
-        <menu-bar>
-          <menu-item-submenu nocaret>
-            <img src="img/icon.svg" alt="linux icon" slot="icon"/>
-            <span>File</span>
-            <menu-list slot="menu">
-              <menu-item info="Ctrl+A" id="selectAll">
-                <img src="img/icon.svg" alt="linux icon" slot="icon"/>
-                <span slot="label">aaaaa</span>
-              </menu-item>
-              <menu-item disabled>bbbbb</menu-item>
-              <menu-item-checkbox id="checkbox">hhhhh</menu-item-checkbox>
-              <menu-item-checkbox disabled>toto tata toto</menu-item-checkbox>
-              <menu-separator></menu-separator>
-              <menu-item-submenu>
-                ccccc
-                <menu-list slot="menu">
-                  <menu-item>ddddd</menu-item>
-                  <menu-item-submenu>
-                    eeeee
-                    <menu-list slot="menu">
-                      <menu-item>fffff</menu-item>
-                      <menu-item>ggggg</menu-item>
-                    </menu-list>
-                  </menu-item-submenu>
-                </menu-list>
-              </menu-item-submenu>
-            </menu-list>
-          </menu-item-submenu>
-          <menu-item-submenu nocaret>
-            Edition
-            <menu-list slot="menu">
-              <menu-item info="Ctrl+A">
-                <img src="img/icon.svg" alt="linux icon" slot="icon"/>
-                aaaaa
-              </menu-item>
-              <menu-item disabled>bbbbb</menu-item>
-              <menu-item-checkbox>hhhhh</menu-item-checkbox>
-              <menu-item-checkbox disabled>jjjjjj</menu-item-checkbox>
-              <menu-separator></menu-separator>
-              <menu-item-submenu>
-                ccccc
-                <menu-list slot="menu">
-                  <menu-item>ddddd</menu-item>
-                  <menu-item-submenu>
-                    eeeee
-                    <menu-list slot="menu">
-                      <menu-item>fffff</menu-item>
-                      <menu-item>ggggg</menu-item>
-                    </menu-list>
-                  </menu-item-submenu>
-                </menu-list>
-              </menu-item-submenu>
-            </menu-list>
-          </menu-item-submenu>
-          <menu-item-submenu disabled nocaret>
-            Disabled menu
-            <menu-list slot="menu">
-              <menu-item>Hello</menu-item>
-            </menu-list>
-          </menu-item>
-        </menu-bar>
-      </nav>
-      <div id="result" tabindex="0"></div>
-      <menu-context for="result">
-        <menu-list>
-          <menu-item>ddddd</menu-item>
-          <menu-item-submenu>
-            eeeee
-            <menu-list slot="menu">
-              <menu-item>fffff</menu-item>
-              <menu-item>ggggg</menu-item>
-            </menu-list>
-          </menu-item-submenu>
-        </menu-list>
-      </menu-context>
-      <p>
-        <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/">Reference W3C</a>
-      </p>
-    </main>
-    <script type="module">
-      const menubar = document.querySelector("menu-bar");
-      function print(str) {
-        document.querySelector("#result").textContent = str;
-      }
-      document.querySelector("#menu-item-k").addEventListener("click", () => {
-        print("action executed ! " + Math.random());
-      })
-      document.querySelector("#selectAll").addEventListener("select", () => {
-        print("select All !");
-        menubar.close();
-      });
-      document.querySelector("#checkbox").addEventListener("change", e => {
-        print("checkbox is " + (e.target.checked ? "checked" : "unchecked"));
-        // menubar.close();
-      })
-    </script>
+        <section>
+          <h3>&lt;menu-button&gt;</h3>
+            <menu-snippet>
+<menu-button>
+  Dropdown button
+  <menu-list slot="menu">
+    <menu-item>Simple item</menu-item>
+    <menu-item>
+      <span slot="icon">☯</span>
+      Item icon
+    </menu-item>
+    <menu-item-checkbox>
+      Checkable option
+    </menu-item-checkbox>
+  </menu-list>
+</menu-button>
+            </menu-snippet>
+        </section>
+        <section>
+          <h3>&lt;menu-context&gt;</h3>
+          <menu-snippet>
+<div id="demo" style="height:100%">
+  Right click to show context menu
+</div>
+<menu-context for="demo">
+  <menu-list>
+    <menu-item>Simple menu item</menu-item>
+    <menu-item-submenu>
+      Submenu item
+      <menu-list slot="menu">
+        <menu-item>menu item 1</menu-item>
+        <menu-item>menu item 2</menu-item>
+      </menu-list>
+    </menu-item-submenu>
+  </menu-list>
+</menu-context>
+      </menu-snippet>
+    </section>
   </body>
 </html>

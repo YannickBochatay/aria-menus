@@ -3,8 +3,18 @@ const style = new CSSStyleSheet();
 style.replaceSync(/*css*/`
   :host {
     display:flex;
+    justify-content:stretch;
     & > section {
       flex:1;
+      
+      &:last-child {
+        display:flex;
+        flex-direction:column;
+        & > div {
+          border:1px solid #ccc;
+          flex:1;
+        }
+      }
     }
   }
 `);
@@ -18,7 +28,9 @@ template.innerHTML = `
   </section>
   <section>
     <h5>Render</h5>
-    <slot></slot>
+    <div>
+      <slot></slot>
+    </div>
   </section>
 `
 
@@ -32,7 +44,8 @@ class Snippet extends HTMLElement {
   }
 
   connectedCallback() {
-    this.shadowRoot.querySelector("code-snippet").textContent = this.firstElementChild.outerHTML;
+    const code = this.shadowRoot.querySelector("code-snippet")
+    code.textContent = [...this.children].reduce((html, node) => html + "\n" + node.outerHTML, "").trim();
   }
 }
 
