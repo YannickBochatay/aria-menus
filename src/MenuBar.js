@@ -50,7 +50,7 @@ export default class MenuBar extends HTMLElement {
       const value = (menu === targetMenu)
       menu.active = value;
       menu.focusable = value;
-      menu.expanded = value ? expanded : false;
+      if ("expanded" in menu) menu.expanded = value ? expanded : false;
     }
     // always keep one menu focusable
     if (!targetMenu) this.menus[0].focusable = true;
@@ -58,7 +58,7 @@ export default class MenuBar extends HTMLElement {
 
   showMenu(targetMenu) {
     this.activeMenu(targetMenu);
-    if (targetMenu) this.menuActive.expanded = true;
+    if (targetMenu && "expanded" in targetMenu) this.menuActive.expanded = true;
   }
 
   close() {
@@ -131,7 +131,7 @@ export default class MenuBar extends HTMLElement {
   }
 
   #handleClick = e => {
-    if (this.menus.includes(e.target)) {
+    if (this.menus.includes(e.target) && "expanded" in e.target) {
       e.target.expanded = !e.target.expanded;
     }
   }
