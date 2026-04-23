@@ -16,6 +16,14 @@ style.replaceSync(/*css*/`
       transform:rotate(90deg);
     }
 
+    .icon:has(slot:empty) {
+      width:auto;
+      margin:0;
+    }
+    .info:has(slot:empty) {
+      margin-left:0;
+    }
+
     slot[name=menu]::slotted(*) {
       position:absolute;
       top:100%;
@@ -98,14 +106,16 @@ export default class MenuSub extends MenuElement {
         }
         break;
 
-      case expandKey: case "Enter": case " ":
-        if (!this.expanded) {
+      case expandKey: case "Enter": case " ": {
           e.preventDefault();
-          e.stopPropagation();
-          this.expanded = true;
-          this.#findMenuList().activeItem(0);
-        }
-        break;
+          if (!this.expanded) {
+            e.stopPropagation();
+            this.expanded = true;
+          }
+          const list = this.#findMenuList()
+          if (!list.items.some(item => item.active)) list.activeItem(0);
+          break;
+      }
     }
   }
 

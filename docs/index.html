@@ -109,19 +109,123 @@
 </menu-list>
             </menu-snippet>
           </section>
-          <section>
-            <h4>Styling</h4>
+        </section>
+        <section>
+          <h3>&lt;menu-item-link&gt;</h3>
             <menu-snippet>
               <menu-list>
   <menu-item>
     Simple menu item
   </menu-item>
-  <menu-item style="--bg-color:turquoise">
-    Styled menu item
+  <menu-item-link
+    href="https://github.com/YannickBochatay"
+  >
+    Link menu item
+  </menu-item-link>
+</menu-list>
+            </menu-snippet>
+        </section>
+        <section>
+          <h3>&lt;menu-item-checkbox&gt;</h3>
+            <menu-snippet>
+              <menu-list>
+  <menu-item>
+    Simple menu item
+  </menu-item>
+  <menu-item-checkbox>
+    Checkbox menu item
+  </menu-item-checkbox>
+  <menu-item-checkbox checked>
+    Checked menu item
+  </menu-item-checkbox>
+</menu-list>
+            </menu-snippet>
+        </section>
+        <section>
+          <h3>&lt;menu-item-radio&gt;</h3>
+            <menu-snippet>
+              <menu-list>
+  <menu-item>
+    Simple menu item
+  </menu-item>
+  <menu-item-radio>
+    Radio menu item 1
+  </menu-item-radio>
+  <menu-item-radio>
+    Radio menu item 2
+  </menu-item-radio>
+  <menu-item-radio checked>
+    Radio menu item 3
+  </menu-item-radio>
+</menu-list>
+            </menu-snippet>
+        </section>
+        <section>
+          <h3>&lt;menu-separator&gt;</h3>
+            <menu-snippet>
+              <menu-list>
+  <menu-item>
+    Simple menu item
+  </menu-item>
+  <menu-separator></menu-separator>
+  <menu-item>
+    Another menu item
   </menu-item>
 </menu-list>
             </menu-snippet>
-          </section>
+        </section>
+        <section>
+          <h3>&lt;menu-item-submenu&gt;</h3>
+            <menu-snippet>
+              <menu-list>
+  <menu-item>
+    Simple menu item
+  </menu-item>
+  <menu-item-submenu>
+    Submenu item
+    <menu-list slot="menu">
+      <menu-item>Item 1</menu-item>
+      <menu-item>Item 2</menu-item>
+    </menu-list>
+  </menu-item-submenu>
+</menu-list>
+            </menu-snippet>
+        </section>
+        <section>
+          <h3>&lt;menu-bar&gt;</h3>
+            <menu-snippet>
+<menu-bar>
+  <menu-item-link>
+    Accueil
+  </menu-item-link>
+  <menu-item-submenu>
+    Menu 1
+    <menu-list slot="menu">
+      <menu-item>
+        Simple menu item
+      </menu-item>
+      <menu-item-submenu>
+        Submenu item
+        <menu-list slot="menu">
+          <menu-item>Item 1</menu-item>
+          <menu-item>Item 2</menu-item>
+        </menu-list>
+      </menu-item-submenu>
+    </menu-list>
+  </menu-item-submenu>
+  <menu-item-submenu>
+    Menu 2
+    <menu-list slot="menu">
+      <menu-item>
+        Simple menu item
+      </menu-item>
+      <menu-item>
+        Another menu item
+      </menu-item>
+    </menu-list>
+  </menu-item-submenu>
+</menu-bar>
+            </menu-snippet>
         </section>
       </section>
       <p>
@@ -137,13 +241,13 @@
               <span slot="label">ddddd</span>
             </menu-item-link>
             <menu-item id="menu-item-k" info="exec">kkkkk</menu-item>
-            <menu-item-sub>
+            <menu-item-submenu>
               <span>eeeee</span>
               <menu-list slot="menu">
                 <menu-item>fffff</menu-item>
                 <menu-item>ggggg</menu-item>
               </menu-list>
-            </menu-item-sub>
+            </menu-item-submenu>
             <menu-item-radio>100%</menu-item-radio>
             <menu-item-radio>80%</menu-item-radio>
             <menu-item-radio>60%</menu-item-radio>
@@ -161,7 +265,7 @@
       </p>
       <nav aria-label="menu example">
         <menu-bar>
-          <menu-item-sub nocaret>
+          <menu-item-submenu nocaret>
             <img src="img/icon.svg" alt="linux icon" slot="icon"/>
             <span>File</span>
             <menu-list slot="menu">
@@ -173,22 +277,22 @@
               <menu-item-checkbox id="checkbox">hhhhh</menu-item-checkbox>
               <menu-item-checkbox disabled>toto tata toto</menu-item-checkbox>
               <menu-separator></menu-separator>
-              <menu-item-sub>
+              <menu-item-submenu>
                 ccccc
                 <menu-list slot="menu">
                   <menu-item>ddddd</menu-item>
-                  <menu-item-sub>
+                  <menu-item-submenu>
                     eeeee
                     <menu-list slot="menu">
                       <menu-item>fffff</menu-item>
                       <menu-item>ggggg</menu-item>
                     </menu-list>
-                  </menu-item-sub>
+                  </menu-item-submenu>
                 </menu-list>
-              </menu-item-sub>
+              </menu-item-submenu>
             </menu-list>
-          </menu-item-sub>
-          <menu-item-sub nocaret>
+          </menu-item-submenu>
+          <menu-item-submenu nocaret>
             Edition
             <menu-list slot="menu">
               <menu-item info="Ctrl+A">
@@ -199,22 +303,22 @@
               <menu-item-checkbox>hhhhh</menu-item-checkbox>
               <menu-item-checkbox disabled>jjjjjj</menu-item-checkbox>
               <menu-separator></menu-separator>
-              <menu-item-sub>
+              <menu-item-submenu>
                 ccccc
                 <menu-list slot="menu">
                   <menu-item>ddddd</menu-item>
-                  <menu-item-sub>
+                  <menu-item-submenu>
                     eeeee
                     <menu-list slot="menu">
                       <menu-item>fffff</menu-item>
                       <menu-item>ggggg</menu-item>
                     </menu-list>
-                  </menu-item-sub>
+                  </menu-item-submenu>
                 </menu-list>
-              </menu-item-sub>
+              </menu-item-submenu>
             </menu-list>
-          </menu-item-sub>
-          <menu-item-sub disabled nocaret>
+          </menu-item-submenu>
+          <menu-item-submenu disabled nocaret>
             Disabled menu
             <menu-list slot="menu">
               <menu-item>Hello</menu-item>
@@ -226,13 +330,13 @@
       <menu-context for="result">
         <menu-list>
           <menu-item>ddddd</menu-item>
-          <menu-item-sub>
+          <menu-item-submenu>
             eeeee
             <menu-list slot="menu">
               <menu-item>fffff</menu-item>
               <menu-item>ggggg</menu-item>
             </menu-list>
-          </menu-item-sub>
+          </menu-item-submenu>
         </menu-list>
       </menu-context>
       <p>

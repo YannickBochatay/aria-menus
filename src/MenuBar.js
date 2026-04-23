@@ -9,6 +9,9 @@ style.replaceSync(/*css*/`
     padding:0;
     display:flex;
   }
+  :host([direction=column]) ul {
+    display:block;
+  }
 }`);
 
 const template = document.createElement("template");
@@ -20,8 +23,6 @@ template.innerHTML = `
 `;
 
 export default class MenuBar extends HTMLElement {
-
-  #pointerDown
 
   constructor() {
     super();
@@ -51,17 +52,13 @@ export default class MenuBar extends HTMLElement {
       menu.focusable = value;
       menu.expanded = value ? expanded : false;
     }
+    // always keep one menu focusable
+    if (!targetMenu) this.menus[0].focusable = true;
   }
 
   showMenu(targetMenu) {
-    for (const menu of this.menus) {
-      const value = (menu === targetMenu);
-      if (menu.active !== value) menu.active = value;
-      if (menu.focusable !== value) menu.focusable = value;
-      if (menu.expanded !== value) menu.expanded = value;
-    }
-    // always keep one menu focusable
-    if (!targetMenu) this.menus[0].focusable = true;
+    this.activeMenu(targetMenu);
+    if (targetMenu) this.menuActive.expanded = true;
   }
 
   close() {
@@ -75,13 +72,6 @@ export default class MenuBar extends HTMLElement {
     }
     
     return this.#getTargetMenu(node.parentNode);
-  }
-
-  #handleClick = e => {
-    if (this.contains(e.target)) {
-      const menu = this.#getTargetMenu(e.target);
-      if (menu) this.showMenu(this.menuActive?.expanded ? null : menu);
-    } else this.showMenu(null);
   }
 
   #handlePointerOver = e => {
@@ -125,47 +115,36 @@ export default class MenuBar extends HTMLElement {
   }
 
   #handleFocusIn = e => {
-    if (!this.#pointerDown && !this.contains(e.relatedTarget)) {
-      if (!this.menuActive) {
-        const menu = this.#getTargetMenu(e.target);
-        menu.focusable = true;
-        menu.active = true;
-      }
+    if (this.menus.includes(document.activeElement)) {
+      document.activeElement.active = true;
     }
+  }
+
+  closeMenus() {
+    this.menus.forEach(menu => {
+      if (menu.expanded) menu.expanded = false;
+    });
   }
 
   #handleFocusOut = e => {
-    if (!this.#pointerDown && !this.contains(e.relatedTarget)) {
-      this.menus.forEach(menu => {
-        if (menu.expanded) menu.expanded = false;
-      })
+    if (!this.contains(e.relatedTarget)) this.closeMenus();
+  }
+
+  #handleClick = e => {
+    if (this.menus.includes(e.target)) {
+      e.target.expanded = !e.target.expanded;
     }
   }
 
-  #handlePointerDown = () => {
-    this.#pointerDown = true;
-  }
-
-  #handlePointerUp = () => {
-    this.#pointerDown = false;
-  }
-
   connectedCallback() {
-    document.addEventListener("click", this.#handleClick);
-    
+    this.addEventListener("click", this.#handleClick);
     this.addEventListener("pointerover", this.#handlePointerOver);
     this.addEventListener("keydown", this.#handleKeyDown);
-    this.addEventListener("pointerdown", this.#handlePointerDown);
-    this.addEventListener("pointerup", this.#handlePointerUp);
-    this.addEventListener("focusin",this.#handleFocusIn);
-    this.addEventListener("focusout",this.#handleFocusOut);
+    this.addEventListener("focusin", this.#handleFocusIn);
+    this.addEventListener("focusout", this.#handleFocusOut);
 
     this.#getAllMenus().forEach(menu => menu.direction = "column");
 
     if (this.menus.every(menu => !menu.focusable)) this.menus[0].focusable = true;
-  }
-
-  disconnectedCallback() {
-    document.removeEventListener("click", this.#handleClick);
   }
 }

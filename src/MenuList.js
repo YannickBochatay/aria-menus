@@ -84,7 +84,7 @@ export default class MenuList extends HTMLElement {
 
   closeSubmenus() {
     for (const item of this.items) {
-      if ("expanded" in item) item.expanded = false;
+      if (item.expanded) item.expanded = false;
       item.active = false;
     }
   }
@@ -95,12 +95,25 @@ export default class MenuList extends HTMLElement {
     else if (index < 0) index = items.length - 1;
 
     for (const [ind, item] of items.entries()) {
-      if (index === ind) item.active = true;
-      else {
-        if ("expanded" in item) item.expanded = false;
+      if (index === ind) {
+        item.focusable = true;
+        item.active = true;
+      } else {
+        if (item.expanded) item.expanded = false;
         item.active = false;
+        item.focusable = false;
       }
     }
+  }
+
+  #handleFocusIn = e => {
+    if (this.items.includes(document.activeElement)) {
+      document.activeElement.active = true;
+    }
+  }
+
+  #handleFocusOut = e => {
+    if (!this.contains(e.relatedTarget)) this.closeSubmenus();
   }
 
   connectedCallback() {
@@ -122,5 +135,9 @@ export default class MenuList extends HTMLElement {
     });
 
     this.addEventListener("keydown", this.#handleKeyDown);
+    this.addEventListener("focusin", this.#handleFocusIn);
+    this.addEventListener("focusout", this.#handleFocusOut);
+    
+    if (this.items.every(item => !item.focusable)) this.items[0].focusable = true;
   }
 }

@@ -3,7 +3,7 @@ export * from "./components.js";
 
 customElements.define("menu-item", components.MenuItem);
 customElements.define("menu-item-link", components.MenuLink);
-customElements.define("menu-item-sub", components.MenuSub);
+customElements.define("menu-item-submenu", components.MenuSub);
 customElements.define("menu-item-checkbox", components.MenuCheckbox);
 customElements.define("menu-item-radio", components.MenuRadio);
 customElements.define("menu-button", components.MenuButton);
