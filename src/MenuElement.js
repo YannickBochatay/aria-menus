@@ -60,6 +60,17 @@ style.replaceSync(/*css*/`
       margin-left:var(--margin-left);
     }
   }
+  :host([direction=column]) li {
+    padding:0.3rem 1rem;
+    
+    .icon:has(slot:empty) {
+      width:auto;
+      margin:0;
+    }
+    .info:has(slot:empty) {
+      margin-left:0;
+    }
+  }
   ::slotted([slot=menu]) {
     z-index:1;
   }
@@ -85,6 +96,18 @@ export default class MenuElement extends HTMLElement {
     super();
     const root = this.attachShadow({ mode : "open" });
     root.adoptedStyleSheets = [style];
+  }
+
+  get direction() {
+    return this.getAttribute("direction");
+  }
+
+  set direction(value) {
+    if (["column", "row"].includes(value)) {
+      this.setAttribute("direction", value);
+    } else {
+      throw new Error("direction value must be column or row");
+    }
   }
 
   get info() {

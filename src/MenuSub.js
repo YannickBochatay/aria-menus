@@ -10,20 +10,9 @@ style.replaceSync(/*css*/`
     cursor:default;
   }
   :host([direction=column]) li {
-    padding:0.3rem 1rem;
-    
     .caret {
       transform:rotate(90deg);
     }
-
-    .icon:has(slot:empty) {
-      width:auto;
-      margin:0;
-    }
-    .info:has(slot:empty) {
-      margin-left:0;
-    }
-
     slot[name=menu]::slotted(*) {
       position:absolute;
       top:100%;
@@ -65,18 +54,6 @@ export default class MenuSub extends MenuElement {
     super();
     this.shadowRoot.append(template.content.cloneNode(true));
     this.shadowRoot.adoptedStyleSheets.push(style);
-  }
-
-  get direction() {
-    return this.getAttribute("direction");
-  }
-
-  set direction(value) {
-    if (["column", "row"].includes(value)) {
-      this.setAttribute("direction", value);
-    } else {
-      throw new Error("direction value must be column or row");
-    }
   }
 
   get expanded() {
