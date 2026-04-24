@@ -4,6 +4,7 @@ style.replaceSync(/*css*/`
   :host {
     display:flex;
     justify-content:stretch;
+    flex-wrap:wrap;
     & > section {
       flex:1;
       
