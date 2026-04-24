@@ -1,5 +1,7 @@
-# desktop-menu
-Web components for desktop app menus. This is a **WORK IN PROGRESS**.
+# aria-menus
+Full accessible menus, context menus, menu bars and menu buttons, according to the [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/).
+
+**⚠️ WORK IN PROGRESS**
 
 ### Demo
 [http://yannickbochatay.github.io/desktop-menu/docs](http://yannickbochatay.github.io/desktop-menu/docs)
@@ -14,46 +16,39 @@ Web components for desktop app menus. This is a **WORK IN PROGRESS**.
     <script src="https://cdn.jsdelivr.net/npm/desktop-menu@1" type="module"></script>
   </head>
   <body>
-    <menu-bar>
-      <menu-bar-item>
-        <span>File</span>
+    <menu-list>
+      <menu-item>
+        Simple menu item
+      </menu-item>
+      <menu-item>
+        <a href="#">Link menu item</a>
+      </menu-item>
+      <menu-item disabled>
+        Disabled menu item
+      </menu-item>
+      <menu-item info="Ctrl+F">
+        Menu item with info
+      </menu-item>
+      <menu-item>
+        <span slot="icon">☯</span>
+        Menu item with symbol icon
+      </menu-item>
+      <menu-item>
+        <img
+          src="img/icon.svg"
+          alt="tux icon"
+          slot="icon"
+        >
+        Menu item with image icon
+      </menu-item>
+      <menu-item>
+        Menu item with submenu
         <menu-list slot="menu">
-          <menu-item info="Ctrl+A" id="selectAll">
-            <img src="img/icon.svg" alt="linux icon" slot="icon"/>
-            aaaaa
-          </menu-item>
-          <menu-item disabled>bbbbb</menu-item>
-          <menu-checkbox id="checkbox">hhhhh</menu-checkbox>
-          <menu-checkbox disabled>jjjjjj</menu-checkbox>
-          <menu-separator></menu-separator>
-          <menu-item>
-            ccccc
-            <menu-list slot="menu">
-              <menu-item>ddddd</menu-item>
-              <menu-item>
-                eeeee
-                <menu-list slot="menu">
-                  <menu-item>fffff</menu-item>
-                  <menu-item>ggggg</menu-item>
-                </menu-list>
-              </menu-item>
-            </menu-list>
-          </menu-item>
+          <menu-item>sub item 1</menu-item>
+          <menu-item>sub item 2</menu-item>
         </menu-list>
-      </menu-bar-item>
-      <menu-bar-item>
-        Edition
-        <menu-list slot="menu">
-          <menu-item info="Ctrl+A">
-            <img src="img/icon.svg" alt="linux icon" slot="icon"/>
-            aaaaa
-          </menu-item>
-          <menu-item disabled>bbbbb</menu-item>
-          <menu-checkbox>hhhhh</menu-checkbox>
-          <menu-checkbox disabled>jjjjjj</menu-checkbox>
-        </menu-list>
-      </menu-bar-item>
-    </menu-bar>
+      </menu-item>
+    </menu-list>
   </body>
 </html>
 ```
