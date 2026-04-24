@@ -84,17 +84,22 @@ export default class MenuButton extends HTMLElement {
         if (this.expanded) {
           e.stopPropagation();
           this.expanded = false;
+          this.shadowRoot.querySelector("button").focus();
         }
         break;
 
-      case "ArrowDown": case "Enter": case " ":
-        if (!this.expanded) {
+      case "ArrowDown": case "Enter": case " ": {
+        const list = this.#findMenuList();
+        const hasMenuActive = list.items.some(item => item.active);
+
+        if (!this.expanded || !hasMenuActive) {
           e.preventDefault();
           e.stopPropagation();
-          this.expanded = true;
-          this.#findMenuList().activeItem(0);
+          if (!this.expanded) this.expanded = true;
+          list.activeItem(0); 
         }
         break;
+      }
     }
   }
 
@@ -103,16 +108,17 @@ export default class MenuButton extends HTMLElement {
     const slot = button.querySelector("slot")
     if (e.target === this || e.target === button || e.target.assignedSlot === slot) {
       this.expanded = !this.expanded
-    } else if (!this.contains(e.target) && this.expanded) this.expanded = false;
+    }
+  }
+
+  #handleFocusOut = e => {
+    if (!this.contains(e.relatedTarget)) this.expanded = false;
   }
 
   connectedCallback() {
     this.addEventListener("keydown", this.#handleKeyNavigation);
-    document.addEventListener("click", this.#handleClick);
-  }
-
-  disconnectedCallback() {
-    document.removeEventListener("click", this.#handleClick);
+    this.addEventListener("click", this.#handleClick);
+    this.addEventListener("focusout", this.#handleFocusOut);
   }
 
   #findAllItems() {
@@ -130,8 +136,7 @@ export default class MenuButton extends HTMLElement {
         this.#findAllItems().forEach(item => {
           item.active = false;
           if ("expanded" in item) item.expanded = false;
-        })
-        button.focus();
+        });
       }
 
     }
