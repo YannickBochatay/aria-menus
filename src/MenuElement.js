@@ -18,7 +18,8 @@ style.replaceSync(/*css*/`
       cursor:not-allowed;
     }
   }
-  :host([nocaret]) li .caret {
+  :host([nocaret]) [role=menuitem].hasSubmenu::after {
+    content:"";
     display:none;
   }
   li {

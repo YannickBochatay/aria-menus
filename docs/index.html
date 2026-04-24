@@ -20,11 +20,9 @@
         margin:auto;
         max-width:80ch;
       }
-      #result {
-        font-size:4rem;
-      }
-      .underline {
-        text-decoration: underline;
+      h3 {
+        font-size:1.4rem;
+        margin:5rem 0 0 0;
       }
     </style>
   </head>
@@ -83,6 +81,13 @@
     >
     Menu item with image icon
   </menu-item>
+  <menu-item>
+    Menu item with submenu
+    <menu-list slot="menu">
+      <menu-item>sub item 1</menu-item>
+      <menu-item>sub item 2</menu-item>
+    </menu-list>
+  </menu-item>
 </menu-list>
             </menu-snippet>
           </section>
@@ -136,45 +141,28 @@
             </menu-snippet>
         </section>
         <section>
-          <h3>&lt;menu-item-submenu&gt;</h3>
-            <menu-snippet>
-              <menu-list>
-  <menu-item>
-    Simple menu item
-  </menu-item>
-  <menu-item-submenu>
-    Submenu item
-    <menu-list slot="menu">
-      <menu-item>Item 1</menu-item>
-      <menu-item>Item 2</menu-item>
-    </menu-list>
-  </menu-item-submenu>
-</menu-list>
-            </menu-snippet>
-        </section>
-        <section>
           <h3>&lt;menu-bar&gt;</h3>
             <menu-snippet>
 <menu-bar>
   <menu-item>
     <a href="#">Accueil</a>
   </menu-item>
-  <menu-item-submenu>
+  <menu-item>
     Menu 1
     <menu-list slot="menu">
       <menu-item>
         Simple menu item
       </menu-item>
-      <menu-item-submenu>
+      <menu-item>
         Submenu item
         <menu-list slot="menu">
           <menu-item>Item 1</menu-item>
           <menu-item>Item 2</menu-item>
         </menu-list>
-      </menu-item-submenu>
+      </menu-item>
     </menu-list>
-  </menu-item-submenu>
-  <menu-item-submenu nocaret>
+  </menu-item>
+  <menu-item nocaret>
     Menu 2
     <menu-list slot="menu">
       <menu-item>
@@ -184,7 +172,7 @@
         Another menu item
       </menu-item>
     </menu-list>
-  </menu-item-submenu>
+  </menu-item>
 </menu-bar>
             </menu-snippet>
         </section>
@@ -196,12 +184,12 @@
   <menu-list slot="menu">
     <menu-item>Simple item</menu-item>
     <menu-item>
-      <span slot="icon">☯</span>
       Item icon
+      <menu-list slot="menu">
+        <menu-item>submenu item 1</menu-item>
+        <menu-item>submenu item 2</menu-item>
+      </menu-list>
     </menu-item>
-    <menu-item-checkbox>
-      Checkable option
-    </menu-item-checkbox>
   </menu-list>
 </menu-button>
             </menu-snippet>
@@ -209,19 +197,20 @@
         <section>
           <h3>&lt;menu-context&gt;</h3>
           <menu-snippet>
-<div id="demo" style="height:100%">
-  Right click to show context menu
+<div id="demo" style="height:100%" tabindex="0">
+  Right click to show context menu<br>
+  Or focus area and press Shift+F10 or Menu key
 </div>
 <menu-context for="demo">
   <menu-list>
     <menu-item>Simple menu item</menu-item>
-    <menu-item-submenu>
+    <menu-item>
       Submenu item
       <menu-list slot="menu">
         <menu-item>menu item 1</menu-item>
         <menu-item>menu item 2</menu-item>
       </menu-list>
-    </menu-item-submenu>
+    </menu-item>
   </menu-list>
 </menu-context>
       </menu-snippet>

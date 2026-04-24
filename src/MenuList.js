@@ -39,7 +39,7 @@ export default class MenuList extends HTMLElement {
   }
 
   #handleKeyDown = e => {
-    if (this.assignedSlot?.hidden || this.items.some(item => item.expanded)) return;
+    if (this.items.some(item => item.expanded)) return;
     
     const activeIndex = this.items.findIndex(item => item.active);
     let newIndex = null;

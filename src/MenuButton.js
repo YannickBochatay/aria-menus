@@ -18,15 +18,20 @@ style.replaceSync(/*css*/`
     position:absolute;
     top:100%;
   }
-  .caret {
+  :host([nocaret]) slot:not([name])::after {
+    content:"";
+    display:none;
+  }
+  
+  slot:not([name])::after {
+    content:"▶";
     font-size:0.6rem;
-    display:inline-block;
     margin-left:0.5rem;
   }
-  [aria-expanded=false] .caret {
+  [aria-expanded=false] slot:not([name])::after {
     transform:rotate(90deg);
   }
-  [aria-expanded=true] .caret {
+  [aria-expanded=true] slot:not([name])::after {
     transform:rotate(-90deg);
   }
   ::slotted([slot=menu]) {
@@ -46,9 +51,6 @@ template.innerHTML = `
     part="button"
   >
     <slot></slot>
-    <slot name="caret">
-      <span class="caret" part="caret">▶</span>
-    </slot>
   </button>
   <slot name="menu" hidden id="menu" aria-labelledby="menubutton"></slot>
 `
