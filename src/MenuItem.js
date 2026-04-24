@@ -21,14 +21,21 @@ export default class MenuItem extends MenuElement {
     if (this.disabled) return;
 
     switch (e.key) {
-      case "Enter": case " ":
-        this.dispatchEvent(new Event("click", { target : this }));
+      case "Enter": case " ": {
+        const link = this.querySelector("a")
+        if (link) this.querySelector("a")?.click();
+        else this.dispatchEvent(new Event("click", { target : this }));
         break;
+      }
     }
   }
 
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener("keydown", this.#handleKeyNavigation);
+    
+    // remove focus for inner link
+    const link = this.querySelector("a")
+    if (link && !link.hasAttribute("tabindex")) link.tabIndex = -1;
   }
 }

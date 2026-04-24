@@ -32,14 +32,14 @@ style.replaceSync(/*css*/`
     &:hover {
       background-color:var(--bg-color);
     }
-    &:has(a:focus) {
-      background-color:var(--bg-color);
-    }
     [role^=menuitem] {
       display:flex;
       align-items:center;
       color:inherit;
       flex:1;
+    }
+    ::slotted(a) {
+      color:inherit;
     }
     .icon {
       width:var(--icon-width);

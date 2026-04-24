@@ -61,6 +61,9 @@
   <menu-item>
     Simple menu item
   </menu-item>
+  <menu-item>
+    <a href="#">Link menu item</a>
+  </menu-item>
   <menu-item disabled>
     Disabled menu item
   </menu-item>
@@ -82,21 +85,6 @@
 </menu-list>
             </menu-snippet>
           </section>
-        <section>
-          <h3>&lt;menu-item-link&gt;</h3>
-            <menu-snippet>
-              <menu-list>
-  <menu-item>
-    Simple menu item
-  </menu-item>
-  <menu-item-link
-    href="https://github.com/YannickBochatay"
-  >
-    Link menu item
-  </menu-item-link>
-</menu-list>
-            </menu-snippet>
-        </section>
         <section>
           <h3>&lt;menu-item-checkbox&gt;</h3>
             <menu-snippet>
@@ -168,7 +156,7 @@
             <menu-snippet>
 <menu-bar>
   <menu-item>
-    Accueil
+    <a href="#">Accueil</a>
   </menu-item>
   <menu-item-submenu>
     Menu 1
@@ -185,7 +173,7 @@
       </menu-item-submenu>
     </menu-list>
   </menu-item-submenu>
-  <menu-item-submenu>
+  <menu-item-submenu nocaret>
     Menu 2
     <menu-list slot="menu">
       <menu-item>
