@@ -12,6 +12,7 @@ style.replaceSync(/*css*/`
         flex-direction:column;
         & > div {
           border:1px solid #ccc;
+          padding:1rem;
           flex:1;
         }
       }
