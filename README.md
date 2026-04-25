@@ -4,7 +4,7 @@ Full accessible menus, context menus, menu bars and menu buttons, according to t
 **⚠️ WORK IN PROGRESS**
 
 ### Demo
-[http://yannickbochatay.github.io/desktop-menu/docs](http://yannickbochatay.github.io/desktop-menu/docs)
+[http://yannickbochatay.github.io/aria-menus/docs](http://yannickbochatay.github.io/aria-menus/docs)
 
 ### Example
 ```html
@@ -13,7 +13,7 @@ Full accessible menus, context menus, menu bars and menu buttons, according to t
   <head>
     <meta charset="UTF-8">
     <title>Desktop menu</title>
-    <script src="https://cdn.jsdelivr.net/npm/desktop-menu@1" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aria-menus" type="module"></script>
   </head>
   <body>
     <menu-list>
@@ -51,5 +51,4 @@ Full accessible menus, context menus, menu bars and menu buttons, according to t
     </menu-list>
   </body>
 </html>
-```
 ```

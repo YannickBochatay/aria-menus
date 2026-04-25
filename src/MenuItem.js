@@ -8,6 +8,7 @@ style.replaceSync(/*css*/`
     content:"▶";
     font-size:0.6rem;
     margin-left:var(--margin-left);
+    margin-right:0.2rem;
     cursor:default;
   }
   :host([direction=column]) li {

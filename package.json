@@ -1,22 +1,27 @@
 {
-  "name": "desktop-menu",
+  "name": "aria-menus",
   "version": "0.0.1",
-  "description": "web component for desktop app menus",
+  "description": "web components for full accessible menus, menubars, menubuttons and context menus",
   "main": "dist/index.js",
   "files": ["dist/index.js"],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YannickBochatay/react-desktop-menus.git"
+    "url": "git+https://github.com/YannickBochatay/aria-menus.git"
   },
   "keywords": [
-    "react",
+    "web component",
     "menu",
-    "javascript"
+    "menubar",
+    "aria",
+    "menubutton",
+    "contextmenu",
+    "accessibility",
+    "desktop"
   ],
   "author": "Yannick Bochatay",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/YannickBochatay/react-desktop-menus/issues"
+    "url": "https://github.com/YannickBochatay/aria-menus/issues"
   },
-  "homepage": "https://github.com/YannickBochatay/react-desktop-menus#readme"
+  "homepage": "https://github.com/YannickBochatay/aria-menus#readme"
 }
