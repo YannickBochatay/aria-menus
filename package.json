@@ -3,7 +3,14 @@
   "version": "0.0.1",
   "description": "web components for full accessible menus, menubars, menubuttons and context menus",
   "main": "dist/index.js",
-  "files": ["dist/index.js"],
+  "files": [
+    "dist/index.js"
+  ],
+  "scripts": {
+    "build-max": "esbuild src/index.js --bundle --format=esm --outfile=dist/index.js",
+    "build-min": "esbuild src/index.js --bundle --minify --format=esm --outfile=dist/index.min.js",
+    "build": "npm run build-max && npm run build-min"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/YannickBochatay/aria-menus.git"
@@ -23,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/YannickBochatay/aria-menus/issues"
   },
-  "homepage": "https://github.com/YannickBochatay/aria-menus#readme"
+  "homepage": "https://github.com/YannickBochatay/aria-menus#readme",
+  "devDependencies": {
+    "esbuild": "^0.28.0"
+  }
 }
