@@ -272,7 +272,7 @@ var MenuList = class extends HTMLElement {
     this.addEventListener("keydown", this.#handleKeyDown);
     this.addEventListener("focusin", this.#handleFocusIn);
     this.addEventListener("focusout", this.#handleFocusOut);
-    if (this.items.every((item) => !item.focusable)) this.items[0].focusable = true;
+    if (this.items.every((item) => !item.focusable) && this.items.length) this.items[0].focusable = true;
   }
 };
 
@@ -372,6 +372,7 @@ var MenuItem = class extends MenuElement {
     switch (e.key) {
       case "Enter":
       case " ": {
+        e.stopPropagation();
         const link = this.querySelector("a");
         if (link) this.querySelector("a")?.click();
         else this.dispatchEvent(new Event("click", { target: this }));
@@ -821,26 +822,33 @@ template7.innerHTML = `
   <slot></slot>
 `;
 var MenuContext = class extends HTMLElement {
+  static observedAttributes = ["for"];
   constructor() {
     super();
     const root = this.attachShadow({ mode: "open" });
     root.append(template7.content.cloneNode(true));
   }
   get target() {
-    return document.querySelector("#" + this.getAttribute("for"));
+    return document.getElementById(this.htmlFor);
+  }
+  get htmlFor() {
+    return this.getAttribute("for");
+  }
+  set htmlFor(value) {
+    this.setAttribute("for", value);
   }
   close() {
     this.firstElementChild?.closeSubmenus?.();
     this.style.display = "none";
-    this.setAttribute("aria-expanded", false);
-    this.target.focus();
+    this.setAttribute("aria-expanded", "false");
+    this.target?.focus();
   }
   open(e) {
     this.style.display = "inline-block";
     const { x, y } = this.#computePosition(e);
     this.style.left = x + "px";
     this.style.top = y + "px";
-    this.setAttribute("aria-expanded", true);
+    this.setAttribute("aria-expanded", "true");
     this.firstElementChild.focus();
   }
   #handleFocusOut = (e) => {
@@ -869,16 +877,28 @@ var MenuContext = class extends HTMLElement {
   #handleKeyDown = (e) => {
     if (e.key === "Escape") this.close();
   };
+  #enableTarget(target) {
+    target?.setAttribute("aria-haspopup", "menu");
+    target?.addEventListener("contextmenu", this.#handleContextMenu);
+  }
+  #disableTarget(target) {
+    target?.removeAttribute("aria-haspopup");
+    target?.removeEventListener("contextmenu", this.#handleContextMenu);
+  }
   connectedCallback() {
-    this.target.setAttribute("aria-haspopup", "menu");
-    this.target.addEventListener("contextmenu", this.#handleContextMenu);
+    this.#enableTarget(this.target);
     this.addEventListener("keydown", this.#handleKeyDown);
     this.addEventListener("focusout", this.#handleFocusOut);
     this.firstElementChild.tabIndex = -1;
   }
   disconnectedCallback() {
-    this.target.removeEventListener("contextmenu", this.#handleContextMenu);
-    this.target.removeAttribute("aria-haspopup");
+    this.#disableTarget(this.target);
+  }
+  attributeChangedCallback(prop, oldValue, value) {
+    if (prop === "for") {
+      this.#disableTarget(document.getElementById(oldValue));
+      this.#enableTarget(document.getElementById(value));
+    }
   }
 };
 
