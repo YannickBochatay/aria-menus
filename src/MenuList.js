@@ -138,6 +138,6 @@ export default class MenuList extends HTMLElement {
     this.addEventListener("focusin", this.#handleFocusIn);
     this.addEventListener("focusout", this.#handleFocusOut);
     
-    if (this.items.every(item => !item.focusable)) this.items[0].focusable = true;
+    if (this.items.every(item => !item.focusable) && this.items.length) this.items[0].focusable = true;
   }
 }
