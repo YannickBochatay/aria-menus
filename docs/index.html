@@ -20,6 +20,9 @@
         margin:auto;
         max-width:80ch;
       }
+      h2 {
+        margin:3rem 0 0 0;
+      }
       h3 {
         font-size:1.4rem;
         margin:3rem 0 0 0;
@@ -213,8 +216,49 @@
     </menu-item>
   </menu-list>
 </menu-context>
-      </menu-snippet>
-    </section>
+          </menu-snippet>
+        </section>
+      </section>
+      <section>
+        <h2>Events and API</h2>
+        <menu-snippet>
+<menu-bar id="menu-with-events">
+  <menu-item>
+    Menu 1
+    <menu-list slot="menu">
+      <menu-item id="item-1">
+        Menu Item 1
+      </menu-item>
+      <menu-item-checkbox id="item-2">
+        Menu Item 2
+      </menu-item-checkbox>
+    </menu-list>
+  </menu-item>
+</menu-bar>
+
+<div id="result" style="height:100px;text-align:center"></div>
+
+<script type="module">
+
+  const menubar = document.getElementById("menu-with-events");
+  const result = document.getElementById("result");
+
+  const item1 = document.getElementById("item-1");
+  item1.addEventListener("click", e => {
+    result.textContent = "item1 clicked";
+    menubar.close();
+  });
+
+  const item2 = document.getElementById("item-2");
+  item2.addEventListener("change", e => {
+    const { checked } = e.target;
+    result.textContent = `item2 ${checked ? "" : "un"}checked`;
+  });
+
+</script>
+        </menu-snippet>
+      </section>
+    </main>
     <access-settings all></access-settings>
   </body>
 </html>
