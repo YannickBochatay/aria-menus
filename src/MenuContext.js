@@ -11,6 +11,8 @@ template.innerHTML = `
 
 export default class MenuContext extends HTMLElement {
 
+  static observedAttributes = ["for"]
+
   constructor() {
     super()
     const root = this.attachShadow({ mode : "open" });
@@ -18,14 +20,22 @@ export default class MenuContext extends HTMLElement {
   }
 
   get target() {
-    return document.querySelector("#" + this.getAttribute("for"));
+    return document.getElementById(this.htmlFor);
+  }
+
+  get htmlFor() {
+    return this.getAttribute("for");
+  }
+
+  set htmlFor(value) {
+    this.setAttribute("for", value);
   }
 
   close() {
     this.firstElementChild?.closeSubmenus?.();
     this.style.display = "none";
-    this.setAttribute("aria-expanded", false);
-    this.target.focus();
+    this.setAttribute("aria-expanded", "false");
+    this.target?.focus();
   }
 
   open(e) {
@@ -33,7 +43,7 @@ export default class MenuContext extends HTMLElement {
     const {x,y} = this.#computePosition(e);
     this.style.left = x + "px";
     this.style.top = y + "px";
-    this.setAttribute("aria-expanded", true);
+    this.setAttribute("aria-expanded", "true");
     this.firstElementChild.focus();
   }
 
@@ -71,10 +81,18 @@ export default class MenuContext extends HTMLElement {
     if (e.key === "Escape") this.close();
   }
 
-  connectedCallback() {
-    this.target.setAttribute("aria-haspopup", "menu");
-    this.target.addEventListener("contextmenu", this.#handleContextMenu);
+  #enableTarget(target) {
+    target?.setAttribute("aria-haspopup", "menu");
+    target?.addEventListener("contextmenu", this.#handleContextMenu);
+  }
 
+  #disableTarget(target) {
+    target?.removeAttribute("aria-haspopup");
+    target?.removeEventListener("contextmenu", this.#handleContextMenu);
+  }
+
+  connectedCallback() {
+    this.#enableTarget(this.target);
     this.addEventListener("keydown", this.#handleKeyDown);
     this.addEventListener("focusout", this.#handleFocusOut);
 
@@ -82,8 +100,14 @@ export default class MenuContext extends HTMLElement {
   }
 
   disconnectedCallback() {
-    this.target.removeEventListener("contextmenu", this.#handleContextMenu);
-    this.target.removeAttribute("aria-haspopup");
+    this.#disableTarget(this.target);
+  }
+
+  attributeChangedCallback(prop, oldValue, value) {
+    if (prop === "for") {
+      this.#disableTarget(document.getElementById(oldValue));
+      this.#enableTarget(document.getElementById(value));
+    }
   }
 
 }
