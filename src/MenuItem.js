@@ -104,6 +104,7 @@ export default class MenuItem extends MenuElement {
   #handleSimpleItemKeyNavigation(e) {
     switch (e.key) {
       case "Enter": case " ": {
+        e.stopPropagation();
         const link = this.querySelector("a");
         if (link) this.querySelector("a")?.click();
         else this.dispatchEvent(new Event("click", { target : this }));
