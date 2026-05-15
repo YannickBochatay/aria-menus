@@ -4,12 +4,15 @@
   "description": "web components for full accessible menus, menubars, menubuttons and context menus",
   "main": "dist/index.js",
   "files": [
-    "dist/index.js", "dist/index.min.js"
+    "dist/index.js",
+    "dist/index.min.js"
   ],
   "scripts": {
     "build-max": "esbuild src/index.js --bundle --format=esm --outfile=dist/index.js",
     "build-min": "esbuild src/index.js --bundle --minify --format=esm --outfile=dist/index.min.js",
-    "build": "npm run build-max && npm run build-min"
+    "build": "npm run build-max && npm run build-min",
+    "start": "http-server -p 8080",
+    "test": "npx playwright test"
   },
   "repository": {
     "type": "git",
@@ -32,6 +35,9 @@
   },
   "homepage": "https://github.com/YannickBochatay/aria-menus#readme",
   "devDependencies": {
-    "esbuild": "^0.28.0"
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.7.0",
+    "esbuild": "^0.28.0",
+    "http-server": "^14.1.1"
   }
 }

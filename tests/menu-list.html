@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Desktop menu">
+    <title>&lt;menu-list&gt; tests</title>
+    <script src="../src/index.js" type="module"></script>
+  </head>
+  <body>
+    <menu-list>
+      <menu-item>
+        Simple menu item
+      </menu-item>
+      <menu-item>
+        <a href="#">Link menu item</a>
+      </menu-item>
+      <menu-item disabled>
+        Disabled menu item
+      </menu-item>
+      <menu-item info="Ctrl+F">
+        Menu item with info
+      </menu-item>
+      <menu-item>
+        <span slot="icon">☯</span>
+        Menu item with symbol icon
+      </menu-item>
+      <menu-item>
+        Menu item with submenu
+        <menu-list slot="menu">
+          <menu-item>sub item 1</menu-item>
+          <menu-item>sub item 2</menu-item>
+        </menu-list>
+      </menu-item>
+    </menu-list>
+  </body>
+</html>
