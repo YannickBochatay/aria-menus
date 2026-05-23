@@ -1,8 +1,6 @@
 # aria-menus
 Full accessible menus, context menus, menu bars and menu buttons, according to the [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/).
 
-**⚠️ WORK IN PROGRESS**
-
 ### Demo
 [http://yannickbochatay.github.io/aria-menus/docs](http://yannickbochatay.github.io/aria-menus/docs)
 
