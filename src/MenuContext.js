@@ -105,6 +105,7 @@ export default class MenuContext extends HTMLElement {
 
   attributeChangedCallback(prop, oldValue, value) {
     if (prop === "for") {
+      this.close();
       this.#disableTarget(document.getElementById(oldValue));
       this.#enableTarget(document.getElementById(value));
     }
