@@ -40,7 +40,7 @@ const template = document.createElement("template");
 
 template.innerHTML = `
   <li role="none">
-    <span role="menuitem" tabindex="-1" aria-haspopup="true" aria-expanded="false">
+    <span role="menuitem" tabindex="-1">
       ${labelTemplate}
     </span>
     <slot name="menu" hidden></slot>
@@ -125,9 +125,12 @@ export default class MenuItem extends MenuElement {
     const menuSlot = this.shadowRoot.querySelector("slot[name=menu]");
     menuSlot.addEventListener("slotchange", () => {
       const menuItem = this.shadowRoot.querySelector("[role=menuitem]");
-      const method = (menuSlot.assignedNodes().length) ? "add" : "remove";
+      const hasSubmenu = Boolean(menuSlot.assignedNodes().length)
+      const method = hasSubmenu ? "add" : "remove";
       menuItem.classList[method]("hasSubmenu");
-    })
+      menuItem.ariaHasPopup = hasSubmenu;
+      if (hasSubmenu) this.expanded = false;
+    });
 
     // remove focus for inner link
     const link = this.querySelector("a")

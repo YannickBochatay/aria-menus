@@ -1,6 +1,6 @@
 {
   "name": "aria-menus",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "web components for full accessible menus, menubars, menubuttons and context menus",
   "main": "dist/index.js",
   "files": [
