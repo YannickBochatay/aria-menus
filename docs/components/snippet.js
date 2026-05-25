@@ -25,11 +25,11 @@ const template = document.createElement("template");
 
 template.innerHTML = `
   <section>
-    <h5>Code</h5>
+    <h4>Code</h4>
     <code-snippet language="html"></code-snippet>
   </section>
   <section>
-    <h5>Render</h5>
+    <h4>Render</h4>
     <div>
       <slot></slot>
     </div>
