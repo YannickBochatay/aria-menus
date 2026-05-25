@@ -316,10 +316,10 @@ style3.replaceSync(
 var template2 = document.createElement("template");
 template2.innerHTML = `
   <li role="none">
-    <span role="menuitem" tabindex="-1" aria-haspopup="true" aria-expanded="false">
+    <span role="menuitem" id="menuitem" tabindex="-1">
       ${labelTemplate}
     </span>
-    <slot name="menu" hidden></slot>
+    <slot name="menu" id="menu" aria-labelledby="menuitem" hidden></slot>
   </li>
 `;
 var MenuItem = class extends MenuElement {
@@ -390,8 +390,16 @@ var MenuItem = class extends MenuElement {
     const menuSlot = this.shadowRoot.querySelector("slot[name=menu]");
     menuSlot.addEventListener("slotchange", () => {
       const menuItem = this.shadowRoot.querySelector("[role=menuitem]");
-      const method = menuSlot.assignedNodes().length ? "add" : "remove";
+      const hasSubmenu = Boolean(menuSlot.assignedNodes().length);
+      const method = hasSubmenu ? "add" : "remove";
       menuItem.classList[method]("hasSubmenu");
+      menuItem.ariaHasPopup = hasSubmenu;
+      if (hasSubmenu) {
+        menuItem.setAttribute("aria-controls", "menu");
+        this.expanded = false;
+      } else {
+        menuItem.removeAttribute("aria-controls");
+      }
     });
     const link = this.querySelector("a");
     if (link && !link.hasAttribute("tabindex")) link.tabIndex = -1;
@@ -896,6 +904,7 @@ var MenuContext = class extends HTMLElement {
   }
   attributeChangedCallback(prop, oldValue, value) {
     if (prop === "for") {
+      this.close();
       this.#disableTarget(document.getElementById(oldValue));
       this.#enableTarget(document.getElementById(value));
     }
