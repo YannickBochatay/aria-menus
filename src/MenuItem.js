@@ -40,10 +40,10 @@ const template = document.createElement("template");
 
 template.innerHTML = `
   <li role="none">
-    <span role="menuitem" tabindex="-1">
+    <span role="menuitem" id="menuitem" tabindex="-1">
       ${labelTemplate}
     </span>
-    <slot name="menu" hidden></slot>
+    <slot name="menu" id="menu" aria-labelledby="menuitem" hidden></slot>
   </li>
 `
 
@@ -129,7 +129,12 @@ export default class MenuItem extends MenuElement {
       const method = hasSubmenu ? "add" : "remove";
       menuItem.classList[method]("hasSubmenu");
       menuItem.ariaHasPopup = hasSubmenu;
-      if (hasSubmenu) this.expanded = false;
+      if (hasSubmenu) {
+        menuItem.setAttribute("aria-controls", "menu");
+        this.expanded = false;
+      } else {
+        menuItem.removeAttribute("aria-controls");
+      }
     });
 
     // remove focus for inner link
