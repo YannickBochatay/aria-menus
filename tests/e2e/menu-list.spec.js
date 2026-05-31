@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 // Based on https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/#kbd_label
 
 test('keyboard navigation', async ({ page }) => {
-  await page.goto('http://127.0.0.1:8080/tests/menu-list.html');
+  await page.goto('http://127.0.0.1:8080/tests/e2e/menu-list.html');
 
   const press = page.keyboard.press.bind(page.keyboard);
 

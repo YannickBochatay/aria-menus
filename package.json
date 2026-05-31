@@ -7,12 +7,18 @@
     "dist/index.js",
     "dist/index.min.js"
   ],
+  "type": "module",
   "scripts": {
     "build-max": "esbuild src/index.js --bundle --format=esm --outfile=dist/index.js",
     "build-min": "esbuild src/index.js --bundle --minify --format=esm --outfile=dist/index.min.js",
     "build": "npm run build-max && npm run build-min",
     "start": "http-server -p 8080",
-    "test": "npx playwright test"
+    "test": "npx playwright test",
+    "test-ui": "npx playwright test --ui",
+    "unit-test": "vitest",
+    "unit-test:ui": "vitest --ui",
+    "unit-test:browser": "vitest --browser",
+    "unit-test:coverage": "vitest --coverage"
   },
   "repository": {
     "type": "git",
@@ -37,7 +43,9 @@
   "devDependencies": {
     "@playwright/test": "^1.60.0",
     "@types/node": "^25.7.0",
+    "@vitest/browser-playwright": "^4.1.7",
     "esbuild": "^0.28.0",
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "vitest": "^4.1.7"
   }
 }
